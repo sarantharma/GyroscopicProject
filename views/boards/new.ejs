@@ -1,0 +1,122 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="row">
+  <h1 class="text-center"></h1>
+  <div class="col-6 offset-3">
+    <form action="/boards" method="POST" novalidate class="validated-form">
+      <!-- Name of the board -->
+      <div class="mb-3">
+        <label class="form-label" for="name">Name</label>
+        <input
+          class="form-control"
+          type="text"
+          id="name"
+          name="board[name]"
+          required
+        />
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+
+      <!-- Description of the board -->
+      <div class="mb-3">
+        <label class="form-label" for="description">Description</label>
+        <textarea
+          class="form-control"
+          type="text"
+          id="description"
+          name="board[description]"
+          required
+        ></textarea>
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+
+      <!-- Default or Custom made columns -->
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="default"
+          name="board[columntype]"
+          value="default"
+          required
+        />
+        <label class="form-check-label" for="default">Default</label><br />
+      </div>
+
+      <div class="form-check mb-4">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="custom"
+          name="board[columntype]"
+          value="custom"
+          required
+        />
+        <label class="form-check-label" for="custom">Custom</label><br />
+      </div>
+
+      <!-- Button to add columns for custom made columns -->
+      <div id="columnselect" class="form-group hidden">
+        <button id="addColumn" type="button" class="btn btn-info mb-3">
+          Add Column
+        </button>
+
+        <!-- Three default Columns -->
+        <input
+          type="text"
+          class="columnName form-control mb-2"
+          name="column[column_1]"
+          placeholder="Enter the column name"
+          value="Went Well"
+        />
+        <input
+          type="text"
+          class="columnName form-control mb-2"
+          name="column[column_2]"
+          placeholder="Enter the column name"
+          value="To Improve"
+        />
+        <input
+          type="text"
+          class="columnName form-control mb-2"
+          name="column[column_3]"
+          placeholder="Enter the column name"
+          value="Actions"
+        />
+      </div>
+
+      <!-- Submit the form (Board) -->
+      <div class="mb-3">
+        <button class="btn btn-success">Add Board</button>
+      </div>
+    </form>
+
+    <a href="/boards">All Boards</a>
+  </div>
+</div>
+
+<script>
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function () {
+    "use strict";
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.querySelectorAll(".validated-form");
+
+    // Loop over them and prevent submission
+    Array.from(forms).forEach(function (form) {
+      form.addEventListener(
+        "submit",
+        function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+
+          form.classList.add("was-validated");
+        },
+        false
+      );
+    });
+  })();
+</script>

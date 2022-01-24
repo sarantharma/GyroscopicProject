@@ -1,0 +1,19 @@
+<% layout('layouts/boilerplate') %>
+<h1>Edit board</h1>
+<form action="/boards/<%=board._id%>?_method=PUT" method="POST">
+  <div>
+    <label for="name">Name</label>
+    <input type="text" id="name" name="board[name]" value="<%=board.name%>" />
+  </div>
+  <div>
+    <label for="description">Description</label>
+    <input
+      type="text"
+      id="description"
+      name="board[description]"
+      value="<%=board.description%>"
+    />
+  </div>
+  <button>Update Board</button>
+</form>
+<a href="/boards/<%=board._id%> ">Back to Board</a>

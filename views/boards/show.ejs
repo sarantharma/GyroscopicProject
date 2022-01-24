@@ -1,0 +1,295 @@
+<% layout('layouts/boilerplate') %>
+
+    <h1><%= board.name %></h1>
+    <p><%= board.description %></p>
+
+    <div class="d-flex justify-content-evenly" >
+        <% for(let column of board.columns){ %>
+
+            <!-- card for each column -->
+            <div class="card" id="<%=`${column._id}`%>" style="background-color: rgb(187, 249, 138); width: 25rem;">
+
+                    <h5 class="card-title"><%=column.header%> </h5>
+
+                    <!-- <div class="comment-form-div"> -->
+                        <!-- _${column.columnOrder} -->
+                        <form class=<%=`comment-form`%>  action="">
+                            <textarea
+                            class="form-control comment-textarea"
+                            type="text"
+                           
+                            name="board[description]"
+                            required
+                            ></textarea>
+                            <button>Send</button>
+                        </form>
+                    <!-- </div> -->
+
+
+                    <!-- Comments -->                   
+                    <div class="card-comment">
+                        <% for(let comment of column.comments){ %>
+                            <div class="card mb-2 draggable" draggable="true" id="<%=comment._id%>">
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        <%=comment.content%> 
+                                    </p>
+                                </div>
+                            </div>   
+                            <% } %>
+                    </div>
+           
+            </div>           
+        <% } %>   
+    </div>
+
+
+    <p><a href="/boards/<%=board._id%>/edit">Edit</a></p>
+
+    <p>
+        <form action="/boards/<%=board._id%>?_method=DELETE" method="POST">
+            <button>Delete</button>
+        </form>
+    </p>
+    <footer>
+      
+      <a href="/boards">All Boards</a>
+    </footer>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+
+        // Temperary Variables
+        let parentColumn;
+        let appendContainer;
+        let newColumn;
+        let currentDragging;
+
+
+        // Initiate Socket in show.ejs
+        const socket = io();
+
+
+  
+        // Get html elements
+        const form = document.getElementsByClassName("comment-form"); // Comment form to create a comment
+        const input = document.getElementsByClassName("comment-textarea"); // Text area to type a comment
+        const comments = document.querySelectorAll(".card-comment"); // All comments
+
+
+        let draggables = document.querySelectorAll(".draggable"); // Single comments (each comment is draggable)
+
+    
+        //  Give submit to all the forms in a board
+        for(let i = 0; i < form.length; i++){
+            form[i].addEventListener("submit", function (e) {         
+            e.preventDefault();
+            if (input[i].value) {
+                // Send newly created board to the server side (To handle real time)
+                socket.emit("board comment", input[i].value, form[i].parentNode.id); // Emit input value and the column id
+                input[i].value = "";               
+            }
+        });                
+        }
+
+
+        // Reveive real time update from the server side
+        // Recevied comment, commentId(Mongo Id) and the column Id
+        socket.on("board comment", function (cmt,cmtID, columnID) {
+            for(let i = 0; i < comments.length; i++){
+                if(comments[i].parentNode.id == columnID){
+                    // Create an html element for newly created comment
+                    const commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmtID}>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    ${cmt}
+                                </p>
+                            </div>
+                        </div>   `
+
+                    // Insert the html element to the comments under the coresponding column
+                    comments[i].insertAdjacentHTML("beforeend", commentHtml);
+
+                    // // ######################################################
+
+                    draggables = document.querySelectorAll(".draggable");
+
+
+                    draggables.forEach((draggable) => {
+                        draggable.addEventListener("dragstart", () => {
+                            draggable.classList.add("dragging");
+                        });
+
+
+                        draggable.addEventListener("dragend", () => {
+                            const draggable = document.querySelector(".dragging");
+                            currentDragging = draggable;
+                            appendContainer.appendChild(draggable);
+                            draggable.classList.remove("dragging");
+
+                            newColumn = draggable.parentNode.parentNode;
+
+                            socket.emit("drag comment", draggable.id, parentColumn.id ,newColumn.id);
+                                
+                            parentColumn = undefined;
+                        
+                        });
+                    });
+
+
+                    socket.on("drag comment", function (cmt, columnID, parentID) {
+                        const comment = document.getElementById(`${cmt._id}`)
+                        const checkComment = comment.parentNode;
+                        const newColumn = document.getElementById(`${columnID}`).querySelector(".card-comment");
+
+                        const draggables = newColumn.querySelectorAll(".draggable")
+
+                        let idArray = []; 
+
+                        draggables.forEach((draggable) => {
+                            idArray.push(draggable.id)
+                        })
+
+                        
+                        if(idArray.includes(cmt._id)){
+                            idArray = [];
+                        }else{
+                            let con = document.getElementById(`${parentID}`).querySelector(".card-comment")
+                            let cc = document.getElementById(`${cmt._id}`)
+                
+                            console.log("Con " ,con);
+                            console.log("Cc " ,cc);
+
+                            con.removeChild(cc)
+
+                            idArray = [];
+                            let commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmt._id}>
+                                        <div class="card-body">
+                                            <p class="card-text">
+                                                ${cmt.content}
+                                            </p>
+                                        </div>
+                                    </div>   `
+                            newColumn.insertAdjacentHTML("beforeend", commentHtml);  
+                        }
+                    })                    
+
+                    comments.forEach((container) => {
+                        container.addEventListener("dragover", (e) => {
+                            e.preventDefault();
+                            const draggable = document.querySelector(".dragging");
+                            // console.log(draggable);
+                            if(parentColumn == undefined){
+                                parentColumn = draggable.parentNode.parentNode;
+
+                            }
+                            appendContainer = container;
+                        });
+                    });
+
+                    
+
+                     // ######################################################
+
+                }
+            } 
+
+        });
+
+
+
+         // ######################################################
+
+         
+
+        //  Treverse through all the draggable elements
+        draggables.forEach((draggable) => {
+            // The start tof dragging
+            draggable.addEventListener("dragstart", () => {
+                draggable.classList.add("dragging"); //Add a class called "dragging" to the dragging element             
+            });
+
+            // The end of dragging 
+            draggable.addEventListener("dragend", () => {
+                const draggable = document.querySelector(".dragging"); //select the dragging element
+                currentDragging = draggable; //Set it to a global variable
+                appendContainer.appendChild(draggable) //Append the draggable element to the container (correspoding column)  
+                draggable.classList.remove("dragging"); //Remove the dragging class from the dragging element (after append)
+            
+                newColumn = draggable.parentNode.parentNode; //Set the newly added column into a global variable
+
+                // Send the dragged and dropped element to the server side (Real time)
+                socket.emit("drag comment", draggable.id, parentColumn.id ,newColumn.id);
+
+                parentColumn = undefined; //Set the global variable undifined 
+            });
+
+        });
+
+
+        // Reveive real time update from the server side for drag and drop
+        // Recevied comment, new column Id, parent column Id
+        socket.on("drag comment", function (cmt, newColumnId, parentID) {
+            const comment = document.getElementById(`${cmt._id}`) //Get the comment 
+            const checkComment = comment.parentNode; 
+            const newColumn = document.getElementById(`${newColumnId}`).querySelector(".card-comment"); // Get the newly dropped column
+            const draggables = newColumn.querySelectorAll(".draggable") // Get all the draggable element from the newly added column
+
+            // temporary id array for draggables
+            let idArray = []; 
+
+            // push all the draggable id to the temporary array
+            draggables.forEach((draggable) => {
+                idArray.push(draggable.id)
+            })
+
+            // Check if the draggable already included to the newly added column
+            if(idArray.includes(cmt._id)){
+                // Make the array empty
+                idArray = [];
+            }else{
+                //If the newly added comment is not in the column then adde the comment inside the column 
+                // This happens only for the real time update for others who did not make the drag and drop
+
+                
+                let con = document.getElementById(`${parentID}`).querySelector(".card-comment") // Get the parent column of the comment
+                let cc = document.getElementById(`${cmt._id}`) //Get the comment
+
+                // Remove the comment from the column 
+                con.removeChild(cc)
+
+                // Make the array empty
+                idArray = [];
+
+                // Create a html element for the comment
+                let commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmt._id}>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    ${cmt.content}
+                                </p>
+                            </div>
+                        </div>   `
+
+                // Insert the html element to the comments under the coresponding column
+                newColumn.insertAdjacentHTML("beforeend", commentHtml);
+
+                
+    
+                
+            }
+        })
+
+        comments.forEach((container) => {
+            container.addEventListener("dragover", (e) => {
+                e.preventDefault();
+                const draggable = document.querySelector(".dragging");
+
+                if(parentColumn == undefined){
+                    parentColumn = draggable.parentNode.parentNode;
+                }
+                appendContainer = container;
+            });    
+        });
+
+
+      </script>
+ 

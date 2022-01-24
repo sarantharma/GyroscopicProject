@@ -1,0 +1,38 @@
+/* body {
+  background-color: rgb(37, 156, 195);
+} */
+div.mycolumn {
+  display: flex;
+  border: 3px solid green;
+}
+.flex-container {
+  display: flex;
+  flex-direction: row;
+}
+.flex-container > div {
+  width: 100%;
+  margin: 5px;
+  padding: 10px;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Dragging and Dropping */
+
+.draggable {
+  /* padding: 1rem; */
+  /* background-color: white;
+  border: 1px solid black; */
+  cursor: move;
+}
+
+.draggable.dragging {
+  opacity: 0.5;
+}
+
+.card-comment {
+  padding: 1em;
+  background-color: aqua;
+}

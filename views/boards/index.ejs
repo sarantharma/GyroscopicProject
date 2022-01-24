@@ -1,0 +1,18 @@
+<% layout('layouts/boilerplate') %>
+<h1>All Boards</h1>
+<div>
+  <a href="/boards/new">New Board</a>
+</div>
+<ul>
+  <%for(let board of boards){%>
+  <div class="card" style="width: 18rem">
+    <div class="card-body">
+      <h5 class="card-title"><%= board.name %></h5>
+      <h6 class="card-subtitle mb-2 text-muted"><%= board.date %></h6>
+      <p class="card-text"><%= board.description %></p>
+      <a href="boards/<%=board._id%>" class="card-link">View</a>
+      <a href="#" class="card-link">Manage</a>
+    </div>
+  </div>
+  <% } %>
+</ul>
