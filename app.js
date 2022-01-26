@@ -8,6 +8,7 @@ const methodOverride = require("method-override");
 const Board = require("./models/board");
 const Column = require("./models/column");
 const Comment = require("./models/comment");
+var User = require("./models/user");
 
 const morgan = require("morgan");
 const ejsMate = require("ejs-mate");
@@ -133,6 +134,10 @@ app.get("/boards/new", (req, res) => {
   res.render("boards/new");
 });
 
+app.get("/signup", (req, res) => {
+  res.render("signup");
+});
+
 app.post(
   "/boards",
   validateBoard,
@@ -153,6 +158,27 @@ app.post(
     res.redirect(`/boards/${board._id}`);
   })
 );
+
+app.post(
+  "/signup",
+  (req, res) => {
+    var username = req.body.username
+    var password = req.body.password
+    var email = req.body.email
+
+    const user = new User({username: username, password: password, email: email})
+    User.find({username: username}, function (err, docs) {
+      if(docs.length > 0) {
+        console.log("User already exists");
+      } 
+      else {
+        user.save();
+        console.log("User added")
+      }
+    })
+
+    res.redirect("signup");
+  });
 
 app.get(
   "/boards/:id",
