@@ -8,17 +8,21 @@
   </head>
   <body>
     <h1> Sign Up </h1>
-  
     <form id="signup-form" action="/signup" method="POST">
       <fieldset>
         <div>
           <label for="email">Email</label>
           <input type="email" name="email" id="email" placeholder="example@trentu.ca" required />
-          <span class="error hidden">That email address is invalid.</span>
+          <% if(error == "email") { %>
+          <span class="error hidden">That email address already in use.</span>
+          <% } %>
         </div>
         <div>
           <label for="username">Username</label>
           <input type="text" name="username" id="username" placeholder="username" pattern=".{3,15}" required title="Must be between 3 and 15 characters long"/>
+          <% if(error == "username") { %>
+            <span class="error hidden">That username already in use.</span>
+            <% } %>
         </div>
         <div>
           <label for="password">Password</label>

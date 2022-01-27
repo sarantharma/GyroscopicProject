@@ -134,8 +134,9 @@ app.get("/boards/new", (req, res) => {
   res.render("boards/new");
 });
 
+// Sign up page
 app.get("/signup", (req, res) => {
-  res.render("signup");
+  res.render("signup", {error: ""}); // render with no errors
 });
 
 app.post(
@@ -162,22 +163,41 @@ app.post(
 app.post(
   "/signup",
   (req, res) => {
+    // Get user input data from form
     var username = req.body.username
     var password = req.body.password
     var email = req.body.email
 
+    // Create new user object with form data
     const user = new User({username: username, password: password, email: email})
+    // Check database for user with the same username
     User.find({username: username}, function (err, docs) {
+      // If the username is already in use
       if(docs.length > 0) {
-        console.log("User already exists");
-      } 
+        // Log to console and notify user
+        console.log("User not added: username already in use");
+        res.render("signup", {error: "username"});
+      }
+      // If the username is not in use
       else {
-        user.save();
-        console.log("User added")
+        // Check database for user with the same email
+        User.find({email: email}, function (err, docs) {
+          // If the email is in use
+          if(docs.length > 0) {
+            // Log to console and notify user
+            console.log("User not added: email already in use");
+            res.render("signup", {error: "email"});
+          }
+          // If username and email not in use
+          else {
+            // Add user to database, log to console and redirect
+            user.save();
+            console.log("User added");
+            res.redirect("signup");
+          }
+        })
       }
     })
-
-    res.redirect("signup");
   });
 
 app.get(
