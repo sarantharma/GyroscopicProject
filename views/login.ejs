@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gyroscopic - Login</title>
+  </head>
+  <body>
+    <h1> Login </h1>
+    <form id="login-form" action="/login" method="POST">
+      <fieldset>
+        <div>
+          <label for="username">Username</label>
+          <input type="text" name="username" id="username" placeholder="username"/>
+          <% if(error == "true") { %>
+            <span class="error hidden">Username/password combination incorrect.</span>
+            <% } %>
+        </div>
+        <div>
+          <label for="password">Password</label>
+          <input type="password" name="password" id="password" placeholder="************"/>
+        </div>
+      </fieldset>
+      <button id="submit" name="submit" >Log in</button>
+    </form>  
+  </body>
+</html>
