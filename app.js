@@ -221,7 +221,7 @@ app.post(
             // Add user to database, log to console and redirect
             user.save();
             console.log("User added");
-            res.redirect("signup");
+            res.redirect("boards");
           }
         })
       }
