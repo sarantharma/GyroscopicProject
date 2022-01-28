@@ -139,6 +139,11 @@ app.get("/signup", (req, res) => {
   res.render("signup", {error: ""}); // render with no errors
 });
 
+// Login page
+app.get("/login", (req, res) => {
+  res.render("login", {error: ""}); // render with no errors
+});
+
 app.post(
   "/boards",
   validateBoard,
@@ -159,6 +164,29 @@ app.post(
     res.redirect(`/boards/${board._id}`);
   })
 );
+
+app.post(
+  "/login",
+  (req, res) => {
+    // Get username and password from form
+    var username = req.body.username
+    var password = req.body.password
+
+    // Find matching User from db
+    const user = User.find({username: username, password: password}, function (err, docs) {
+      // If user is found in the db
+      if(docs.length > 0) {
+        console.log("User found! To do: create session...");
+        // Redirect to home page
+        res.redirect("boards");
+      }
+      // If user not found
+      else {
+        console.log("User not found");
+        res.render("login", {error: "true"});
+      }
+    })
+  });
 
 app.post(
   "/signup",
