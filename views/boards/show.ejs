@@ -34,7 +34,13 @@
                                     <p class="card-text">
                                         <%=comment.content%> 
                                     </p>
+                                    <div class="like-dislike">
+                                        <img src="/img/like.svg" alt="like" style="height: 1em; width: 1em;">
+                                        <img src="/img/dislike.svg" alt="like" style="height: 1em; width: 1em;">
+                                        <img src="/img/comment.svg" alt="like" style="height: 1em; width: 1em;">
+                                    </div>
                                 </div>
+                                
                             </div>   
                             <% } %>
                     </div>
@@ -103,6 +109,11 @@
                                 <p class="card-text">
                                     ${cmt}
                                 </p>
+                                <div class="like-dislike">
+                                        <img src="/img/like.svg" alt="like" style="height: 1em; width: 1em;">
+                                        <img src="/img/dislike.svg" alt="like" style="height: 1em; width: 1em;">
+                                        <img src="/img/comment.svg" alt="like" style="height: 1em; width: 1em;">
+                                </div>
                             </div>
                         </div>   `
 
@@ -167,6 +178,11 @@
                                             <p class="card-text">
                                                 ${cmt.content}
                                             </p>
+                                            <div class="like-dislike">
+                                                <img src="/img/like.svg" alt="like" style="height: 1em; width: 1em;">
+                                                <img src="/img/dislike.svg" alt="like" style="height: 1em; width: 1em;">
+                                                <img src="/img/comment.svg" alt="like" style="height: 1em; width: 1em;">
+                                            </div>
                                         </div>
                                     </div>   `
                             newColumn.insertAdjacentHTML("beforeend", commentHtml);  
