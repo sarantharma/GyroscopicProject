@@ -67,6 +67,151 @@ div.mycolumn {
   font-size: 25px;
 }
 
+/*Ayaan CSS Changes*/
+/*Card background colour*/
+.bg-orange{
+  background-color: #E66F25;
+  transition: background-color ease-in-out .35s;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)
+}
+.bg-lite{
+  background-color: white;
+  transition: background-color ease-in-out .35s;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)
+}
+/*Card background colour change on hover*/
+.bg-orange:hover{
+  background-color: #343A40;
+}
+.bg-lite:hover{
+  background-color: #343A40;
+  color: white;
+}
+
+/*Footer css*/
+footer{
+  background-color: #343A40;
+  color: #E66F25;
+  width: auto;
+  height: auto;
+}
+footer .row{
+  border: 5px;
+}
+.ftrele{
+  color: white;
+  text-decoration: none;
+
+}
+.ftrele:hover{
+  color: #E66F25;
+  text-decoration: none;
+}
+.vl {
+  border-left: 4px solid #E66F25;
+  height: 80px;
+  position: absolute;
+  left: 30%;
+  margin-left: -1px;
+  top: 0;
+}
+footer .copyright{
+  text-align: center;
+  color: white;
+  font-size: small;
+}
+
+/*Product css*/
+.container {
+  max-width: 960px;  
+}
+/*
+ * Custom translucent site header
+ */
+
+ .site-header {
+  background-color: #343A40;
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+}
+.site-header a {
+  color: #E66F25;
+  transition: ease-in-out color .15s;
+  font-weight: .83em;
+  text-decoration: none;
+}
+.site-header a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+
+/*
+ * Dummy devices (replace them with your own or something else entirely!)
+ */
+
+.product-device {
+  position: absolute;
+  right: 10%;
+  bottom: -30%;
+  width: 300px;
+  height: 540px;
+  background-color: #333;
+  border-radius: 21px;
+  -webkit-transform: rotate(30deg);
+  transform: rotate(30deg);
+}
+
+.product-device::before {
+  position: absolute;
+  top: 10%;
+  right: 10px;
+  bottom: 10%;
+  left: 10px;
+  content: "";
+  background-color: rgba(255, 255, 255, .1);
+  border-radius: 5px;
+}
+
+.product-device-2 {
+  top: -25%;
+  right: auto;
+  bottom: 0;
+  left: 5%;
+  background-color: #e5e5e5;
+}
+
+
+
+/*
+ * Extra utilities
+ */
+
+.border-top { border-top: 1px solid #e5e5e5; }
+.border-bottom { border-bottom: 1px solid #e5e5e5; }
+
+.box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
+
+.flex-equal > * {
+  -ms-flex: 1;
+  -webkit-box-flex: 1;
+  flex: 1;
+}
+@media (min-width: 768px) {
+  .flex-md-equal > * {
+    -ms-flex: 1;
+    -webkit-box-flex: 1;
+    flex: 1;
+  }
+}
+
+.overflow-hidden { overflow: hidden; }
+
+
+
+/*--------Ayaan CSS changes (end)------*/
+
+
 .comment-textarea{
   margin: 12px;
   border-radius: 10px;

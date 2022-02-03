@@ -163,6 +163,11 @@ app.get("/login", (req, res) => {
   res.render("login", {error: ""}); // render with no errors
 });
 
+// Home page
+app.get("/home", (req, res) => {
+  res.render("home", {error: ""}); // render with no errors
+});
+
 // Logout
 app.get("/logout", (req, res) => {
     req.session.destroy();
