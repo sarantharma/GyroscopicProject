@@ -22,10 +22,11 @@ div.mycolumn {
 /* Dragging and Dropping */
 
 .draggable {
-  /* padding: 1rem; */
-  /* background-color: white;
-  border: 1px solid black; */
   cursor: move;
+  border-radius: 10px;
+  border:none;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+
 }
 
 .draggable.dragging {
@@ -34,9 +35,74 @@ div.mycolumn {
 
 .card-comment {
   padding: 1em;
-  background-color: aqua;
+  /* background-color: #ff009d57; */
+  height: 100%;
 }
 
 .like-dislike{
-  background-color: bisque;
+  /* background-color: bisque; */
+  margin: 2px;
+  display: flex;
+  justify-content: flex-end;
 }
+
+.like-dislike > img {
+  margin-right: 5px;
+}
+
+.column {
+  /* background-color: rgba(0, 0, 255, 0.164); */
+  border-radius: 10px;
+  width: 400px;
+  margin: 5px;
+  display: flex;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border:none;
+  background-color: rgba(238, 238, 238, 0.438);
+  text-align: center;  
+}
+
+.card-title{
+  margin: 10px;
+  font-size: 25px;
+}
+
+.comment-textarea{
+  margin: 12px;
+  border-radius: 10px;
+  max-width: 93%;
+  margin-bottom: 5px;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+
+.comment-button{
+  background-color: rgba(255, 115, 0, 0.712);
+  width: 93%;
+  margin: 12px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.comment-button:hover{
+  background-color: rgb(255, 115, 0);
+}
+
+.board-title{
+  text-align: center;
+  color: #E66F25
+}
+
+.board-description{
+  text-align: center;
+}
+.all-buttons{
+  display: flex;
+  padding: 1em;
+}
+
+.all-buttons *{
+  margin: 3px;
+}
+
