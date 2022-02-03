@@ -1,4 +1,7 @@
 const express = require("express");
+const expressSession = require("express-session");
+const parser = require("cookie-parser");
+var session;
 
 const app = express();
 const mongoose = require("mongoose");
@@ -8,13 +11,13 @@ const methodOverride = require("method-override");
 const Board = require("./models/board");
 const Column = require("./models/column");
 const Comment = require("./models/comment");
-var User = require("./models/user");
+const User = require("./models/user");
 
 const morgan = require("morgan");
 const ejsMate = require("ejs-mate");
 const catchAsync = require("./utils/catchAsync");
 const ExpressError = require("./utils/ExpressError");
-const Joi = require("Joi"); // For validations
+const Joi = require("joi"); // For validations
 
 // Real time (Socket.io)
 const http = require("http");
@@ -100,6 +103,16 @@ app.use(methodOverride("_method"));
 
 app.use(express.static(path.join(__dirname, "public")));
 
+// Express session
+app.use(expressSession({
+    saveUninitialized: false,
+    secret: "gyroscopicboard",
+    resave: false
+}));
+
+// Cookie parser
+app.use(parser());
+
 const validateBoard = (req, res, next) => {
   const boardSchema = Joi.object({
     board: Joi.object({
@@ -119,7 +132,13 @@ const validateBoard = (req, res, next) => {
 };
 
 app.get("/", (req, res) => {
-  res.render("home");
+    session = req.session;
+    if(session.username) {
+        res.render("home");
+    }
+    else {
+        res.redirect("login");
+    }
 });
 
 app.get(
@@ -142,6 +161,12 @@ app.get("/signup", (req, res) => {
 // Login page
 app.get("/login", (req, res) => {
   res.render("login", {error: ""}); // render with no errors
+});
+
+// Logout
+app.get("/logout", (req, res) => {
+    req.session.destroy();
+    res.redirect("login");
 });
 
 app.post(
@@ -169,14 +194,19 @@ app.post(
   "/login",
   (req, res) => {
     // Get username and password from form
-    var username = req.body.username
-    var password = req.body.password
+    const username = req.body.username
+    const password = req.body.password
 
     // Find matching User from db
     const user = User.find({username: username, password: password}, function (err, docs) {
       // If user is found in the db
       if(docs.length > 0) {
-        console.log("User found! To do: create session...");
+        console.log("User found!");
+        // Create session
+        session = req.session;
+        session.username = username;
+        console.log(req.session);
+
         // Redirect to home page
         res.redirect("boards");
       }
@@ -192,9 +222,9 @@ app.post(
   "/signup",
   (req, res) => {
     // Get user input data from form
-    var username = req.body.username
-    var password = req.body.password
-    var email = req.body.email
+    const username = req.body.username
+    const password = req.body.password
+    const email = req.body.email
 
     // Create new user object with form data
     const user = new User({username: username, password: password, email: email})
@@ -221,7 +251,14 @@ app.post(
             // Add user to database, log to console and redirect
             user.save();
             console.log("User added");
-            res.redirect("boards");
+
+              // Create session
+              session = req.session;
+              session.username = username;
+              console.log(req.session);
+
+              // Redirect to board page
+              res.redirect("boards");
           }
         })
       }
