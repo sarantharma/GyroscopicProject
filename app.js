@@ -69,12 +69,10 @@ io.on("connection", (socket) => {
 
   //Editing Comment
   socket.on("commentEdit", async (cmt, commentID) => {
-	console.log(cmt +""+ commentID);
     Comment.findOneAndUpdate({_id: commentID}, {$set: {content: cmt} }, function(error, result){
    	if(error){
    		console.log("Error Editing Comment");
    	}else{
-		console.log("Yes");
    		io.emit("commentEdit", cmt, commentID);
    	}
    },);
