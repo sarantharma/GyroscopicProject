@@ -67,16 +67,19 @@ io.on("connection", (socket) => {
     io.emit("drag comment", theComment, findNewColumn.id, parentColumnID);
   });
 
-  // Editing Comment
-  // socket.on("commentEdit", async (cmt, commentID) => {
-  //   Comment.findOneAndUpdate({_id: commentID}, {$set: {content: cmt} }, function(error, result){
-  // 	if(error){
-  // 		console.log("Error Editing Comment");
-  // 	}else{
-  // 		io.emit("commentEdit", cmt, commentID);
-  // 	}
-  // },);
-  // });
+  //Editing Comment
+  socket.on("commentEdit", async (cmt, commentID) => {
+	console.log(cmt +""+ commentID);
+    Comment.findOneAndUpdate({_id: commentID}, {$set: {content: cmt} }, function(error, result){
+   	if(error){
+   		console.log("Error Editing Comment");
+   	}else{
+		console.log("Yes");
+   		io.emit("commentEdit", cmt, commentID);
+   	}
+   },);
+   });
+   
 });
 
 mongoose.connect("mongodb://localhost:27017/gyroscopic_1", {

@@ -12,7 +12,7 @@
         <h5 class="card-title"><%= board.name %></h5>
         <h6 class="card-subtitle mb-2 text-muted"><%= board.date.toLocaleString("en-US") %></h6>
         <p class="card-text"><%= board.description %></p>
-        <a href="boards/<%=board._id%>"><button type="button" class="btn btn-primary btn-sm">View</button></a>
+        <a href="/boards/<%=board._id%>"><button type="button" class="btn btn-primary btn-sm">View</button></a>
       </div>
     </div>
     <% } %>

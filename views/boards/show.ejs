@@ -29,7 +29,7 @@
       <% for(let comment of column.comments){ %>
       <div class="card mb-2 draggable" draggable="true" id="<%=comment._id%>">
         <div class="card-body">
-          <p class="card-text"><%=comment.content%></p>
+          <p class="card-text comment-edit"><%=comment.content%></p>
           <div class="like-dislike">
             <img
               src="/img/like.svg"
@@ -89,7 +89,6 @@
   const dragStartEnd = () => {
     //  Treverse through all the draggable elements
     draggables = document.querySelectorAll(".draggable"); 
-    console.log("drag start end")
     draggables.forEach((draggable) => {
       // The start tof dragging
       draggable.addEventListener("dragstart", () => {
@@ -121,7 +120,6 @@
   };
 
   const dragSocket = () => {
-    console.log("drag socket")
     // Reveive real time update from the server side for drag and drop
     // Recevied comment, new column Id, parent column Id
     socket.on("drag comment", function (cmt, newColumnId, parentID) {
@@ -178,7 +176,7 @@
         newColumn.insertAdjacentHTML("beforeend", commentHtml);
         // location.reload()
         dragStartEnd();
-        dragSocket();
+        // dragSocket();
       }
     });
   };
@@ -190,7 +188,6 @@
         dragStartEnd();
         dragSocket();
         const draggable = document.querySelector(".dragging");
-        console.log("drag Over 2")
         if (parentColumn == undefined) {
           console.log(draggable);
           parentColumn = draggable.parentNode.parentNode;
@@ -222,7 +219,7 @@
         // Create an html element for newly created comment
         const commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmtID}>
                             <div class="card-body">
-                                <p class="card-text">
+                                <p class="card-text comment-edit">
                                     ${cmt}
                                 </p>
                                 <div class="like-dislike">
@@ -235,14 +232,54 @@
 
         // Insert the html element to the comments under the coresponding column
         comments[i].insertAdjacentHTML("beforeend", commentHtml);
-        dragStartEnd();
-        dragSocket();
+
+        // // ######################################################
+        // dragStartEnd();
+        // dragSocket();
         dragOver();
+        // ######################################################
       }
     }
   });
 
+  // ######################################################
+
   dragStartEnd();
   dragSocket();
   dragOver();
+  
+
+let commentEdit = document.getElementsByClassName("comment-edit");
+	console.log(commentEdit)
+	// Updating comment
+	for(let i = 0; i < commentEdit.length; i++){
+		
+		// Double clicking a Comment
+		commentEdit[i].addEventListener("dblclick", function (e) {
+			
+			let val = commentEdit[i].innerHTML;
+			commentEdit[i].innerHTML = "<form><input type=\"text\" value=\""+val+"\"></input></form>";
+			commentEdit[i].childNodes[0].childNodes[0].focus();
+			
+			// On Blur - Comment update
+			commentEdit[i].childNodes[0].childNodes[0].addEventListener("blur", function (e){
+				socket.emit("commentEdit", commentEdit[i].childNodes[0].childNodes[0].value, commentEdit[i].parentNode.parentNode.id);
+				commentEdit[i].innerHTML = "<p>"+commentEdit[i].childNodes[0].childNodes[0].value+"<\p>";
+			});
+			
+			// On Enter - Comment update
+			commentEdit[i].childNodes[0].addEventListener("submit", function (e){
+				socket.emit("commentEdit", commentEdit[i].childNodes[0].childNodes[0].value, commentEdit[i].parentNode.parentNode.id);
+				e.preventDefault();
+				commentEdit[i].innerHTML = "<p>"+commentEdit[i].childNodes[0].childNodes[0].value+"<\p>";
+			});	
+		});
+	}
+		
+	// when someone else updates a comment
+	socket.on("commentEdit", function (cmt, commentID) {
+		let commentFount = document.getElementById(commentID);
+		commentFount.childNodes[1].childNodes[1].innerHTML = cmt;
+	});
+	
 </script>
