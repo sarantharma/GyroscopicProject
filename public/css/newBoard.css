@@ -62,7 +62,7 @@ div.mycolumn {
   text-align: center;  
 }
 
-.card-title{
+.column >.card-title{
   margin: 10px;
   font-size: 25px;
 }
@@ -242,6 +242,11 @@ footer .copyright{
 .board-description{
   text-align: center;
 }
+
+.board-date{
+  text-align: center;
+}
+
 .all-buttons{
   display: flex;
   padding: 1em;
@@ -251,3 +256,23 @@ footer .copyright{
   margin: 3px;
 }
 
+
+/* Index page styling */
+
+.new-board_button{
+  text-align: center;  
+}
+
+/* Float four columns side by side */
+.board {
+  margin: 20px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+}
+
+.board:hover{
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
+.boards-container .card-title{
+  color: #E66F25;
+}

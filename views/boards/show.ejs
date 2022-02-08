@@ -2,6 +2,7 @@
 
 <h1 class="board-title"><%= board.name %></h1>
 <p class="board-description"><%= board.description %></p>
+<p class="board-date text-muted"><%= board.date.toLocaleString("en-US") %></p>
 
 <div class="d-flex justify-content-evenly">
   <% for(let column of board.columns){ %>
@@ -84,6 +85,123 @@
 
   let draggables = document.querySelectorAll(".draggable"); // Single comments (each comment is draggable)
 
+  // ==Functions =======================================
+  const dragStartEnd = () => {
+    //  Treverse through all the draggable elements
+    draggables = document.querySelectorAll(".draggable"); 
+    console.log("drag start end")
+    draggables.forEach((draggable) => {
+      // The start tof dragging
+      draggable.addEventListener("dragstart", () => {
+        draggable.classList.add("dragging"); //Add a class called "dragging" to the dragging element
+        console.log("drag start");
+        console.log(draggable);
+      });
+
+      // The end of dragging
+      draggable.addEventListener("dragend", () => {
+        const draggable = document.querySelector(".dragging"); //select the dragging element
+        currentDragging = draggable; //Set it to a global variable
+        appendContainer.appendChild(draggable); //Append the draggable element to the container (correspoding column)
+        draggable.classList.remove("dragging"); //Remove the dragging class from the dragging element (after append)
+
+        newColumn = draggable.parentNode.parentNode; //Set the newly added column into a global variable
+
+        // Send the dragged and dropped element to the server side (Real time)
+        socket.emit(
+          "drag comment",
+          draggable.id,
+          parentColumn.id,
+          newColumn.id
+        );
+
+        parentColumn = undefined; //Set the global variable undifined
+      });
+    });
+  };
+
+  const dragSocket = () => {
+    console.log("drag socket")
+    // Reveive real time update from the server side for drag and drop
+    // Recevied comment, new column Id, parent column Id
+    socket.on("drag comment", function (cmt, newColumnId, parentID) {
+      const comment = document.getElementById(`${cmt._id}`); //Get the comment
+      const checkComment = comment.parentNode;
+      const newColumn = document
+        .getElementById(`${newColumnId}`)
+        .querySelector(".card-comment"); // Get the newly dropped column
+
+      const draggables = newColumn.querySelectorAll(".draggable"); // Get all the draggable element from the newly added column
+
+      // temporary id array for draggables
+      let idArray = [];
+
+      // push all the draggable id to the temporary array
+      draggables.forEach((draggable) => {
+        idArray.push(draggable.id);
+      });
+
+      // Check if the draggable already included to the newly added column
+      if (idArray.includes(cmt._id)) {
+        // Make the array empty
+        idArray = [];
+      } else {
+        //If the newly added comment is not in the column then adde the comment inside the column
+        // This happens only for the real time update for others who did not make the drag and drop
+
+        let con = document
+          .getElementById(`${parentID}`)
+          .querySelector(".card-comment"); // Get the parent column of the comment
+        let cc = document.getElementById(`${cmt._id}`); //Get the comment
+
+        // Remove the comment from the column
+        con.removeChild(cc);
+
+        // Make the array empty
+        idArray = [];
+
+        // Create a html element for the comment
+        let commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmt._id}>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    ${cmt.content}
+                                </p>
+                                    <div class="like-dislike">
+                                        <img src="/img/like.svg" alt="like" style="height: 1em; width: 1em;">
+                                        <img src="/img/dislike.svg" alt="dislike" style="height: 1em; width: 1em;">
+                                        <img src="/img/comment.svg" alt="comment" style="height: 1em; width: 1em;">
+                                    </div>
+                            </div>
+                        </div>   `;
+
+        // Insert the html element to the comments under the coresponding column
+        newColumn.insertAdjacentHTML("beforeend", commentHtml);
+        // location.reload()
+        dragStartEnd();
+        dragSocket();
+      }
+    });
+  };
+
+  const dragOver = () => {
+    comments.forEach((container) => {
+      container.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        dragStartEnd();
+        dragSocket();
+        const draggable = document.querySelector(".dragging");
+        console.log("drag Over 2")
+        if (parentColumn == undefined) {
+          console.log(draggable);
+          parentColumn = draggable.parentNode.parentNode;
+        }
+        appendContainer = container;
+      });
+    });
+  };
+
+  // == End Functions===================================
+
   //  Give submit to all the forms in a board
   for (let i = 0; i < form.length; i++) {
     form[i].addEventListener("submit", function (e) {
@@ -117,187 +235,14 @@
 
         // Insert the html element to the comments under the coresponding column
         comments[i].insertAdjacentHTML("beforeend", commentHtml);
-
-        // // ######################################################
-
-        draggables = document.querySelectorAll(".draggable");
-
-        draggables.forEach((draggable) => {
-          draggable.addEventListener("dragstart", () => {
-            draggable.classList.add("dragging");
-          });
-
-          draggable.addEventListener("dragend", () => {
-            const draggable = document.querySelector(".dragging");
-            currentDragging = draggable;
-            appendContainer.appendChild(draggable);
-            draggable.classList.remove("dragging");
-
-            newColumn = draggable.parentNode.parentNode;
-
-            socket.emit(
-              "drag comment",
-              draggable.id,
-              parentColumn.id,
-              newColumn.id
-            );
-
-            parentColumn = undefined;
-          });
-        });
-
-        socket.on("drag comment", function (cmt, columnID, parentID) {
-          const comment = document.getElementById(`${cmt._id}`);
-          const checkComment = comment.parentNode;
-          const newColumn = document
-            .getElementById(`${columnID}`)
-            .querySelector(".card-comment");
-
-          const draggables = newColumn.querySelectorAll(".draggable");
-
-          let idArray = [];
-
-          draggables.forEach((draggable) => {
-            idArray.push(draggable.id);
-          });
-
-          if (idArray.includes(cmt._id)) {
-            idArray = [];
-          } else {
-            let con = document
-              .getElementById(`${parentID}`)
-              .querySelector(".card-comment");
-            let cc = document.getElementById(`${cmt._id}`);
-
-            // console.log("Con " ,con);
-            // console.log("Cc " ,cc);
-
-            con.removeChild(cc);
-
-            idArray = [];
-            let commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmt._id}>
-                                        <div class="card-body">
-                                            <p class="card-text">
-                                                ${cmt.content}
-                                            </p>
-                                            <div class="like-dislike">
-                                                <img src="/img/like.svg" alt="like" style="height: 1em; width: 1em;">
-                                                <img src="/img/dislike.svg" alt="dislike" style="height: 1em; width: 1em;">
-                                                <img src="/img/comment.svg" alt="comment" style="height: 1em; width: 1em;">
-                                            </div>
-                                        </div>
-                                    </div>   `;
-            newColumn.insertAdjacentHTML("beforeend", commentHtml);
-          }
-        });
-
-        comments.forEach((container) => {
-          container.addEventListener("dragover", (e) => {
-            e.preventDefault();
-            const draggable = document.querySelector(".dragging");
-            // console.log(draggable);
-            if (parentColumn == undefined) {
-              parentColumn = draggable.parentNode.parentNode;
-            }
-            appendContainer = container;
-          });
-        });
-
-        // ######################################################
+        dragStartEnd();
+        dragSocket();
+        dragOver();
       }
     }
   });
 
-  // ######################################################
-
-  //  Treverse through all the draggable elements
-  draggables.forEach((draggable) => {
-    // The start tof dragging
-    draggable.addEventListener("dragstart", () => {
-      draggable.classList.add("dragging"); //Add a class called "dragging" to the dragging element
-    });
-
-    // The end of dragging
-    draggable.addEventListener("dragend", () => {
-      const draggable = document.querySelector(".dragging"); //select the dragging element
-      currentDragging = draggable; //Set it to a global variable
-      appendContainer.appendChild(draggable); //Append the draggable element to the container (correspoding column)
-      draggable.classList.remove("dragging"); //Remove the dragging class from the dragging element (after append)
-
-      newColumn = draggable.parentNode.parentNode; //Set the newly added column into a global variable
-
-      // Send the dragged and dropped element to the server side (Real time)
-      socket.emit("drag comment", draggable.id, parentColumn.id, newColumn.id);
-
-      parentColumn = undefined; //Set the global variable undifined
-    });
-  });
-
-  // Reveive real time update from the server side for drag and drop
-  // Recevied comment, new column Id, parent column Id
-  socket.on("drag comment", function (cmt, newColumnId, parentID) {
-    const comment = document.getElementById(`${cmt._id}`); //Get the comment
-    const checkComment = comment.parentNode;
-    const newColumn = document
-      .getElementById(`${newColumnId}`)
-      .querySelector(".card-comment"); // Get the newly dropped column
-    const draggables = newColumn.querySelectorAll(".draggable"); // Get all the draggable element from the newly added column
-
-    // temporary id array for draggables
-    let idArray = [];
-
-    // push all the draggable id to the temporary array
-    draggables.forEach((draggable) => {
-      idArray.push(draggable.id);
-    });
-
-    // Check if the draggable already included to the newly added column
-    if (idArray.includes(cmt._id)) {
-      // Make the array empty
-      idArray = [];
-    } else {
-      //If the newly added comment is not in the column then adde the comment inside the column
-      // This happens only for the real time update for others who did not make the drag and drop
-
-      let con = document
-        .getElementById(`${parentID}`)
-        .querySelector(".card-comment"); // Get the parent column of the comment
-      let cc = document.getElementById(`${cmt._id}`); //Get the comment
-
-      // Remove the comment from the column
-      con.removeChild(cc);
-
-      // Make the array empty
-      idArray = [];
-
-      // Create a html element for the comment
-      let commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmt._id}>
-                            <div class="card-body">
-                                <p class="card-text">
-                                    ${cmt.content}
-                                </p>
-                                    <div class="like-dislike">
-                                        <img src="/img/like.svg" alt="like" style="height: 1em; width: 1em;">
-                                        <img src="/img/dislike.svg" alt="dislike" style="height: 1em; width: 1em;">
-                                        <img src="/img/comment.svg" alt="comment" style="height: 1em; width: 1em;">
-                                    </div>
-                            </div>
-                        </div>   `;
-
-      // Insert the html element to the comments under the coresponding column
-      newColumn.insertAdjacentHTML("beforeend", commentHtml);
-    }
-  });
-
-  comments.forEach((container) => {
-    container.addEventListener("dragover", (e) => {
-      e.preventDefault();
-      const draggable = document.querySelector(".dragging");
-
-      if (parentColumn == undefined) {
-        parentColumn = draggable.parentNode.parentNode;
-      }
-      appendContainer = container;
-    });
-  });
+  dragStartEnd();
+  dragSocket();
+  dragOver();
 </script>

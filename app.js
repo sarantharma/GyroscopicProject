@@ -178,7 +178,8 @@ app.post(
   "/boards",
   validateBoard,
   catchAsync(async (req, res) => {
-    const board = new Board(req.body.board);
+    const dateNow = new Date()
+    const board = new Board({...req.body.board, date:dateNow});
     const x = await board.save();
     const newBoard = await Board.findById(x._id);
 

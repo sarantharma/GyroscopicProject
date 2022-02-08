@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const BoardSchema = new Schema({
   name: String,
-  date: String,
+  date: { type : Date, default: Date.now },
   description: String,
   columntype: String,
   columns: [
