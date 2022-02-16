@@ -93,6 +93,7 @@ io.on("connection", (socket) => {
     const deletedComemnt = await Comment.findByIdAndDelete(cmtID);
     io.emit("remove comment", cmtID)
   })
+  
 });
 
 mongoose.connect("mongodb://localhost:27017/gyroscopic_1", {
