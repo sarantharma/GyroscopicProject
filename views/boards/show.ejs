@@ -90,30 +90,33 @@
   const form = document.getElementsByClassName("comment-form"); // Comment form to create a comment
   const input = document.getElementsByClassName("comment-textarea"); // Text area to type a comment
   const comments = document.querySelectorAll(".card-comment"); // All comments
-  const removes = document.querySelectorAll(".remove-comment");
-
-  console.log(removes);
+  let removes = document.querySelectorAll(".remove-comment");
 
   let draggables = document.querySelectorAll(".draggable"); // Single comments (each comment is draggable)
 
-  console.log(comments);
-  comments.forEach((comment) => {
-    console.log(comment.offsetParent.id);
-  });
-
-  removes.forEach((remove) => {
-    remove.addEventListener("click", (e) => {
-      console.log(e.target.offsetParent.id);
-      socket.emit("remove comment", e.target.offsetParent.id);
-    });
-  });
-
-  socket.on("remove comment", (cmtID) => {
-    const deleteComment = document.getElementById(`${cmtID}`)
-    deleteComment.remove();
-  });
-
   // ==Functions =======================================
+  const deleteComment = () => {
+    draggables = document.querySelectorAll(".card-comment"); 
+    removes = document.querySelectorAll(".remove-comment");
+    draggables.forEach((comment) => {
+    });
+
+    removes.forEach((remove) => {
+      remove.addEventListener("click", (e) => {
+        console.log(e.target.offsetParent.id);
+        socket.emit("remove comment", e.target.offsetParent.id);
+      });
+    });
+
+    socket.on("remove comment", (cmtID) => {
+      const deleteComment = document.getElementById(`${cmtID}`);
+      if(deleteComment){
+
+        deleteComment.remove();
+      }
+    });
+  };
+
   const dragStartEnd = () => {
     //  Treverse through all the draggable elements
     draggables = document.querySelectorAll(".draggable");
@@ -189,6 +192,14 @@
         // Create a html element for the comment
         let commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmt._id}>
                             <div class="card-body">
+                              <div class="delete-comment">
+                                <img
+                                  class="remove-comment"
+                                  src="/img/xmark.svg"
+                                  alt="like"
+                                  style="height: 1em; width: 1em"
+                                />
+                              </div>
                                 <p class="card-text comment-edit">
                                     ${cmt.content}
                                 </p>
@@ -204,7 +215,7 @@
         newColumn.insertAdjacentHTML("beforeend", commentHtml);
         // location.reload()
         dragStartEnd();
-		addCommentEdit();
+        addCommentEdit();
         // dragSocket();
       }
     });
@@ -227,40 +238,52 @@
   };
 
   const addCommentEdit = () => {
-	let commentEdit = document.getElementsByClassName("comment-edit");
-	  
-	// Updating comment
-	for(let i = 0; i < commentEdit.length; i++){
-		
-		// Double clicking a Comment
-		commentEdit[i].addEventListener("dblclick", function (e) {
-			
-			let commentTextBox = e.path[0];
-			
-			let val = commentTextBox.textContent;
-			val = val.trim();
-			
-			commentTextBox.innerHTML = "<form><input type=\"text\" value=\""+val+"\"></input></form>";
-			commentTextBox.childNodes[0].childNodes[0].focus();
-			
-			// On Blur - Comment update
-			commentTextBox.childNodes[0].childNodes[0].addEventListener("blur", function (e){
-				socket.emit("commentEdit", commentTextBox.childNodes[0].childNodes[0].value, commentTextBox.parentNode.parentNode.id);
-				commentTextBox.innerHTML = "<p>"+commentTextBox.childNodes[0].childNodes[0].value+"<\p>";
-			});
-			
-			// On Enter - Comment update
-			commentTextBox.childNodes[0].addEventListener("submit", function (e){
-				socket.emit("commentEdit", commentTextBox.childNodes[0].childNodes[0].value, commentTextBox.parentNode.parentNode.id);
-				e.preventDefault();
-			//	commentTextBox.innerHTML = "<p>"+commentTextBox.childNodes[0].childNodes[0].value+"<\p>";
-			});	
-		});
-	}
-  }
-  
+    let commentEdit = document.getElementsByClassName("comment-edit");
+
+    // Updating comment
+    for (let i = 0; i < commentEdit.length; i++) {
+      // Double clicking a Comment
+      commentEdit[i].addEventListener("dblclick", function (e) {
+        let commentTextBox = e.path[0];
+
+        let val = commentTextBox.textContent;
+        val = val.trim();
+
+        commentTextBox.innerHTML =
+          '<form><input type="text" value="' + val + '"></input></form>';
+        commentTextBox.childNodes[0].childNodes[0].focus();
+
+        // On Blur - Comment update
+        commentTextBox.childNodes[0].childNodes[0].addEventListener(
+          "blur",
+          function (e) {
+            socket.emit(
+              "commentEdit",
+              commentTextBox.childNodes[0].childNodes[0].value,
+              commentTextBox.parentNode.parentNode.id
+            );
+            commentTextBox.innerHTML =
+              "<p>" + commentTextBox.childNodes[0].childNodes[0].value + "<\p>";
+          }
+        );
+
+        // On Enter - Comment update
+        commentTextBox.childNodes[0].addEventListener("submit", function (e) {
+          socket.emit(
+            "commentEdit",
+            commentTextBox.childNodes[0].childNodes[0].value,
+            commentTextBox.parentNode.parentNode.id
+          );
+          e.preventDefault();
+          //	commentTextBox.innerHTML = "<p>"+commentTextBox.childNodes[0].childNodes[0].value+"<\p>";
+        });
+      });
+    }
+  };
+
   // == End Functions===================================
 
+  deleteComment();
   //  Give submit to all the forms in a board
   for (let i = 0; i < form.length; i++) {
     form[i].addEventListener("submit", function (e) {
@@ -281,6 +304,14 @@
         // Create an html element for newly created comment
         const commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmtID}>
                             <div class="card-body">
+                              <div class="delete-comment">
+                                <img
+                                  class="remove-comment"
+                                  src="/img/xmark.svg"
+                                  alt="like"
+                                  style="height: 1em; width: 1em"
+                                />
+                              </div>
                                 <p class="card-text comment-edit">
                                     ${cmt}
                                 </p>
@@ -294,10 +325,11 @@
 
         // Insert the html element to the comments under the coresponding column
         comments[i].insertAdjacentHTML("beforeend", commentHtml);
-
+        deleteComment();
         // // ######################################################
         // dragStartEnd();
         // dragSocket();
+
         dragOver();
         // ######################################################
       }
@@ -310,11 +342,10 @@
   dragSocket();
   dragOver();
   addCommentEdit();
-		
-	// when someone else updates a comment
-	socket.on("commentEdit", function (cmt, commentID) {
-		let commentFount = document.getElementById(commentID);
-		commentFount.childNodes[1].childNodes[1].textContent = cmt;
-	});
-	
+
+  // when someone else updates a comment
+  socket.on("commentEdit", function (cmt, commentID) {
+    let commentFount = document.getElementById(commentID);
+    commentFount.childNodes[1].childNodes[1].textContent = cmt;
+  });
 </script>
