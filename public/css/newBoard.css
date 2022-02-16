@@ -276,3 +276,12 @@ footer .copyright{
 .boards-container .card-title{
   color: #E66F25;
 }
+
+.delete-comment{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.remove-comment{
+  cursor: pointer;
+}

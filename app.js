@@ -34,6 +34,8 @@ io.on("connection", (socket) => {
     console.log("User disconnected");
   });
 
+  // ==================== Real Time ====================
+  //create new comment
   socket.on("board comment", async (cmt, columnID) => {
     // console.log("message: ", cmt, columnID);
     // console.log(columnID);
@@ -49,6 +51,7 @@ io.on("connection", (socket) => {
     io.emit("board comment", cmt, newComment.id, columnID);
   });
 
+  // drag and drop comment
   socket.on("drag comment", async (cmtID, parentColumnID, newColumnID) => {
     // const findParentColumn = await Column.findById(parentColumnID);
     // console.log("Comment ID ", cmtID);
@@ -69,17 +72,27 @@ io.on("connection", (socket) => {
 
   //Editing Comment
   socket.on("commentEdit", async (cmt, commentID) => {
-	console.log(cmt +""+ commentID);
-    Comment.findOneAndUpdate({_id: commentID}, {$set: {content: cmt} }, function(error, result){
-   	if(error){
-   		console.log("Error Editing Comment");
-   	}else{
-		console.log("Yes");
-   		io.emit("commentEdit", cmt, commentID);
-   	}
-   },);
-   });
-   
+    console.log(cmt + "" + commentID);
+    Comment.findOneAndUpdate(
+      { _id: commentID },
+      { $set: { content: cmt } },
+      function (error, result) {
+        if (error) {
+          console.log("Error Editing Comment");
+        } else {
+          console.log("Yes");
+          io.emit("commentEdit", cmt, commentID);
+        }
+      }
+    );
+  });
+
+
+  // delete a comment
+  socket.on("remove comment", async(cmtID) => {
+    const deletedComemnt = await Comment.findByIdAndDelete(cmtID);
+    io.emit("remove comment", cmtID)
+  })
 });
 
 mongoose.connect("mongodb://localhost:27017/gyroscopic_1", {
@@ -107,11 +120,13 @@ app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 
 // Express session
-app.use(expressSession({
+app.use(
+  expressSession({
     saveUninitialized: false,
     secret: "gyroscopicboard",
-    resave: false
-}));
+    resave: false,
+  })
+);
 
 // Cookie parser
 app.use(parser());
@@ -135,13 +150,12 @@ const validateBoard = (req, res, next) => {
 };
 
 app.get("/", (req, res) => {
-    session = req.session;
-    if(session.username) {
-        res.render("home");
-    }
-    else {
-        res.redirect("login");
-    }
+  session = req.session;
+  if (session.username) {
+    res.render("home");
+  } else {
+    res.redirect("login");
+  }
 });
 
 app.get(
@@ -158,31 +172,31 @@ app.get("/boards/new", (req, res) => {
 
 // Sign up page
 app.get("/signup", (req, res) => {
-  res.render("signup", {error: ""}); // render with no errors
+  res.render("signup", { error: "" }); // render with no errors
 });
 
 // Login page
 app.get("/login", (req, res) => {
-  res.render("login", {error: ""}); // render with no errors
+  res.render("login", { error: "" }); // render with no errors
 });
 
 // Home page
 app.get("/home", (req, res) => {
-  res.render("home", {error: ""}); // render with no errors
+  res.render("home", { error: "" }); // render with no errors
 });
 
 // Logout
 app.get("/logout", (req, res) => {
-    req.session.destroy();
-    res.redirect("login");
+  req.session.destroy();
+  res.redirect("login");
 });
 
 app.post(
   "/boards",
   validateBoard,
   catchAsync(async (req, res) => {
-    const dateNow = new Date()
-    const board = new Board({...req.body.board, date:dateNow});
+    const dateNow = new Date();
+    const board = new Board({ ...req.body.board, date: dateNow });
     const x = await board.save();
     const newBoard = await Board.findById(x._id);
 
@@ -199,17 +213,17 @@ app.post(
   })
 );
 
-app.post(
-  "/login",
-  (req, res) => {
-    // Get username and password from form
-    const username = req.body.username
-    const password = req.body.password
+app.post("/login", (req, res) => {
+  // Get username and password from form
+  const username = req.body.username;
+  const password = req.body.password;
 
-    // Find matching User from db
-    const user = User.find({username: username, password: password}, function (err, docs) {
+  // Find matching User from db
+  const user = User.find(
+    { username: username, password: password },
+    function (err, docs) {
       // If user is found in the db
-      if(docs.length > 0) {
+      if (docs.length > 0) {
         console.log("User found!");
         // Create session
         session = req.session;
@@ -222,57 +236,60 @@ app.post(
       // If user not found
       else {
         console.log("User not found");
-        res.render("login", {error: "true"});
+        res.render("login", { error: "true" });
       }
-    })
+    }
+  );
+});
+
+app.post("/signup", (req, res) => {
+  // Get user input data from form
+  const username = req.body.username;
+  const password = req.body.password;
+  const email = req.body.email;
+
+  // Create new user object with form data
+  const user = new User({
+    username: username,
+    password: password,
+    email: email,
   });
+  // Check database for user with the same username
+  User.find({ username: username }, function (err, docs) {
+    // If the username is already in use
+    if (docs.length > 0) {
+      // Log to console and notify user
+      console.log("User not added: username already in use");
+      res.render("signup", { error: "username" });
+    }
+    // If the username is not in use
+    else {
+      // Check database for user with the same email
+      User.find({ email: email }, function (err, docs) {
+        // If the email is in use
+        if (docs.length > 0) {
+          // Log to console and notify user
+          console.log("User not added: email already in use");
+          res.render("signup", { error: "email" });
+        }
+        // If username and email not in use
+        else {
+          // Add user to database, log to console and redirect
+          user.save();
+          console.log("User added");
 
-app.post(
-  "/signup",
-  (req, res) => {
-    // Get user input data from form
-    const username = req.body.username
-    const password = req.body.password
-    const email = req.body.email
+          // Create session
+          session = req.session;
+          session.username = username;
+          console.log(req.session);
 
-    // Create new user object with form data
-    const user = new User({username: username, password: password, email: email})
-    // Check database for user with the same username
-    User.find({username: username}, function (err, docs) {
-      // If the username is already in use
-      if(docs.length > 0) {
-        // Log to console and notify user
-        console.log("User not added: username already in use");
-        res.render("signup", {error: "username"});
-      }
-      // If the username is not in use
-      else {
-        // Check database for user with the same email
-        User.find({email: email}, function (err, docs) {
-          // If the email is in use
-          if(docs.length > 0) {
-            // Log to console and notify user
-            console.log("User not added: email already in use");
-            res.render("signup", {error: "email"});
-          }
-          // If username and email not in use
-          else {
-            // Add user to database, log to console and redirect
-            user.save();
-            console.log("User added");
-
-              // Create session
-              session = req.session;
-              session.username = username;
-              console.log(req.session);
-
-              // Redirect to board page
-              res.redirect("boards");
-          }
-        })
-      }
-    })
+          // Redirect to board page
+          res.redirect("boards");
+        }
+      });
+    }
   });
+});
 
 app.get(
   "/boards/:id",
@@ -300,10 +317,14 @@ app.get(
 
 app.put(
   "/boards/:id",
-  validateBoard,
   catchAsync(async (req, res) => {
     const { id } = req.params;
-    const board = await Board.findByIdAndUpdate(id, { ...req.body.board });
+    const boardBeforeUpdate = await Board.findById(id);
+    const b = { ...boardBeforeUpdate._doc, ...req.body.board };
+    const board = await Board.findByIdAndUpdate(id, {
+      ...boardBeforeUpdate._doc,
+      ...req.body.board,
+    });
     res.redirect(`/boards/${board._id}`);
   })
 );

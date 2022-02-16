@@ -29,6 +29,14 @@
       <% for(let comment of column.comments){ %>
       <div class="card mb-2 draggable" draggable="true" id="<%=comment._id%>">
         <div class="card-body">
+          <div class="delete-comment">
+            <img
+              class="remove-comment"
+              src="/img/xmark.svg"
+              alt="like"
+              style="height: 1em; width: 1em"
+            />
+          </div>
           <p class="card-text comment-edit"><%=comment.content%></p>
           <div class="like-dislike">
             <img
@@ -82,13 +90,33 @@
   const form = document.getElementsByClassName("comment-form"); // Comment form to create a comment
   const input = document.getElementsByClassName("comment-textarea"); // Text area to type a comment
   const comments = document.querySelectorAll(".card-comment"); // All comments
+  const removes = document.querySelectorAll(".remove-comment");
+
+  console.log(removes);
 
   let draggables = document.querySelectorAll(".draggable"); // Single comments (each comment is draggable)
+
+  console.log(comments);
+  comments.forEach((comment) => {
+    console.log(comment.offsetParent.id);
+  });
+
+  removes.forEach((remove) => {
+    remove.addEventListener("click", (e) => {
+      console.log(e.target.offsetParent.id);
+      socket.emit("remove comment", e.target.offsetParent.id);
+    });
+  });
+
+  socket.on("remove comment", (cmtID) => {
+    const deleteComment = document.getElementById(`${cmtID}`)
+    deleteComment.remove();
+  });
 
   // ==Functions =======================================
   const dragStartEnd = () => {
     //  Treverse through all the draggable elements
-    draggables = document.querySelectorAll(".draggable"); 
+    draggables = document.querySelectorAll(".draggable");
     draggables.forEach((draggable) => {
       // The start tof dragging
       draggable.addEventListener("dragstart", () => {
@@ -247,39 +275,48 @@
   dragStartEnd();
   dragSocket();
   dragOver();
-  
 
-let commentEdit = document.getElementsByClassName("comment-edit");
-	console.log(commentEdit)
-	// Updating comment
-	for(let i = 0; i < commentEdit.length; i++){
-		
-		// Double clicking a Comment
-		commentEdit[i].addEventListener("dblclick", function (e) {
-			
-			let val = commentEdit[i].innerHTML;
-			commentEdit[i].innerHTML = "<form><input type=\"text\" value=\""+val+"\"></input></form>";
-			commentEdit[i].childNodes[0].childNodes[0].focus();
-			
-			// On Blur - Comment update
-			commentEdit[i].childNodes[0].childNodes[0].addEventListener("blur", function (e){
-				socket.emit("commentEdit", commentEdit[i].childNodes[0].childNodes[0].value, commentEdit[i].parentNode.parentNode.id);
-				commentEdit[i].innerHTML = "<p>"+commentEdit[i].childNodes[0].childNodes[0].value+"<\p>";
-			});
-			
-			// On Enter - Comment update
-			commentEdit[i].childNodes[0].addEventListener("submit", function (e){
-				socket.emit("commentEdit", commentEdit[i].childNodes[0].childNodes[0].value, commentEdit[i].parentNode.parentNode.id);
-				e.preventDefault();
-				commentEdit[i].innerHTML = "<p>"+commentEdit[i].childNodes[0].childNodes[0].value+"<\p>";
-			});	
-		});
-	}
-		
-	// when someone else updates a comment
-	socket.on("commentEdit", function (cmt, commentID) {
-		let commentFount = document.getElementById(commentID);
-		commentFount.childNodes[1].childNodes[1].innerHTML = cmt;
-	});
-	
+  let commentEdit = document.getElementsByClassName("comment-edit");
+  // Updating comment
+  for (let i = 0; i < commentEdit.length; i++) {
+    // Double clicking a Comment
+    commentEdit[i].addEventListener("dblclick", function (e) {
+      let val = commentEdit[i].innerHTML;
+      commentEdit[i].innerHTML =
+        '<form><input type="text" value="' + val + '"></input></form>';
+      commentEdit[i].childNodes[0].childNodes[0].focus();
+
+      // On Blur - Comment update
+      commentEdit[i].childNodes[0].childNodes[0].addEventListener(
+        "blur",
+        function (e) {
+          socket.emit(
+            "commentEdit",
+            commentEdit[i].childNodes[0].childNodes[0].value,
+            commentEdit[i].parentNode.parentNode.id
+          );
+          commentEdit[i].innerHTML =
+            "<p>" + commentEdit[i].childNodes[0].childNodes[0].value + "<\p>";
+        }
+      );
+
+      // On Enter - Comment update
+      commentEdit[i].childNodes[0].addEventListener("submit", function (e) {
+        socket.emit(
+          "commentEdit",
+          commentEdit[i].childNodes[0].childNodes[0].value,
+          commentEdit[i].parentNode.parentNode.id
+        );
+        e.preventDefault();
+        commentEdit[i].innerHTML =
+          "<p>" + commentEdit[i].childNodes[0].childNodes[0].value + "<\p>";
+      });
+    });
+  }
+
+  // when someone else updates a comment
+  socket.on("commentEdit", function (cmt, commentID) {
+    let commentFount = document.getElementById(commentID);
+    commentFount.childNodes[1].childNodes[1].innerHTML = cmt;
+  });
 </script>
