@@ -3,6 +3,7 @@ const expressSession = require("express-session");
 const parser = require("cookie-parser");
 var session;
 
+const bcrypt = require("bcrypt");
 const app = express();
 const mongoose = require("mongoose");
 const path = require("path");
@@ -220,19 +221,31 @@ app.post("/login", (req, res) => {
   const password = req.body.password;
 
   // Find matching User from db
-  const user = User.find(
-    { username: username, password: password },
+  User.find(
+    { username: username },
     function (err, docs) {
       // If user is found in the db
       if (docs.length > 0) {
         console.log("User found!");
-        // Create session
-        session = req.session;
-        session.username = username;
-        console.log(req.session);
 
-        // Redirect to home page
-        res.redirect("boards");
+        // Compare passwords with fetched user using bcrypt
+        bcrypt.compare(password, docs[0].password, function (err, result) {
+          // If passwords match, log in
+          if(result) {
+            // Create session
+            session = req.session;
+            session.username = username;
+            console.log(req.session);
+
+            // Redirect to home page
+            res.redirect("boards");
+          }
+          // If passwords do not match, reload with error
+          else {
+            console.log("Incorrect password");
+            res.render("login", { error: "true" });
+          }
+        });
       }
       // If user not found
       else {
@@ -249,46 +262,62 @@ app.post("/signup", (req, res) => {
   const password = req.body.password;
   const email = req.body.email;
 
-  // Create new user object with form data
-  const user = new User({
-    username: username,
-    password: password,
-    email: email,
-  });
-  // Check database for user with the same username
-  User.find({ username: username }, function (err, docs) {
-    // If the username is already in use
-    if (docs.length > 0) {
-      // Log to console and notify user
-      console.log("User not added: username already in use");
-      res.render("signup", { error: "username" });
-    }
-    // If the username is not in use
-    else {
-      // Check database for user with the same email
-      User.find({ email: email }, function (err, docs) {
-        // If the email is in use
+  // Salt and hash password using bcrypt
+  bcrypt.genSalt(10, function (err, salt) {
+    bcrypt.hash(password, salt, function (err, hash) {
+      let cryptPassword = hash;
+      console.log(cryptPassword);
+
+      // Check hashed password
+      if(cryptPassword == null) {
+        console.log("Error: hashed password null.");
+        // Reload with error
+        res.render("signup", { error: "password" });
+      }
+
+      // Create new user object with form data. Plaintext password being stored for development...
+      const user = new User({
+        username: username,
+        plaintextPassword: password,
+        password: cryptPassword,
+        email: email,
+      });
+      // Check database for user with the same username
+      User.find({ username: username }, function (err, docs) {
+        // If the username is already in use
         if (docs.length > 0) {
           // Log to console and notify user
-          console.log("User not added: email already in use");
-          res.render("signup", { error: "email" });
+          console.log("User not added: username already in use");
+          res.render("signup", { error: "username" });
         }
-        // If username and email not in use
+        // If the username is not in use
         else {
-          // Add user to database, log to console and redirect
-          user.save();
-          console.log("User added");
+          // Check database for user with the same email
+          User.find({ email: email }, function (err, docs) {
+            // If the email is in use
+            if (docs.length > 0) {
+              // Log to console and notify user
+              console.log("User not added: email already in use");
+              res.render("signup", { error: "email" });
+            }
+            // If username and email not in use
+            else {
+              // Add user to database, log to console and redirect
+              user.save();
+              console.log("User added");
 
-          // Create session
-          session = req.session;
-          session.username = username;
-          console.log(req.session);
+              // Create session
+              session = req.session;
+              session.username = username;
+              console.log(req.session);
 
-          // Redirect to board page
-          res.redirect("boards");
+              // Redirect to board page
+              res.redirect("boards");
+            }
+          });
         }
       });
-    }
+    });
   });
 });
 
