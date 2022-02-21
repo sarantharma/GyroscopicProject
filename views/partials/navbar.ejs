@@ -1,23 +1,23 @@
 <!-- NEW NAV BAR-->
-<nav class="site-header sticky-top py-1">
+<!-- <nav class="site-header sticky-top py-1">
   <div class="container d-flex flex-column flex-md-row justify-content-between">
     <a class="py-2" href="#">
 <strong>Gyroscopic</strong>    </a>
-    <a class="py-2 d-none d-md-inline-block" href="#">About Us</a>
-    <a class="py-2 d-none d-md-inline-block" href="/">Home</a>
-    <a class="py-2 d-none d-md-inline-block" href="#">Account</a>
-    <a class="py-2 d-none d-md-inline-block" href="/boards">My Boards</a>
-    <a class="py-2 d-none d-md-inline-block" href="/boards/new">Create Board</a>
-    <a class="py-2 d-none d-md-inline-block" href="/logout">Logout</a>
+    <a class="py-2 d-none d-md-inline-block" href="/boards">All Boards</a>
+    <a class="py-2 d-none d-md-inline-block" href="/boards/new">New Board</a>
+ 
+    <a class="py-2 d-none d-md-inline-block " href="/login">Login</a>
+    <a class="py-2 d-none d-md-inline-block " href="/signup">Signup</a>
+    <a class="py-2 d-none d-md-inline-block " href="/logout">Logout</a>
+
   </div>
-</nav>
+</nav> -->
 
 
 
-<!-- OLD NAV BAR
-  <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Gyroscopic</a>
+    <a class="navbar-brand" href="/home">Gyroscopic</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -34,8 +34,17 @@
         <a class="nav-link active" aria-current="page" href="/">Home</a>
         <a class="nav-link" href="/boards">Boards</a>
         <a class="nav-link" href="/boards/new">New Board</a>
-        <a class="nav-link disabled">Disabled</a>
+      </div>
+
+      <div class="ml-auto navbar-nav">
+        <% if(!currentUser) {%>
+        <a class="nav-link" href="/login">Login</a>
+        <a class="nav-link" href="/signup">Signup</a>
+        <% } else {%>
+        <a class="nav-link" href="#">Hi <%=currentUser.username%></a>
+        <a class="nav-link" href="/logout">Logout</a>
+        <% } %>
       </div>
     </div>
   </div>
-</nav>-->
+</nav> 

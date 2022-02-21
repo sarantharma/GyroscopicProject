@@ -1,7 +1,7 @@
 <% layout('layouts/boilerplate') %>
-
 <h1 class="board-title"><%= board.name %></h1>
 <p class="board-description"><%= board.description %></p>
+<p class="board-owner" data-boardOwner="<%=board.owner.username%> ">Created By: <%= board.owner.username %></p>
 <p class="board-date text-muted"><%= board.date.toLocaleString("en-US") %></p>
 
 <div class="d-flex justify-content-evenly">
@@ -13,7 +13,14 @@
 
     <!-- <div class="comment-form-div"> -->
     <!-- _${column.columnOrder} -->
-    <form class="comment-form" action="">
+    <% if(currentUser){ %> 
+    <form
+      class="comment-form"
+      data-ownerId="<%=currentUser ? currentUser._id : `anonymous`%>"
+      data-ownerName="<%=currentUser ? currentUser.username : `anonymous`%>"
+
+      action=""
+    >
       <textarea
         class="form-control comment-textarea"
         type="text"
@@ -22,6 +29,7 @@
       ></textarea>
       <button class="btn comment-button">Send</button>
     </form>
+    <% } %> 
     <!-- </div> -->
 
     <!-- Comments -->
@@ -29,6 +37,7 @@
       <% for(let comment of column.comments){ %>
       <div class="card mb-2 draggable" draggable="true" id="<%=comment._id%>">
         <div class="card-body">
+          <% if(currentUser && (comment.owner.equals(currentUser) || board.owner.equals(currentUser))){ %>
           <div class="delete-comment">
             <img
               class="remove-comment"
@@ -37,23 +46,24 @@
               style="height: 1em; width: 1em"
             />
           </div>
+          <% } %>
           <p class="card-text comment-edit"><%=comment.content%></p>
           <div class="like-dislike">
+            <p class="comment-owner"><%=comment.owner.username%></p>
             <img
               src="/img/like.svg"
               alt="like"
               style="height: 1em; width: 1em"
+              class="like"
             />
+            <p class="likeCount"></p>
             <img
               src="/img/dislike.svg"
               alt="dislike"
               style="height: 1em; width: 1em"
+              class="dislike"
             />
-            <img
-              src="/img/comment.svg"
-              alt="comment"
-              style="height: 1em; width: 1em"
-            />
+            <p class="dislikeCount"></p>
           </div>
         </div>
       </div>
@@ -64,6 +74,7 @@
 </div>
 
 <div class="all-buttons">
+  <% if(currentUser && board.owner.equals(currentUser)){ %>
   <a href="/boards/<%=board._id%>/edit"
     ><button class="btn btn-outline-secondary">Edit</button></a
   >
@@ -71,7 +82,7 @@
   <form action="/boards/<%=board._id%>?_method=DELETE" method="POST">
     <button class="btn btn-outline-danger">Delete</button>
   </form>
-
+  <% } %>
   <a href="/boards"><button class="btn btn-outline-info">All Boards</button></a>
 </div>
 
@@ -94,24 +105,31 @@
 
   let draggables = document.querySelectorAll(".draggable"); // Single comments (each comment is draggable)
 
+  const currentUser = form[0].dataset.ownerid;
+  const currentUsername = form[0].dataset.ownername;
+
+
+  const boardOwner = document.querySelector('.board-owner');
+  const boardOwnername = boardOwner.dataset.boardowner;
+  
+
   // ==Functions =======================================
+
   const deleteComment = () => {
-    draggables = document.querySelectorAll(".card-comment"); 
+    draggables = document.querySelectorAll(".card-comment");
     removes = document.querySelectorAll(".remove-comment");
-    draggables.forEach((comment) => {
-    });
+    draggables.forEach((comment) => {});
 
     removes.forEach((remove) => {
       remove.addEventListener("click", (e) => {
-        console.log(e.target.offsetParent.id);
+        // console.log(e.target.offsetParent.id);
         socket.emit("remove comment", e.target.offsetParent.id);
       });
     });
 
     socket.on("remove comment", (cmtID) => {
       const deleteComment = document.getElementById(`${cmtID}`);
-      if(deleteComment){
-
+      if (deleteComment) {
         deleteComment.remove();
       }
     });
@@ -124,15 +142,15 @@
       // The start tof dragging
       draggable.addEventListener("dragstart", () => {
         draggable.classList.add("dragging"); //Add a class called "dragging" to the dragging element
-        console.log("drag start");
-        console.log(draggable);
+
       });
 
       // The end of dragging
       draggable.addEventListener("dragend", () => {
-        const draggable = document.querySelector(".dragging"); //select the dragging element
+        let draggable = document.querySelector(".dragging"); //select the dragging element
         currentDragging = draggable; //Set it to a global variable
-        appendContainer.appendChild(draggable); //Append the draggable element to the container (correspoding column)
+        if(draggable){
+          appendContainer.appendChild(draggable); //Append the draggable element to the container (correspoding column)
         draggable.classList.remove("dragging"); //Remove the dragging class from the dragging element (after append)
 
         newColumn = draggable.parentNode.parentNode; //Set the newly added column into a global variable
@@ -144,6 +162,9 @@
           parentColumn.id,
           newColumn.id
         );
+        }else{
+          draggable = null;
+        }
 
         parentColumn = undefined; //Set the global variable undifined
       });
@@ -189,6 +210,12 @@
         // Make the array empty
         idArray = [];
 
+        // ===== Check=========
+        // let draggable = document.querySelector(".dragging");
+  
+        // ===== End Check=========
+
+        
         // Create a html element for the comment
         let commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmt._id}>
                             <div class="card-body">
@@ -206,17 +233,17 @@
                                     <div class="like-dislike">
                                         <img src="/img/like.svg" alt="like" style="height: 1em; width: 1em;">
                                         <img src="/img/dislike.svg" alt="dislike" style="height: 1em; width: 1em;">
-                                        <img src="/img/comment.svg" alt="comment" style="height: 1em; width: 1em;">
                                     </div>
                             </div>
                         </div>   `;
 
         // Insert the html element to the comments under the coresponding column
-        newColumn.insertAdjacentHTML("beforeend", commentHtml);
-        // location.reload()
+        newColumn.insertAdjacentHTML("beforeend", currentDragging);
+        location.reload();
         dragStartEnd();
         addCommentEdit();
         // dragSocket();
+        deleteComment();
       }
     });
   };
@@ -227,10 +254,13 @@
         e.preventDefault();
         dragStartEnd();
         dragSocket();
+        deleteComment();
+
         const draggable = document.querySelector(".dragging");
         if (parentColumn == undefined) {
-          console.log(draggable);
-          parentColumn = draggable.parentNode.parentNode;
+          if(draggable){
+            parentColumn = draggable.parentNode.parentNode;
+          }
         }
         appendContainer = container;
       });
@@ -284,13 +314,19 @@
   // == End Functions===================================
 
   deleteComment();
+
   //  Give submit to all the forms in a board
   for (let i = 0; i < form.length; i++) {
     form[i].addEventListener("submit", function (e) {
       e.preventDefault();
       if (input[i].value) {
         // Send newly created board to the server side (To handle real time)
-        socket.emit("board comment", input[i].value, form[i].parentNode.id); // Emit input value and the column id
+        socket.emit(
+          "board comment",
+          input[i].value,
+          form[i].parentNode.id,
+          currentUser
+        ); // Emit input value and the column id
         input[i].value = "";
       }
     });
@@ -298,11 +334,20 @@
 
   // Reveive real time update from the server side
   // Recevied comment, commentId(Mongo Id) and the column Id
-  socket.on("board comment", function (cmt, cmtID, columnID) {
+  socket.on("board comment", function (cmt, cmtID, columnID, cmtUser) {
     for (let i = 0; i < comments.length; i++) {
       if (comments[i].parentNode.id == columnID) {
         // Create an html element for newly created comment
-        const commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmtID}>
+
+        console.log(boardOwnername)
+
+        let commentHtml;
+
+
+        if (currentUsername == cmtUser || currentUsername == boardOwnername) {
+          console.log(currentUsername)
+          console.log(boardOwnername)
+          commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmtID}>
                             <div class="card-body">
                               <div class="delete-comment">
                                 <img
@@ -316,27 +361,39 @@
                                     ${cmt}
                                 </p>
                                 <div class="like-dislike">
+                                        <p class="comment-owner">${cmtUser}</p>
                                         <img src="/img/like.svg" alt="like" style="height: 1em; width: 1em;">
                                         <img src="/img/dislike.svg" alt="dislike" style="height: 1em; width: 1em;">
-                                        <img src="/img/comment.svg" alt="comment" style="height: 1em; width: 1em;">
                                 </div>
                             </div>
                         </div>   `;
+        } else {
+          commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmtID}>
+                            <div class="card-body">
+                        
+                                <p class="card-text comment-edit">
+                                    ${cmt}
+                                </p>
+                                <div class="like-dislike">
+                                        <p class="comment-owner">${cmtUser}</p>
+                                        <img src="/img/like.svg" alt="like" style="height: 1em; width: 1em;">
+                                        <img src="/img/dislike.svg" alt="dislike" style="height: 1em; width: 1em;">
+                                </div>
+                            </div>
+                        </div>   `;
+        }
 
         // Insert the html element to the comments under the coresponding column
         comments[i].insertAdjacentHTML("beforeend", commentHtml);
         deleteComment();
-        // // ######################################################
-        // dragStartEnd();
+        dragStartEnd();
         // dragSocket();
-
-        dragOver();
-        // ######################################################
+        // dragOver();
+        location.reload();
       }
     }
   });
 
-  // ######################################################
 
   dragStartEnd();
   dragSocket();

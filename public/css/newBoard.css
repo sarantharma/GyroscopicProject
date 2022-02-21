@@ -41,15 +41,34 @@ div.mycolumn {
 
 .like-dislike{
   /* background-color: bisque; */
-  margin: 2px;
   display: flex;
   justify-content: flex-end;
+  align-items: baseline;
+  /* align-items: center; */
+  /* height: 25px; */
 }
 
 .like-dislike > img {
+  /* margin-right: 5px; */
+  margin: 0px;
   margin-right: 5px;
+  cursor: pointer;
 }
 
+.comment-owner{
+  margin: 0px;
+  margin-right: auto;
+  color: rgb(107, 106, 106);
+  font-size: 14px;
+}
+
+.likeCount{
+  margin: 0px;
+}
+
+.dislikeCount{
+  margin: 0px;
+}
 .column {
   /* background-color: rgba(0, 0, 255, 0.164); */
   border-radius: 10px;
@@ -243,8 +262,17 @@ footer .copyright{
   text-align: center;
 }
 
+.board-owner{
+  text-align: center;
+  margin: 0px;
+}
+
 .board-date{
   text-align: center;
+  font-size: 13px;
+  margin: 0px;
+  margin-bottom: 5px;
+
 }
 
 .all-buttons{
