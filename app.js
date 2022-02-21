@@ -87,14 +87,16 @@ io.on("connection", (socket) => {
     );
   });
 
-
   // delete a comment
-  socket.on("remove comment", async(cmtID) => {
+  socket.on("remove comment", async (cmtID) => {
     const deletedComemnt = await Comment.findByIdAndDelete(cmtID);
-    io.emit("remove comment", cmtID)
-  })
-  
+    io.emit("remove comment", cmtID);
+  });
 });
+
+// ==================== End Real Time ====================
+
+// ==================== Mongo Connection ====================
 
 mongoose.connect("mongodb://localhost:27017/gyroscopic_1", {
   useNewUrlParser: true,
@@ -107,6 +109,8 @@ db.on("error", console.error.bind(console, "Connection error:"));
 db.once("open", () => {
   console.log("Database Connected!");
 });
+
+// ================== End Mongo Connection ==================
 
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
@@ -150,6 +154,8 @@ const validateBoard = (req, res, next) => {
   }
 };
 
+// ==================== Home Page ====================
+
 app.get("/", (req, res) => {
   session = req.session;
   if (session.username) {
@@ -159,6 +165,9 @@ app.get("/", (req, res) => {
   }
 });
 
+
+
+  // ==================== Board Pages ====================
 app.get(
   "/boards",
   catchAsync(async (req, res) => {
