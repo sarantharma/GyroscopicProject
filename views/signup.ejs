@@ -27,6 +27,9 @@
         <div>
           <label for="password">Password</label>
           <input type="password" name="password" id="password" placeholder="************" pattern=".{6,15}" required title="Must be 6 to 15 characters long"/>
+          <% if(error == "password") { %>
+            <span class="error hidden">Error with password.</span>
+          <% } %>
         </div>
       </fieldset>
       <button id="submit" name="submit" >Submit</button>
