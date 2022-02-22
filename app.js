@@ -43,12 +43,18 @@ io.on("connection", (socket) => {
 
   // ==================== Real Time ====================
   //create new comment
-  socket.on("board comment", async (cmt, columnID, currentUser) => {
+  socket.on("board comment", async (cmt, columnID, currentUser, isanonymous) => {
     // console.log("message: ", cmt, columnID);
     // console.log(columnID);
     let user = "annonymous";
     const findColumn = await Column.findById(columnID);
     const comment = new Comment({ content: cmt });
+    if(isanonymous == ""){
+        comment.anonymous = false;
+    }else{
+        comment.anonymous = true;
+    }
+    
     if (currentUser != "annonymous") {
       const checkUser = await User.findById(currentUser);
       // console.log(user);
@@ -61,7 +67,7 @@ io.on("connection", (socket) => {
     await findColumn.save();
     // console.log("The ID: ", newComment);
     // console.log(newComment.id);
-    io.emit("board comment", cmt, newComment.id, columnID, user);
+    io.emit("board comment", cmt, newComment.id, columnID, user, isanonymous);
   });
 
   // drag and drop comment
