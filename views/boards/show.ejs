@@ -461,6 +461,6 @@
   // when someone else updates a comment
   socket.on("commentEdit", function (cmt, commentID) {
     let commentFount = document.getElementById(commentID);
-    commentFount.childNodes[1].childNodes[1].textContent = cmt;
+    commentFount.childNodes[1].childNodes[3].textContent = cmt;
   });
 </script>
