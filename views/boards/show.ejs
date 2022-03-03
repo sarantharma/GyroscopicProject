@@ -45,6 +45,7 @@
       <% for(let comment of column.comments){ %>
       <div class="card mb-2 draggable" draggable="true" id="<%=comment._id%>">
         <div class="card-body">
+          <input type="hidden" value="<%=comment.owner._id%>" >
           <% if(currentUser && (comment.owner.equals(currentUser) || board.owner.equals(currentUser))){ %>
           <div class="delete-comment">
             <img
@@ -54,6 +55,8 @@
               style="height: 1em; width: 1em"
             />
           </div>
+          <% }else{ %>
+          <input type="hidden">
           <% } %>
           <p class="card-text comment-edit"><%=comment.content%></p>
           <div class="like-dislike">
@@ -119,11 +122,11 @@
   let draggables = document.querySelectorAll(".draggable"); // Single comments (each comment is draggable)
 
   const currentUser = form[0].dataset.ownerid;
-  const currentUsername = form[0].dataset.ownername;
+  const currentUsername = form[0].dataset.ownername.trim();
 
 
   const boardOwner = document.querySelector('.board-owner');
-  const boardOwnername = boardOwner.dataset.boardowner;
+  const boardOwnername = boardOwner.dataset.boardowner.trim();
   
 
   // ==Functions =======================================
@@ -285,42 +288,46 @@
 
     // Updating comment
     for (let i = 0; i < commentEdit.length; i++) {
-      // Double clicking a Comment
-      commentEdit[i].addEventListener("dblclick", function (e) {
-        let commentTextBox = e.path[0];
+      // only comment owner and boardOwnername can edit.
+      if((commentEdit[i].parentNode.childNodes[1].value === currentUser) || (currentUsername.trim() == boardOwnername.trim()) ){
+        
+        // Double clicking a Comment
+        commentEdit[i].addEventListener("dblclick", function (e) {
+          
+          let commentTextBox = e.path[0];
 
-        let val = commentTextBox.textContent;
-        val = val.trim();
+          let val = commentTextBox.textContent;
+          val = val.trim();
 
-        commentTextBox.innerHTML =
+          commentTextBox.innerHTML =
           '<form><input type="text" value="' + val + '"></input></form>';
-        commentTextBox.childNodes[0].childNodes[0].focus();
+          commentTextBox.childNodes[0].childNodes[0].focus();
 
-        // On Blur - Comment update
-        commentTextBox.childNodes[0].childNodes[0].addEventListener(
+          // On Blur - Comment update
+          commentTextBox.childNodes[0].childNodes[0].addEventListener(
           "blur",
           function (e) {
-            socket.emit(
+              socket.emit(
+              "commentEdit",
+              commentTextBox.childNodes[0].childNodes[0].value,
+              commentTextBox.parentNode.parentNode.id
+              );
+              commentTextBox.innerHTML =
+              "<p>" + commentTextBox.childNodes[0].childNodes[0].value + "<\p>";
+          });
+
+          // On Enter - Comment update
+          commentTextBox.childNodes[0].addEventListener("submit", function (e) {
+          socket.emit(
               "commentEdit",
               commentTextBox.childNodes[0].childNodes[0].value,
               commentTextBox.parentNode.parentNode.id
             );
-            commentTextBox.innerHTML =
-              "<p>" + commentTextBox.childNodes[0].childNodes[0].value + "<\p>";
-          }
-        );
-
-        // On Enter - Comment update
-        commentTextBox.childNodes[0].addEventListener("submit", function (e) {
-          socket.emit(
-            "commentEdit",
-            commentTextBox.childNodes[0].childNodes[0].value,
-            commentTextBox.parentNode.parentNode.id
-          );
           e.preventDefault();
-          //	commentTextBox.innerHTML = "<p>"+commentTextBox.childNodes[0].childNodes[0].value+"<\p>";
-        });
-      });
+          //commentTextBox.innerHTML = "<p>"+commentTextBox.childNodes[0].childNodes[0].value+"<\p>";
+          });
+        });  
+      }
     }
   };
 
@@ -461,6 +468,6 @@
   // when someone else updates a comment
   socket.on("commentEdit", function (cmt, commentID) {
     let commentFount = document.getElementById(commentID);
-    commentFount.childNodes[1].childNodes[3].textContent = cmt;
+    commentFount.childNodes[1].childNodes[5].textContent = cmt;
   });
 </script>
