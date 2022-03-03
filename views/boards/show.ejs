@@ -374,7 +374,10 @@
       if (comments[i].parentNode.id == columnID) {
         // Create an html element for newly created comment
 
+        console.log(boardOwnername)
+
         let commentHtml;
+
 
         if (currentUsername == cmtUser || currentUsername == boardOwnername) {
           commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmtID}>
