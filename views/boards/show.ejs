@@ -37,8 +37,8 @@
       <% for(let comment of column.comments){ %>
       <div class="card mb-2 draggable" draggable="true" id="<%=comment._id%>">
         <div class="card-body">
-          <% if(currentUser && (comment.owner.equals(currentUser) || board.owner.equals(currentUser))){ %>
-          <div class="delete-comment">
+          <div class ="<%= (currentUser && (comment.owner.equals(currentUser) || board.owner.equals(currentUser))) ? 'delete-comment' : 'hidden' %> ">
+            <!-- "delete-comment" -->
             <img
               class="remove-comment"
               src="/img/xmark.svg"
@@ -46,7 +46,6 @@
               style="height: 1em; width: 1em"
             />
           </div>
-          <% } %>
           <p class="card-text comment-edit"><%=comment.content%></p>
           <div class="like-dislike">
             <p class="comment-owner"><%=comment.owner.username%></p>
@@ -115,6 +114,7 @@
 
   // ==Functions =======================================
 
+
   const deleteComment = () => {
     draggables = document.querySelectorAll(".card-comment");
     removes = document.querySelectorAll(".remove-comment");
@@ -155,12 +155,18 @@
 
         newColumn = draggable.parentNode.parentNode; //Set the newly added column into a global variable
 
+
+        
+        // const xx = currentDragging.innerHTML;
+        // console.log(currentDragging.outerHTML)
+          // console.log(xx)
         // Send the dragged and dropped element to the server side (Real time)
         socket.emit(
           "drag comment",
           draggable.id,
           parentColumn.id,
-          newColumn.id
+          newColumn.id,
+          currentDragging.outerHTML
         );
         }else{
           draggable = null;
@@ -174,7 +180,7 @@
   const dragSocket = () => {
     // Reveive real time update from the server side for drag and drop
     // Recevied comment, new column Id, parent column Id
-    socket.on("drag comment", function (cmt, newColumnId, parentID) {
+    socket.on("drag comment", function (cmt, newColumnId, parentID,cmtUser,currentDragging) {
       const comment = document.getElementById(`${cmt._id}`); //Get the comment
       const checkComment = comment.parentNode;
       const newColumn = document
@@ -215,9 +221,15 @@
   
         // ===== End Check=========
 
-        
+        let commentHtml;
         // Create a html element for the comment
-        let commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmt._id}>
+        // console.log(currentUsername);
+        // console.log(cmtUser)
+        // console.log(boardOwnername)
+
+        if (currentUsername == cmtUser || currentUsername.trim() == boardOwnername.trim()) {
+          console.log('yes')
+          commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmt._id}>
                             <div class="card-body">
                               <div class="delete-comment">
                                 <img
@@ -231,15 +243,38 @@
                                     ${cmt.content}
                                 </p>
                                     <div class="like-dislike">
+                                      <p class="comment-owner">${cmtUser}</p>
+                                        <img src="/img/like.svg" alt="like" style="height: 1em; width: 1em;">
+                                        <img src="/img/dislike.svg" alt="dislike" style="height: 1em; width: 1em;">
+                                    </div>
+                            </div>
+                        </div>   `;
+        }else{
+          console.log('no')
+          commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmt._id}>
+                            <div class="card-body">
+                          
+                                <p class="card-text comment-edit">
+                                    ${cmt.content}
+                                </p>
+                                    <div class="like-dislike">
+                                      <p class="comment-owner">${cmtUser}</p>
                                         <img src="/img/like.svg" alt="like" style="height: 1em; width: 1em;">
                                         <img src="/img/dislike.svg" alt="dislike" style="height: 1em; width: 1em;">
                                     </div>
                             </div>
                         </div>   `;
 
+        }
+
+
+
+        // console.log(currentDragging)
+        
+
         // Insert the html element to the comments under the coresponding column
-        newColumn.insertAdjacentHTML("beforeend", currentDragging);
-        location.reload();
+        newColumn.insertAdjacentHTML("beforeend", commentHtml);
+        // location.reload();
         dragStartEnd();
         addCommentEdit();
         // dragSocket();
@@ -345,8 +380,6 @@
 
 
         if (currentUsername == cmtUser || currentUsername == boardOwnername) {
-          console.log(currentUsername)
-          console.log(boardOwnername)
           commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmtID}>
                             <div class="card-body">
                               <div class="delete-comment">
@@ -389,7 +422,7 @@
         dragStartEnd();
         // dragSocket();
         // dragOver();
-        location.reload();
+        // location.reload();
       }
     }
   });

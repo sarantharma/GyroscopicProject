@@ -65,11 +65,12 @@ io.on("connection", (socket) => {
   });
 
   // drag and drop comment
-  socket.on("drag comment", async (cmtID, parentColumnID, newColumnID) => {
+  socket.on("drag comment", async (cmtID, parentColumnID, newColumnID, currentDragging) => {
     // const findParentColumn = await Column.findById(parentColumnID);
     // console.log("Comment ID ", cmtID);
     // console.log("Parent ID ", parentColumnID);
     // console.log("New ID ", newColumnID);
+    // console.log("Grag", currentDragging)
 
     const theComment = await Comment.findById(cmtID);
     const findNewColumn = await Column.findById(newColumnID);
@@ -79,8 +80,10 @@ io.on("connection", (socket) => {
     });
     findNewColumn.comments.push(theComment);
     await findNewColumn.save();
+    const findUser = await User.findById(theComment.owner._id);
+    const cmtUser = findUser.username;
 
-    io.emit("drag comment", theComment, findNewColumn.id, parentColumnID);
+    io.emit("drag comment", theComment, findNewColumn.id, parentColumnID,cmtUser,currentDragging);
   });
 
   //Editing Comment
