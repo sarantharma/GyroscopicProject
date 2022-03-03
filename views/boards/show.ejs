@@ -27,7 +27,15 @@
         name="board[description]"
         required
       ></textarea>
-      <button class="btn comment-button">Send</button>
+        <div>
+            <div style="float: left; width:50%;">
+                <button class="btn comment-button">Send</button>
+            </div>
+            <div style="float: right; width:50%; padding-top: 18px;">
+                <input class="form-check-input is-anonymous" type="checkbox" value="" name="anonymous">
+                <label class="form-check-label">Anonymous Comment</label>
+            </div>
+        </div>
     </form>
     <% } %> 
     <!-- </div> -->
@@ -49,7 +57,11 @@
           <% } %>
           <p class="card-text comment-edit"><%=comment.content%></p>
           <div class="like-dislike">
+            <% if( !comment.anonymous ){ %>
             <p class="comment-owner"><%=comment.owner.username%></p>
+            <% } else { %>
+            <p class="comment-owner"></p>
+            <% } %>
             <img
               src="/img/like.svg"
               alt="like"
@@ -100,6 +112,7 @@
   // Get html elements
   const form = document.getElementsByClassName("comment-form"); // Comment form to create a comment
   const input = document.getElementsByClassName("comment-textarea"); // Text area to type a comment
+  const anonymous = document.getElementsByClassName("is-anonymous"); // anonymous toggle
   const comments = document.querySelectorAll(".card-comment"); // All comments
   let removes = document.querySelectorAll(".remove-comment");
 
@@ -325,7 +338,8 @@
           "board comment",
           input[i].value,
           form[i].parentNode.id,
-          currentUser
+          currentUser,
+          anonymous[i].checked 
         ); // Emit input value and the column id
         input[i].value = "";
       }
@@ -334,7 +348,7 @@
 
   // Reveive real time update from the server side
   // Recevied comment, commentId(Mongo Id) and the column Id
-  socket.on("board comment", function (cmt, cmtID, columnID, cmtUser) {
+  socket.on("board comment", function (cmt, cmtID, columnID, cmtUser, isanonymous) {
     for (let i = 0; i < comments.length; i++) {
       if (comments[i].parentNode.id == columnID) {
         // Create an html element for newly created comment
@@ -343,11 +357,9 @@
 
         let commentHtml;
 
-
-        if (currentUsername == cmtUser || currentUsername == boardOwnername) {
-          console.log(currentUsername)
-          console.log(boardOwnername)
-          commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmtID}>
+        if( !isanonymous){ // public comment
+            if (currentUsername == cmtUser || currentUsername == boardOwnername) { // is delete-able
+            commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmtID}>
                             <div class="card-body">
                               <div class="delete-comment">
                                 <img
@@ -367,8 +379,8 @@
                                 </div>
                             </div>
                         </div>   `;
-        } else {
-          commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmtID}>
+            } else { // non-delete-able
+            commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmtID}>
                             <div class="card-body">
                         
                                 <p class="card-text comment-edit">
@@ -381,7 +393,50 @@
                                 </div>
                             </div>
                         </div>   `;
+            }
+            
+        }else{ // anonyous comment
+            
+            if (currentUsername == cmtUser || currentUsername == boardOwnername) { // is delete-able
+            console.log(currentUsername)
+            console.log(boardOwnername)
+            commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmtID}>
+                            <div class="card-body">
+                              <div class="delete-comment">
+                                <img
+                                  class="remove-comment"
+                                  src="/img/xmark.svg"
+                                  alt="like"
+                                  style="height: 1em; width: 1em"
+                                />
+                              </div>
+                                <p class="card-text comment-edit">
+                                    ${cmt}
+                                </p>
+                                <div class="like-dislike">
+                                        <p class="comment-owner">Anonyous</p>
+                                        <img src="/img/like.svg" alt="like" style="height: 1em; width: 1em;">
+                                        <img src="/img/dislike.svg" alt="dislike" style="height: 1em; width: 1em;">
+                                </div>
+                            </div>
+                        </div>   `;
+            } else { // non-delete-able
+            commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmtID}>
+                            <div class="card-body">
+                        
+                                <p class="card-text comment-edit">
+                                    ${cmt}
+                                </p>
+                                <div class="like-dislike">
+                                        <p class="comment-owner"></p>
+                                        <img src="/img/like.svg" alt="like" style="height: 1em; width: 1em;">
+                                        <img src="/img/dislike.svg" alt="dislike" style="height: 1em; width: 1em;">
+                                </div>
+                            </div>
+                        </div>   `;
+            }
         }
+        
 
         // Insert the html element to the comments under the coresponding column
         comments[i].insertAdjacentHTML("beforeend", commentHtml);
@@ -389,6 +444,9 @@
         dragStartEnd();
         // dragSocket();
         // dragOver();
+        
+        // calling reload is'nt real time, 
+        // We will have to remove all cases of reload, reloading on local host is fast not in irl when online,
         location.reload();
       }
     }
@@ -403,6 +461,6 @@
   // when someone else updates a comment
   socket.on("commentEdit", function (cmt, commentID) {
     let commentFount = document.getElementById(commentID);
-    commentFount.childNodes[1].childNodes[1].textContent = cmt;
+    commentFount.childNodes[1].childNodes[3].textContent = cmt;
   });
 </script>
