@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const commentSchema = new Schema({
   content: String,
+  anonymous: Boolean,
   likes: {
     type:Number,
     default:0
