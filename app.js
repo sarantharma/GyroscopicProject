@@ -85,7 +85,7 @@ io.on("connection", (socket) => {
     const cmtUser = await User.findById(theComment.owner._id)
 
     console.log(cmtUser)
-    io.emit("drag comment", theComment, findNewColumn.id, parentColumnID);
+    io.emit("drag comment", theComment, findNewColumn.id, parentColumnID, cmtUser.username);
   });
 
   //Editing Comment

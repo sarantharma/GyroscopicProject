@@ -190,7 +190,7 @@
   const dragSocket = () => {
     // Reveive real time update from the server side for drag and drop
     // Recevied comment, new column Id, parent column Id
-    socket.on("drag comment", function (cmt, newColumnId, parentID) {
+    socket.on("drag comment", function (cmt, newColumnId, parentID, cmtUser) {
       const comment = document.getElementById(`${cmt._id}`); //Get the comment
       const checkComment = comment.parentNode;
       const newColumn = document
@@ -233,7 +233,15 @@
 
         
         // Create a html element for the comment
-        let commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmt._id}>
+        let commentHtml;
+        // Create a html element for the comment
+        // console.log(currentUsername);
+        // console.log(cmtUser)
+        // console.log(boardOwnername)
+
+        if (currentUsername == cmtUser || currentUsername.trim() == boardOwnername.trim()) {
+          console.log('yes')
+          commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmt._id}>
                             <div class="card-body">
                               <div class="delete-comment">
                                 <img
@@ -247,15 +255,33 @@
                                     ${cmt.content}
                                 </p>
                                     <div class="like-dislike">
+                                      <p class="comment-owner">${cmtUser}</p>
+                                        <img src="/img/like.svg" alt="like" style="height: 1em; width: 1em;">
+                                        <img src="/img/dislike.svg" alt="dislike" style="height: 1em; width: 1em;">
+                                    </div>
+                            </div>
+                        </div>   `;
+        }else{
+          console.log('no')
+          commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmt._id}>
+                            <div class="card-body">
+                          
+                                <p class="card-text comment-edit">
+                                    ${cmt.content}
+                                </p>
+                                    <div class="like-dislike">
+                                      <p class="comment-owner">${cmtUser}</p>
                                         <img src="/img/like.svg" alt="like" style="height: 1em; width: 1em;">
                                         <img src="/img/dislike.svg" alt="dislike" style="height: 1em; width: 1em;">
                                     </div>
                             </div>
                         </div>   `;
 
+        }
+
         // Insert the html element to the comments under the coresponding column
-        newColumn.insertAdjacentHTML("beforeend", currentDragging);
-        location.reload();
+        newColumn.insertAdjacentHTML("beforeend", commentHtml);
+        // location.reload();
         dragStartEnd();
         addCommentEdit();
         // dragSocket();
@@ -454,7 +480,7 @@
         
         // calling reload is'nt real time, 
         // We will have to remove all cases of reload, reloading on local host is fast not in irl when online,
-        location.reload();
+        // location.reload();
       }
     }
   });
