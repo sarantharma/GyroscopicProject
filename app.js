@@ -18,6 +18,7 @@ const ejsMate = require("ejs-mate");
 const catchAsync = require("./utils/catchAsync");
 const ExpressError = require("./utils/ExpressError");
 const Joi = require("joi"); // For validations
+const sendgrid = require("@sendgrid/mail"); // For emails
 
 const flash = require("connect-flash");
 
@@ -386,6 +387,36 @@ app.delete(
     req.flash("success", "Successfully deleted the board!");
     res.redirect("/boards");
   })
+);
+
+app.post(
+    "/boards/:id",
+    (req, res) => {
+        sendgrid.setApiKey("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");
+        const url = 'http://localhost:3100/boards/' + req.params.id;
+
+        const msg = {
+            to: req.body.email, // Change to your recipient
+            from: 'gyroscopicboard@gmail.com', // Change to your verified sender
+            subject: 'Gyroscopic Board Invitation',
+            templateId: 'd-478522bdf29f47468a107e3540e0d577',
+            dynamic_template_data: {
+                subject: 'Gyroscopic Board Invitation',
+                boardlink: url,
+            },
+        }
+        sendgrid
+            .send(msg)
+            .then(() => {
+                console.log('Email sent')
+            })
+            .catch((error) => {
+                console.error(error)
+            })
+
+        req.flash("success", `Invite sent`);
+        res.redirect("back");
+    }
 );
 
 app.all("*", (req, res, next) => {
