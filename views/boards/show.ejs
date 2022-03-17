@@ -348,28 +348,22 @@
       });
     });
   };
+  
+  // logic for editing in realtime plus the eventlisteners is uses.
+  function realTimeEdit(e){
+    e = e || window.event;
 
-  const addCommentEdit = () => {
-    let commentEdit = document.getElementsByClassName("comment-edit");
-
-    // Updating comment
-    for (let i = 0; i < commentEdit.length; i++) {
-      // only comment owner and boardOwnername can edit.
-      if((commentEdit[i].parentNode.childNodes[1].value === currentUser) || (currentUsername.trim() == boardOwnername.trim()) ){
-        
-        // Double clicking a Comment
-        commentEdit[i].addEventListener("dblclick", function (e) {
+    let commentTextBox = e.path[0];
           
-          let commentTextBox = e.path[0];
-
-          let val = commentTextBox.textContent;
+          
+      let val = commentTextBox.textContent;
           val = val.trim();
 
           commentTextBox.innerHTML =
           '<form><input type="text" value="' + val + '"></input></form>';
           commentTextBox.childNodes[0].childNodes[0].focus();
 
-          // On Blur - Comment update
+          // On Blur (click away)- Comment update
           commentTextBox.childNodes[0].childNodes[0].addEventListener(
           "blur",
           function (e) {
@@ -392,7 +386,18 @@
           e.preventDefault();
           //commentTextBox.innerHTML = "<p>"+commentTextBox.childNodes[0].childNodes[0].value+"<\p>";
           });
-        });  
+        } 
+
+  const addCommentEdit = () => {
+    let commentEdit = document.getElementsByClassName("comment-edit");
+
+    // Updating comment
+    for (let i = 0; i < commentEdit.length; i++) {
+      // only comment owner and boardOwnername can edit.
+      if((commentEdit[i].parentNode.childNodes[1].value === currentUser) || (currentUsername.trim() == boardOwnername.trim()) ){
+        
+        // Double clicking a Comment
+        commentEdit[i].addEventListener("dblclick", realTimeEdit);  
       }
     }
   };
@@ -515,6 +520,12 @@
         comments[i].insertAdjacentHTML("beforeend", commentHtml);
         deleteComment();
         dragStartEnd();
+        
+        // if edit-able
+        if(currentUsername == cmtUser || currentUsername == boardOwnername){
+            document.getElementById(cmtID).childNodes[1].addEventListener("dblclick", realTimeEdit);
+        }
+        
         // dragSocket();
         // dragOver();
         
@@ -534,6 +545,12 @@
   // when someone else updates a comment
   socket.on("commentEdit", function (cmt, commentID) {
     let commentFount = document.getElementById(commentID);
-    commentFount.childNodes[1].childNodes[5].textContent = cmt;
+    
+    for(var i = 0; i < commentFount.childNodes[1].childNodes.length; i++){
+        if(commentFount.childNodes[1].childNodes[i].className == "card-text comment-edit"){
+            commentFount.childNodes[1].childNodes[i].textContent = cmt;
+        }
+    }   
+    
   });
 </script>
