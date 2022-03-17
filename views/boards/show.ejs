@@ -88,6 +88,21 @@
   <% } %>
 </div>
 
+<!-- Add column -->
+<div style="position: absolute; left: 50%;">
+  <% if(currentUser && board.owner.equals(currentUser)){ %>
+    <button class="btn btn-outline-secondary" onclick="showAddColumn()">Add Column</button>
+  <% } %>
+
+    <div class="add-column">
+      <form id="add-column-form" style="display: none;" action="/boards/<%=board._id%>?_method=POST" method="POST">
+        <label class="form-label" for="add-column-name">Column Name</label>
+        <input class="add-column-name" type="text" id="add-column-name" name="newColumnName" required />
+        <button class="btn btn-success">Add</button>
+      </form>
+    </div>
+</div>
+
 <div class="all-buttons">
   <% if(currentUser && board.owner.equals(currentUser)){ %>
   <a href="/boards/<%=board._id%>/edit"
@@ -106,7 +121,7 @@
 </div>
 
 <div class="invite">
-  <form id="invite-form" style="display: none;" action="/boards/<%=board._id%>?_method=POST" method="POST">
+  <form id="invite-form" style="display: none;" action="/boards/<%=board._id%>/invite?_method=POST" method="POST">
     <label class="form-label" for="email">Email</label>
     <input class="email" type="email" id="email" name="email" required />
     <button class="btn btn-success">Send</button>
@@ -144,9 +159,16 @@
 
   // ==Functions =======================================
 
+  // Show invite button for board creators
   function showInvite() {
     // Make invite form visible
     document.getElementById('invite-form').style.display = 'block';
+  }
+
+  // Show add column button for board creators
+  function showAddColumn() {
+    // Make add button visible
+    document.getElementById('add-column-form').style.display = 'block';
   }
 
   const deleteComment = () => {

@@ -330,21 +330,30 @@ app.get(
   "/boards/:id",
   catchAsync(async (req, res) => {
     // const board = await Board.findById(req.params.id).populate("columns");
-    const board = await Board.findById(req.params.id)
-      .populate({
-        path: "columns",
-        populate: {
-          path: "comments",
-          populate: {
-            path: "owner",
-          },
-        },
-      })
-      .populate("owner");
-    // .populate("comments");
-    // console.log(board);
+      const board = await Board.findById(req.params.id);
+      // Allow user to view board if they are a member of it
+    if(board.members.includes(req.user._id)) {
+        const board = await Board.findById(req.params.id)
+            .populate({
+                path: "columns",
+                populate: {
+                    path: "comments",
+                    populate: {
+                        path: "owner",
+                    },
+                },
+            })
+            .populate("owner");
+        // .populate("comments");
+        // console.log(board);
 
-    res.render("boards/show", { board });
+        res.render("boards/show", { board });
+    }
+    // Otherwise deny access
+    else{
+        // To do: add proper page for this
+        res.send("Access denied.");
+    }
   })
 );
 
@@ -395,6 +404,24 @@ app.delete(
 app.post(
     "/boards/:id",
     catchAsync(async (req, res) => {
+        // Get new column name, add new column to board
+        const board = await Board.findById(req.params.id);
+        const order = board.columns.$size;
+        const column = new Column({header: req.body.newColumnName, columnOrder: order });
+        const x = await column.save();
+        const newColumn = await Column.findById(x._id);
+        board.columns.push(newColumn);
+        await board.save();
+
+        console.log("New column added");
+
+        res.redirect("back");
+    })
+);
+
+app.post(
+    "/boards/:id/invite",
+    catchAsync(async (req, res) => {
         sendgrid.setApiKey("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");
         const url = 'http://localhost:3100/boards/' + req.params.id;
         const board = await Board.findById(req.params.id);
@@ -428,11 +455,15 @@ app.post(
             }
             // If the user exists. To do: check if already a member of board
             if(doc != null) {
-                console.log("User exists, adding to board members");
-                if(!board.owner.equals(invitee._id)) {
+                console.log("User exists");
+                const id = invitee._id;
+                if(!board.owner.equals(invitee._id) && !board.members.includes(id)) {
                     console.log(invitee._id);
                     board.members.push(invitee._id);
                     board.save();
+                }
+                else {
+                    console.log("Not added: User is already a member.");
                 }
             }
             // If the user doesn't exist
