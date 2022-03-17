@@ -272,6 +272,7 @@ app.post(
     const dateNow = new Date();
     const board = new Board({ ...req.body.board, date: dateNow });
     board.owner = req.user._id;
+    board.members.push(req.user._id);
     const x = await board.save();
     const newBoard = await Board.findById(x._id);
 
@@ -362,6 +363,8 @@ app.put(
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const boardBeforeUpdate = await Board.findById(id);
+
+    // Check if a board member?  || !Board.findOne({id: id}, {members: {$elemMatch: {id: req.user._id}}})
     if (!boardBeforeUpdate.owner.equals(req.user._id)) {
       return res.redirect(`/boards/${id}`);
     }
@@ -391,12 +394,14 @@ app.delete(
 
 app.post(
     "/boards/:id",
-    (req, res) => {
+    catchAsync(async (req, res) => {
         sendgrid.setApiKey("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");
         const url = 'http://localhost:3100/boards/' + req.params.id;
+        const board = await Board.findById(req.params.id);
+        const email = req.body.email;
 
         const msg = {
-            to: req.body.email, // Change to your recipient
+            to: email, // Change to your recipient
             from: 'gyroscopicboard@gmail.com', // Change to your verified sender
             subject: 'Gyroscopic Board Invitation',
             templateId: 'd-478522bdf29f47468a107e3540e0d577',
@@ -415,8 +420,30 @@ app.post(
             })
 
         req.flash("success", `Invite sent`);
+
+        // If user already has an account, add to members list of board
+        const invitee = await User.findOne({email: email}, function(err, doc) {
+            if(err) {
+                console.log(err);
+            }
+            // If the user exists. To do: check if already a member of board
+            if(doc != null) {
+                console.log("User exists, adding to board members");
+                if(!board.owner.equals(invitee._id)) {
+                    console.log(invitee._id);
+                    board.members.push(invitee._id);
+                    board.save();
+                }
+            }
+            // If the user doesn't exist
+            else {
+                console.log("User doesn't already exist");
+                // Add pseudo users...
+            }
+        }).clone().catch(function (err){console.log(err)})
+
         res.redirect("back");
-    }
+    })
 );
 
 app.all("*", (req, res, next) => {

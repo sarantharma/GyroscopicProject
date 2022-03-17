@@ -17,8 +17,13 @@ const BoardSchema = new Schema({
       ref: "Column",
     },
   ],
+  members: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
 });
-
 
 BoardSchema.post("findOneAndDelete", async function (doc) {
   console.log(doc)
