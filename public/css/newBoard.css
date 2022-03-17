@@ -1,6 +1,26 @@
 /* body {
   background-color: rgb(37, 156, 195);
 } */
+/*html, body {
+  position:inherit;
+  width: 100%;
+  height:auto;
+  left: 0;
+  top: 0;
+  z-index: 10;
+}*/
+
+html {
+  position:relative;
+  min-height: 100%;
+}
+
+body {
+  margin: 0 0 100px;
+  /* bottom = footer height */
+  
+}
+
 div.mycolumn {
   display: flex;
   border: 3px solid green;
@@ -18,6 +38,8 @@ div.mycolumn {
 .hidden {
   display: none;
 }
+
+
 
 /* Dragging and Dropping */
 
@@ -68,6 +90,46 @@ div.mycolumn {
 }
 
 /*Ayaan CSS Changes*/
+
+/*CSS for show.ejs*/
+.btn-outline-danger{
+  color: #fff;
+  background-color: red;
+}
+.btn-outline-danger:hover{
+  color: red;
+}
+
+/*CSS for new.ejs*/
+.Addbtn{
+  margin-left: 180px;
+}
+.AllBoardbtn{
+  color: #fff;
+}
+
+/*CSS for index.ejs*/
+.board-title{
+  text-align: center;
+}
+.card-body{
+  margin-left: auto;
+}
+.boards-container{
+  margin: auto;
+  margin-left: auto;
+}
+.new-board_button{
+ margin-left: 990px;
+ margin-top: 2%;
+ margin-bottom: 2%;
+}
+.board-title{
+  margin-top: 2%;
+}
+.newBoardbtn{
+  color: #fff;
+}
 /*Card background colour*/
 .bg-orange{
   background-color: #E66F25;
@@ -88,12 +150,59 @@ div.mycolumn {
   color: white;
 }
 
+/*Login Page CSS*/
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
+}
+.h-custom {
+  height: calc(100% - 73px);
+}
+.btn:hover{
+  background-color: #343A40;
+  border-color: #343A40;
+}
+.btn{
+  background-color: #E66F25;
+  border-color: #E66F25;
+  margin-left: 160px;
+}
+.loginLink{
+  margin-left: 130px;
+}
+.link-danger{
+  color: #E66F25;
+}
+.footerLogin{
+  text-align: center;
+  background-color: #E66F25;
+  
+}
+@media (max-width: 450px) {
+  .h-custom {
+    height: 100%;
+  }
+}
+
 /*Footer css*/
 footer{
+  /*background-color: #343A40;
+  color: #E66F25;  
+  left: 0;
+  bottom: 0;    
+  width: 100%;
+  overflow:hidden;
+  position:relative;*/
   background-color: #343A40;
   color: #E66F25;
-  width: auto;
-  height: auto;
+  position:relative;
+  left: 0;
+  bottom: 0;    
+  width: 100%;
+  overflow: hidden;
 }
 footer .row{
   border: 5px;
@@ -101,6 +210,7 @@ footer .row{
 .ftrele{
   color: white;
   text-decoration: none;
+  text-align: center;
 
 }
 .ftrele:hover{
@@ -134,16 +244,25 @@ footer .copyright{
   -webkit-backdrop-filter: saturate(180%) blur(20px);
   backdrop-filter: saturate(180%) blur(20px);
 }
-.site-header a {
+.site-header a:nth-child(n+1){
   color: #E66F25;
   transition: ease-in-out color .15s;
   font-weight: .83em;
+  font-size: 1.2em;  
+  text-decoration: none;
+}
+.site-header a:nth-child(n+2) {
+  color: #fff;
+  transition: ease-in-out color .15s;
+  font-weight: .83em;
+  font-size: 1em;
   text-decoration: none;
 }
 .site-header a:hover {
-  color: #fff;
+  color: #E66F25;
   text-decoration: none;
 }
+
 
 
 /*

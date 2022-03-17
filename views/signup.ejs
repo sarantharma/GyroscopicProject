@@ -1,3 +1,4 @@
+<% layout('layouts/loginBoiler') %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,6 +7,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gyroscopic - Signup</title>
   </head>
+  <body>
+    <!-- New login page code with bootstrap-->
+  <section class="vh-100">
+    <div class="container-fluid h-custom">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-md-9 col-lg-6 col-xl-5">
+          <img src="https://gyroscopic.ca/images/icons/LogoSmall.png" class="img-fluid"
+            alt="Sample image">
+        </div>
+        <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+          <form id="signup-form" action="/signup" method="POST">        
+            <div class="divider d-flex align-items-center my-4">
+              <p class="text-center fw-bold mx-3 mb-0">Sign Up</p>
+            </div>
+  
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+              <label class="form-label" for="form3Example3">Email address</label>
+              <input type="email" name="email" id="email" placeholder="example@domain.ca" required class="form-control form-control-lg"
+              /> 
+                <% if(error == "email") { %>
+                  <span class="error hidden">This email address is already in use.</span>
+                  <% } %>              
+            </div>
+
+             <!-- Username input -->
+             <div class="form-outline mb-4">
+              <label class="form-label" for="form3Example3">Username</label>
+              <input type="text" name="username" id="username" placeholder="Choose your username" pattern=".{3,15}" required title="Must be between 3 and 15 characters long" class="form-control form-control-lg"
+              /> 
+                <% if(error == "username") { %>
+                  <span class="error hidden">That username already in use.</span>
+                  <% } %>             
+            </div>
+  
+            <!-- Password input -->
+            <div class="form-outline mb-3">
+              <label class="form-label" for="form3Example4">Password</label>
+              <input type="password" name="password" id="password" placeholder="Choose your password" pattern=".{6,15}" required title="Must be 6 to 15 characters long" class="form-control form-control-lg"
+              />
+                <% if(error == "password") { %>
+                  <span class="error hidden">Error with password.</span>
+                <% } %>
+            </div>
+  
+            <div class="form-check d-flex justify-content-center mb-5">
+              <input
+                class="form-check-input me-2"
+                type="checkbox"
+                value=""
+                id="form2Example3cg"
+              />
+              <label class="form-check-label" for="form2Example3g">
+                I agree all statements in <a href="#!" class="text-body"><u>Terms of service</u></a>
+              </label>
+            </div>
+  
+            <div class="text-center text-lg-start mt-4 pt-2">
+              <button type="button" id="submit" name="submit" class="loginButton btn btn-primary btn-lg"
+                style="padding-left: 2.5rem; padding-right: 2.5rem;">Sign Up</button>
+              <p class="loginLink small fw-bold mt-2 pt-1 mb-0">Already have an account? <a href="/login"
+                  class="link-danger">Login</a></p>
+            </div>
+  
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="footerLogin d-flex flex-column    py-4 px-4 px-xl-5">
+      <!-- Copyright -->      
+      <p class="text-center fw-bold mx-3 mb-0">© Gyroscopic 2022</p>
+      <!-- Copyright -->
+    </div>
+  </section>
+  </body>
+  </html>
+  
+  
+  
+  
+  
+  <!--Old Signup Code
   <body>
     <h1> Sign Up </h1>
     <form id="signup-form" action="/signup" method="POST">
@@ -36,3 +119,4 @@
     </form>  
   </body>
 </html>
+-->

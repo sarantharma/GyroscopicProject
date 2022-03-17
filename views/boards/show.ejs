@@ -73,14 +73,14 @@
 
 <div class="all-buttons">
   <a href="/boards/<%=board._id%>/edit"
-    ><button class="btn btn-outline-secondary">Edit</button></a
+    ><button class="btn btn-outline-secondary" style="color: #fff;">Edit</button></a
   >
 
   <form action="/boards/<%=board._id%>?_method=DELETE" method="POST">
-    <button class="btn btn-outline-danger">Delete</button>
+    <button class="deleteBtn btn btn-outline-danger">Delete</button>
   </form>
 
-  <a href="/boards"><button class="btn btn-outline-info">All Boards</button></a>
+  <a href="/boards"><button class="btn btn-outline-info" style="color: #fff;">All Boards</button></a>
 </div>
 
 <script src="/socket.io/socket.io.js"></script>
