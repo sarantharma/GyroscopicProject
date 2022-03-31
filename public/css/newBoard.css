@@ -19,6 +19,17 @@ div.mycolumn {
   display: none;
 }
 
+.close-column-btn{
+
+  align-items: center;
+  margin: auto;
+}
+
+.columnName{
+  align-items: center;
+  margin-top: 10px;
+}
+
 /* Dragging and Dropping */
 
 .draggable {

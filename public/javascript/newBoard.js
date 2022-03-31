@@ -8,6 +8,11 @@ const column_3 = document.getElementsByName("column_3");
 const selectColumn = document.getElementById("columnselect");
 
 const addColumnButton = document.getElementById("addColumn");
+const addColumnContainer = document.getElementById("add-column-container");
+
+
+let removeColumn = document.querySelectorAll(".close-column-btn");
+
 
 radioButtonCustom.addEventListener("click", function () {
   selectColumn.classList.remove("hidden");
@@ -29,12 +34,35 @@ addColumnButton.addEventListener("click", function () {
     alert("You have reached the maximum columns");
     return;
   }
-  const inputColumnText = `<input
-type="text"
-class="columnName form-control mb-2"
-name="column[column_${column_number}]"
-placeholder="Enter the column name"
-/>`;
-  selectColumn.insertAdjacentHTML("beforeend", inputColumnText);
+  const inputColumnText = `
+  <div class="column">
+  <input
+  type="text"
+  class="columnName form-control mb-2"
+  name="column[column_${column_number}]"
+  placeholder="Enter the column name"
+  />
+  <button type="button" class="btn-close close-column-btn" aria-label="Close"></button>
+  </div>
+  `;
+  addColumnContainer.insertAdjacentHTML("beforeend", inputColumnText);
   column_number++;
+  removeColumn = document.querySelectorAll(".close-column-btn");
+  removeColumnFunction();
 });
+
+
+const removeColumnFunction = () => {
+  removeColumn.forEach((btn) => {
+    btn.addEventListener('click', function(){
+      console.log("GI")
+      const btnParent = btn.parentElement;
+      btnParent.remove()
+      column_number--;
+      console.log(deleteInput)
+    })
+  })
+}
+
+
+removeColumnFunction();

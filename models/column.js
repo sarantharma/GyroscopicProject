@@ -14,10 +14,10 @@ const columnSchema = new Schema({
 });
 
 columnSchema.post("deleteMany", async function (doc) {
-  console.log("Column delete");
-  doc.array.forEach(element => {
-    console.log(element)
-  });
+  // console.log("Column delete");
+  // doc.array.forEach(element => {
+  //   console.log(element)
+  // });
   if (doc) {
     await Comment.deleteMany({
       _id: {
