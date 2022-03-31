@@ -13,6 +13,7 @@ const Column = require("./models/column");
 const Comment = require("./models/comment");
 const User = require("./models/user");
 const Team = require("./models/team");
+const React = require("./models/react");
 
 const morgan = require("morgan");
 const ejsMate = require("ejs-mate");
@@ -100,7 +101,6 @@ io.on("connection", (socket) => {
         if (error) {
           console.log("Error Editing Comment");
         } else {
-          console.log("Yes");
           io.emit("commentEdit", cmt, commentID);
         }
       }
@@ -113,13 +113,57 @@ io.on("connection", (socket) => {
     io.emit("remove comment", cmtID);
   });
 
-  socket.on("like comment", async (cmtID) => {
-    const comment = await Comment.findById(cmtID);
-    comment.likes += 1;
-    await comment.save();
-    const numLikes = comment.likes;
-    io.emit("like comment", cmtID, numLikes);
+  // Like comment
+  socket.on("like", async (commentID, userId) => {
+                 
+      React.updateOne(
+          {userId: userId, commentId: commentID},
+              { $set: {
+                  userId: userId,
+                  commentId: commentID,
+                  like: true,
+                  dislike: false}
+                  },
+          {upsert:true},
+          function(error, result){
+              if(error){
+                  console.log(error);
+              }else{
+                  console.log("valid upvote");
+              }
+          }
+      );
+      let like = await React.countDocuments({commentId: commentID, like: true});
+      let dislike = await React.countDocuments({commentId: commentID, dislike: true});
+      io.emit("updateReact", commentID, like, dislike);
+      
   });
+  // Dislike comment
+  socket.on("dislike", async (commentID, userId) => {
+                 
+      React.updateOne(
+          {userId: userId, commentId: commentID},
+              { $set: {
+                  userId: userId,
+                  commentId: commentID,
+                  like: false,
+                  dislike: true}
+                  },
+          {upsert:true},
+          function(error, result){
+              if(error){
+                  console.log(error);
+              }else{
+                  console.log("valid downvote");
+              }
+          }
+      );
+      let like = await React.countDocuments({commentId: commentID, like: true});
+      let dislike = await React.countDocuments({commentId: commentID, dislike: true});
+      io.emit("updateReact", commentID, like, dislike);
+  });
+  
+
 });
 
 // ================== End Real Time ====================
