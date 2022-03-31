@@ -71,14 +71,14 @@
               style="height: 1em; width: 1em"
               class="like"
             />
-            <p class="likeCount"></p>
+            <p class="likeCount">0</p>
             <img
               src="/img/dislike.svg"
               alt="dislike"
               style="height: 1em; width: 1em"
               class="dislike"
             />
-            <p class="dislikeCount"></p>
+            <p class="dislikeCount">0</p>
           </div>
         </div>
       </div>
@@ -280,7 +280,6 @@
         // console.log(boardOwnername)
 
         if (currentUsername == cmtUser || currentUsername.trim() == boardOwnername.trim()) {
-          console.log('yes')
           commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmt._id}>
                             <div class="card-body">
                               <div class="delete-comment">
@@ -302,7 +301,6 @@
                             </div>
                         </div>   `;
         }else{
-          console.log('no')
           commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmt._id}>
                             <div class="card-body">
                           
@@ -324,6 +322,7 @@
         // location.reload();
         dragStartEnd();
         addCommentEdit();
+        addReactButton();
         // dragSocket();
         deleteComment();
       }
@@ -401,6 +400,23 @@
       }
     }
   };
+  
+  const addReactButton = () => {
+      let likeButton = document.getElementsByClassName("like");
+      let dislikeButton = document.getElementsByClassName("dislike");
+      
+      for(let i =0; i < likeButton.length; i++){
+          likeButton[i].addEventListener("click", function (e){
+              socket.emit("like", e.path[3].id, currentUser);
+          })
+      }
+      for(let i =0; i < dislikeButton.length; i++){
+          dislikeButton[i].addEventListener("click", function (e){
+              socket.emit("dislike", e.path[3].id, currentUser);
+          })
+      }          
+      
+  }
 
   // == End Functions===================================
 
@@ -541,6 +557,7 @@
   dragSocket();
   dragOver();
   addCommentEdit();
+  addReactButton();
 
   // when someone else updates a comment
   socket.on("commentEdit", function (cmt, commentID) {
@@ -551,6 +568,16 @@
             commentFount.childNodes[1].childNodes[i].textContent = cmt;
         }
     }   
+    
+  });
+  
+  // when someone else like/dislike a comment
+  socket.on("updateReact", function (commentID, like, dislike) {
+    let commentFount = document.getElementById(commentID);
+    let tolike = commentFount.getElementsByClassName("likeCount");
+    let todislike = commentFount.getElementsByClassName("dislikeCount");
+    tolike[0].textContent = like;
+    todislike[0].textContent = dislike;
     
   });
 </script>
