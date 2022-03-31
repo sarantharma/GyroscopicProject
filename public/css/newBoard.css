@@ -107,6 +107,43 @@ div.mycolumn {
   color: white;
 }
 
+/*Login Page CSS*/
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
+}
+.h-custom {
+  height: calc(100% - 73px);
+}
+.btn:hover{
+  background-color: #343A40;
+  border-color: #343A40;
+}
+.btn{
+  background-color: #E66F25;
+  border-color: #E66F25;
+  margin-left: 160px;
+}
+.loginLink{
+  margin-left: 100px;
+}
+.link-danger{
+  color: #E66F25;
+}
+.footerLogin{
+  text-align: center;
+  background-color: #E66F25;
+  
+}
+@media (max-width: 450px) {
+  .h-custom {
+    height: 100%;
+  }
+}
+
 /*Footer css*/
 footer{
   background-color: #343A40;
