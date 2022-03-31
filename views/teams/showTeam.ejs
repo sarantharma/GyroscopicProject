@@ -1,0 +1,111 @@
+<% layout('layouts/boilerplate') %>
+
+<!-- General team info -->
+<h1 class="team-title"><%= team.name %></h1>
+<h4 class="team-description"><%= team.description %></h4>
+<p class="team-owner" data-teamOwner="<%=team.owner.username%> ">Created By: <%= team.owner.username %></p>
+
+<!-- If the current user is a member of the team -->
+<% if(team.owner.equals(currentUser._id)) { %>
+    <!-- List members -->
+    <div class="members" style="background-color: #afeeee;">
+        <h5>Team members:</h5>
+        <!-- Loop through members list -->
+        <% for(let member of team.members){ %>
+        <!-- Card for each member -->
+        <div class="member" id="<%=`${member._id}`%>">
+            <!-- Special ending for current user (who is also the owner) -->
+            <% if(team.owner.equals(member._id)) { %>
+                <p class="member-name"><%=member.username%> (me)</p>
+            <% } %>
+            <!-- Print name -->
+            <% if(!team.owner.equals(member._id)) { %>
+                <p class="member-name"><%=member.username%></p>
+            <% } %>
+            <!-- Add remove button for team members except the owner -->
+            <% if(!team.owner.equals(member._id)) { %>
+                <button class="btn btn-outline-danger" onclick="removeMember(<%=member._id.toString()%>)">Remove</button>
+            <% } %>
+        </div>
+        <% } %>
+    </div>
+<% } %>
+
+<%
+// Function to check if the entered used is a member of a team
+function isMember() {
+    let i = 0;
+    for(let member of team.members) {
+        if(member._id.toString() == currentUser._id.toString()) {
+            i = i + 1;
+        }
+    }
+    return i;
+}
+ %>
+
+<!-- If the current user is not a member of the team -->
+<% if(!isMember()) { %>
+    <h2><%=isMember()%> You are not a member of this team.</h2>
+<% } %>
+
+<!-- Show the team's boards if the user is a part of the team -->
+<% if(isMember()) {
+    for(let b of boards) { %>
+        <div class="card board" style="width: 18rem">
+            <div class="card-body">
+                <h5 class="card-title"><%= b.name %></h5>
+                <h6 class="card-subtitle mb-2 text-muted"><%= b.date.toLocaleString("en-US") %></h6>
+                <p class="card-text"><%= b.description %></p>
+                <a href="/boards/<%=b._id%>"><button type="button" class="btn btn-primary btn-sm">View</button></a>
+            </div>
+        </div>
+    <% }
+} %>
+
+<!-- Buttons on the page -->
+<div class="all-buttons">
+    <% if(currentUser && team.owner.equals(currentUser)){ %>
+    <a href="/teams/<%=team._id%>/edit"
+    ><button class="btn btn-outline-secondary">Edit</button></a
+    >
+
+    <form action="/teams/<%=team._id%>?_method=DELETE" method="POST">
+        <button class="btn btn-outline-danger">Delete</button>
+    </form>
+
+    <button class="btn btn-outline-secondary" onclick="showInvite()">Invite</button>
+
+    <% } %>
+    <a href="/teams"><button class="btn btn-outline-info">My Teams</button></a>
+
+</div>
+
+<!-- Invite form -->
+<div class="invite">
+    <form id="invite-form" style="display: none;" action="/teams/<%=team._id%>/invite?_method=POST" method="POST">
+        <label class="form-label" for="email">Email</label>
+        <input class="email" type="email" id="email" name="email" required />
+        <button class="btn btn-success">Send</button>
+    </form>
+    <p id="sent"></p>
+</div>
+
+<script>
+    // Show invite button for board creators
+    function showInvite() {
+        // Make invite form visible
+        document.getElementById('invite-form').style.display = 'block';
+    }
+
+    // Remove member from team
+    function removeMember(memberid) {
+        let i = 0;
+        while(i < team.members.length) {
+            if(team.members[i]._id.toString() == memberid)
+                team.members.splice(i, 1);
+            else
+                i++;
+        }
+    }
+</script>

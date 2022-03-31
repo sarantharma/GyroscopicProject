@@ -11,16 +11,14 @@ const BoardSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
+  team: {
+    type: Schema.Types.ObjectId,
+    ref: "Team",
+  },
   columns: [
     {
       type: Schema.Types.ObjectId,
       ref: "Column",
-    },
-  ],
-  members: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "User",
     },
   ],
 });

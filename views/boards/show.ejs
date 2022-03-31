@@ -4,6 +4,10 @@
 <p class="board-owner" data-boardOwner="<%=board.owner.username%> ">Created By: <%= board.owner.username %></p>
 <p class="board-date text-muted"><%= board.date.toLocaleString("en-US") %></p>
 
+<% if(board.team != null) { %>
+  <p class="team">Team: <%= board.team.name %></p>
+<% } %>
+
 <div class="d-flex justify-content-evenly">
   <% for(let column of board.columns){ %>
 
@@ -112,21 +116,9 @@
   <form action="/boards/<%=board._id%>?_method=DELETE" method="POST">
     <button class="btn btn-outline-danger">Delete</button>
   </form>
-
-  <button class="btn btn-outline-secondary" onclick="showInvite()">Invite</button>
-
   <% } %>
   <a href="/boards"><button class="btn btn-outline-info">All Boards</button></a>
 
-</div>
-
-<div class="invite">
-  <form id="invite-form" style="display: none;" action="/boards/<%=board._id%>/invite?_method=POST" method="POST">
-    <label class="form-label" for="email">Email</label>
-    <input class="email" type="email" id="email" name="email" required />
-    <button class="btn btn-success">Send</button>
-  </form>
-  <p id="sent"></p>
 </div>
 
 <script src="/socket.io/socket.io.js"></script>
@@ -158,12 +150,6 @@
   
 
   // ==Functions =======================================
-
-  // Show invite button for board creators
-  function showInvite() {
-    // Make invite form visible
-    document.getElementById('invite-form').style.display = 'block';
-  }
 
   // Show add column button for board creators
   function showAddColumn() {

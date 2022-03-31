@@ -1,0 +1,22 @@
+<% layout('layouts/boilerplate') %>
+<h1 class="team-title">My Teams</h1>
+<div class="new-team_button">
+    <a href="/teams/new"><button type="button" class="btn btn-outline-success">New Team</button></a>
+</div>
+
+<div class="teams-container row">
+
+    <% for(let team of teams) { %>
+        <!-- List team if the current user is a member of it -->
+        <% if(team.members.includes(currentUser._id)) { %>
+            <div class="card team" style="width: 18rem">
+                <div class="card-body">
+                    <h5 class="card-title"><%= team.name %></h5>
+                    <p class="card-text"><%= team.description %></p>
+                    <a href="/teams/<%=team._id%>"><button type="button" class="btn btn-primary btn-sm">View</button></a>
+                </div>
+            </div>
+        <% } %>
+    <% } %>
+
+</div>
