@@ -8,7 +8,7 @@
 <!-- If the current user is a member of the team -->
 <% if(team.owner.equals(currentUser._id)) { %>
     <!-- List members -->
-    <div class="members" style="background-color: #afeeee;">
+    <div class="members" style="background-color: #DCDCDC;">
         <h5>Team members:</h5>
         <!-- Loop through members list -->
         <% for(let member of team.members){ %>
@@ -24,7 +24,7 @@
             <% } %>
             <!-- Add remove button for team members except the owner -->
             <% if(!team.owner.equals(member._id)) { %>
-                <button class="btn btn-outline-danger" onclick="removeMember(<%=member._id.toString()%>)">Remove</button>
+                <button class="btn btn-primary btn-sm" onclick="removeMember(<%=member._id.toString()%>)">Remove</button>
             <% } %>
         </div>
         <% } %>
@@ -67,17 +67,17 @@ function isMember() {
 <div class="all-buttons">
     <% if(currentUser && team.owner.equals(currentUser)){ %>
     <a href="/teams/<%=team._id%>/edit"
-    ><button class="btn btn-outline-secondary">Edit</button></a
+    ><button class="btn btn-primary btn-sm">Edit</button></a
     >
 
     <form action="/teams/<%=team._id%>?_method=DELETE" method="POST">
-        <button class="btn btn-outline-danger">Delete</button>
+        <button class="btn btn-primary btn-sm">Delete</button>
     </form>
 
-    <button class="btn btn-outline-secondary" onclick="showInvite()">Invite</button>
+    <button class="btn btn-primary btn-sm" onclick="showInvite()">Invite</button>
 
     <% } %>
-    <a href="/teams"><button class="btn btn-outline-info">My Teams</button></a>
+    <a href="/teams"><button class="btn btn-primary btn-sm">My Teams</button></a>
 
 </div>
 

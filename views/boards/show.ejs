@@ -95,14 +95,14 @@
 <!-- Add column -->
 <div style="position: absolute; left: 50%;">
   <% if(currentUser && board.owner.equals(currentUser)){ %>
-    <button class="btn btn-outline-secondary" onclick="showAddColumn()">Add Column</button>
+    <button class="btn btn-primary btn-sm" onclick="showAddColumn()">Add Column</button>
   <% } %>
 
     <div class="add-column">
       <form id="add-column-form" style="display: none;" action="/boards/<%=board._id%>?_method=POST" method="POST">
         <label class="form-label" for="add-column-name">Column Name</label>
         <input class="add-column-name" type="text" id="add-column-name" name="newColumnName" required />
-        <button class="btn btn-success">Add</button>
+        <button class="btn btn-primary btn-sm">Add</button>
       </form>
     </div>
 </div>
@@ -110,14 +110,14 @@
 <div class="all-buttons">
   <% if(currentUser && board.owner.equals(currentUser)){ %>
   <a href="/boards/<%=board._id%>/edit"
-    ><button class="btn btn-outline-secondary">Edit</button></a
+    ><button class="btn btn-primary btn-sm">Edit</button></a
   >
 
   <form action="/boards/<%=board._id%>?_method=DELETE" method="POST">
-    <button class="btn btn-outline-danger">Delete</button>
+    <button class="btn btn-primary btn-sm">Delete</button>
   </form>
   <% } %>
-  <a href="/boards"><button class="btn btn-outline-info">All Boards</button></a>
+  <a href="/boards"><button class="btn btn-primary btn-sm">All Boards</button></a>
 
 </div>
 
