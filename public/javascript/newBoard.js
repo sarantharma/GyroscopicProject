@@ -59,7 +59,6 @@ const removeColumnFunction = () => {
       const btnParent = btn.parentElement;
       btnParent.remove()
       column_number--;
-      console.log(deleteInput)
     })
   })
 }
