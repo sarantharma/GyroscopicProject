@@ -1,5 +1,7 @@
 <% layout('layouts/boilerplate') %>
-
+<html>
+<body>
+    
 <div class="row">
   <h1 class="text-center"></h1>
   <div class="col-6 offset-3">
@@ -57,8 +59,8 @@
 
       <!-- Button to add columns for custom made columns -->
       <div id="columnselect" class="form-group hidden">
-        <button id="addColumn" type="button" class="btn btn-info mb-3">
-          Add Column
+        <button id="addColumn" type="button" class="btn btn-success">
+         + Add Column
         </button>
 
         <!-- Three default Columns -->
@@ -66,32 +68,32 @@
           type="text"
           class="columnName form-control mb-2"
           name="column[column_1]"
-          placeholder="Enter the column name"
+          placeholder="Enter new column name"
           value="Went Well"
         />
         <input
           type="text"
           class="columnName form-control mb-2"
           name="column[column_2]"
-          placeholder="Enter the column name"
+          placeholder="Enter new column name"
           value="To Improve"
         />
         <input
           type="text"
           class="columnName form-control mb-2"
           name="column[column_3]"
-          placeholder="Enter the column name"
+          placeholder="Enter new column name"
           value="Actions"
         />
       </div>
 
       <!-- Submit the form (Board) -->
       <div class="mb-3">
-        <button class="btn btn-success">Add Board</button>
+        <button id="addBoard" class="btn btn-success">Add Board</button>
       </div>
     </form>
 
-    <a href="/boards">All Boards</a>
+    <a href="/boards" id="allBoard" class="btn btn-success">&lt&lt All Boards</a>
   </div>
 </div>
 
@@ -120,3 +122,6 @@
     });
   })();
 </script>
+
+</body>
+</html>

@@ -1,13 +1,14 @@
 <% layout('layouts/boilerplate') %>
+<html>
+<body>
 <h1 class="board-title">All Boards</h1>
 <div class="new-board_button">
-  <a href="/boards/new"><button type="button" class="btn btn-outline-success">New Board</button></a>
+  <a href="/boards/new"><button type="button" class="newBoardbtn btn btn-outline-success">+ Create New Board</button></a>
 </div>
 
 <div class="boards-container row">
-
   <%for(let board of boards){%>
-    <div class="card board" style="width: 18rem">
+    <div class="card board" style="width: 18rem; margin-left: auto;">
       <div class="card-body">
         <h5 class="card-title"><%= board.name %></h5>
         <h6 class="card-subtitle mb-2 text-muted"><%= board.date.toLocaleString("en-US") %></h6>
@@ -16,5 +17,6 @@
       </div>
     </div>
     <% } %>
-
 </div>
+</body>
+</html>

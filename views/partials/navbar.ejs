@@ -17,7 +17,7 @@
 
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/home">Gyroscopic</a>
+    <a class="navbar-brand" style="color: #E66F25" href="/home">Gyroscopic</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -31,20 +31,21 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link active" aria-current="page" href="/">Home</a>
+        <a class="nav-link active" aria-current="page" href="/home">Home</a>
         <a class="nav-link" href="/boards">Boards</a>
         <a class="nav-link" href="/boards/new">New Board</a>
+        <div class="ml-auto navbar-nav">
+          <% if(!currentUser) {%>
+          <a class="nav-link" href="/login">Login</a>
+          <a class="nav-link" href="/signup">Signup</a>
+          <% } else {%>            
+          <a class="nav-link" href="#">Hi <%=currentUser.username%></a>
+          <a class="nav-link" href="/logout">Logout</a>          
+          <% } %>
+        </div>
       </div>
 
-      <div class="ml-auto navbar-nav">
-        <% if(!currentUser) {%>
-        <a class="nav-link" href="/login">Login</a>
-        <a class="nav-link" href="/signup">Signup</a>
-        <% } else {%>
-        <a class="nav-link" href="#">Hi <%=currentUser.username%></a>
-        <a class="nav-link" href="/logout">Logout</a>
-        <% } %>
-      </div>
+   
     </div>
   </div>
 </nav> 

@@ -1,57 +1,96 @@
-<% layout('layouts/boilerplate')%>
-<h1>Login</h1>
-<div class="container mt-5">
+<!--New Login Page with new CSS, tested!-->
+<% layout('layouts/loginBoiler') %>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gyroscopic - Login</title>
+  </head>
+  <body>
+    
+  <section class="vh-100">
+    <div class="container-fluid h-custom">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-md-9 col-lg-6 col-xl-5">
+            <img src="https://gyroscopic.ca/images/icons/LogoSmall.png" class="img-fluid"
+              alt="Sample image">
+          </div>
+        <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                <div class="container mt-5">
+                  <form action="/login" method="POST" class="validated-form" novalidate>
+                    
+                    <div class="divider d-flex align-items-center my-4">
+                      <p class="text-center fw-bold mx-3 mb-0">Login</p>
+                    </div>
+                    
+                    <!--Username input-->
+                    <div class="form-outline mb-4">
+                      <label class="form-label" for="username">Username</label>
+                      <input
+                        class="form-control form-control-lg"
+                        type="text"
+                        id="username"
+                        name="username"                        
+                        required
+                      />
+                      <div class="valid-feedback">Looks good!</div>
+                    </div>                   
 
-<form action="/login" method="POST" class="validated-form" novalidate>
-  <div class="mb-3">
-    <label class="form-label" for="username">Username</label>
-    <input
-      class="form-control"
-      type="text"
-      id="username"
-      name="username"
-      required
-    />
-    <div class="valid-feedback">Looks good!</div>
-  </div>
+                    <!--Password Input-->
+                    <div class="form-outline mb-4">
+                      <label class="form-label" for="password">Password</label>
+                      <input
+                        class="form-control form-control-lg"
+                        type="password"
+                        id="password"
+                        name="password"                        
+                        required
+                      />
+                      <div class="valid-feedback">Looks good!</div>
+                    </div>
 
-  <div class="mb-3">
-    <label class="form-label" for="password">Password</label>
-    <input
-      class="form-control"
-      type="password"
-      id="password"
-      name="password"
-      required
-    />
-    <div class="valid-feedback">Looks good!</div>
-  </div>
-  <button class="btn btn-success">Login</button>
-</form>
-</div>
+                    <!--Register Button with link to login page-->
+                    <button class="btn btn-success">Login</button>
+                    <p class="loginLink small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="/signup"
+                      class="link-danger">Sign Up</a></p>
+                  </form>
+                </div>
+                
 
-<script>
-  // Example starter JavaScript for disabling form submissions if there are invalid fields
-  (function () {
-    "use strict";
-
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    const forms = document.querySelectorAll(".validated-form");
-
-    // Loop over them and prevent submission
-    Array.from(forms).forEach(function (form) {
-      form.addEventListener(
-        "submit",
-        function (event) {
-          if (!form.checkValidity()) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
-
-          form.classList.add("was-validated");
-        },
-        false
-      );
-    });
-  })();
-</script>
+                <script>
+                  // Example starter JavaScript for disabling form submissions if there are invalid fields
+                  (function () {
+                    "use strict";
+                
+                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                    const forms = document.querySelectorAll(".validated-form");
+                
+                    // Loop over them and prevent submission
+                    Array.from(forms).forEach(function (form) {
+                      form.addEventListener(
+                        "submit",
+                        function (event) {
+                          if (!form.checkValidity()) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                          }
+                
+                          form.classList.add("was-validated");
+                        },
+                        false
+                      );
+                    });
+                  })();
+                </script>
+        </div>
+      </div>
+    </div>
+    <div class="footerLogin d-flex flex-column    py-4 px-4 px-xl-5">
+      <!-- Copyright -->      
+      <p class="text-center fw-bold mx-3 mb-0">© Gyroscopic 2022</p>
+      <!-- Copyright -->
+    </div>
+  </section>
+  
