@@ -12,6 +12,7 @@ const Board = require("./models/board");
 const Column = require("./models/column");
 const Comment = require("./models/comment");
 const User = require("./models/user");
+const Team = require("./models/team");
 const React = require("./models/react");
 
 const morgan = require("morgan");
@@ -243,6 +244,7 @@ const validateBoard = (req, res, next) => {
     board: Joi.object({
       name: Joi.string().required(),
       description: Joi.string().required(),
+      team: Joi.string().allow(null, ""),
       columntype: Joi.string().required(),
     }).required(),
   });
@@ -254,6 +256,23 @@ const validateBoard = (req, res, next) => {
   } else {
     next();
   }
+};
+
+const validateTeam = (req, res, next) => {
+    const teamSchema = Joi.object({
+        team: Joi.object({
+            name: Joi.string().required(),
+            description: Joi.string().required(),
+        }).required(),
+    });
+
+    const { error } = teamSchema.validate({ team: req.body.team });
+    if (error) {
+        const msg = error.details.map((el) => el.message).join(",");
+        throw new ExpressError(msg, 400);
+    } else {
+        next();
+    }
 };
 
 const isLoggedIn = (req, res, next) => {
@@ -278,12 +297,31 @@ app.get(
   "/boards",
   catchAsync(async (req, res) => {
     const boards = await Board.find({});
-    res.render("boards/index", { boards });
+    const teams = await Team.find({});
+    res.render("boards/index", { boards, teams });
   })
 );
 
-app.get("/boards/new", isLoggedIn, (req, res) => {
-  res.render("boards/new");
+app.get(
+    "/teams",
+    isLoggedIn,
+    catchAsync(async (req, res) => {
+        const teams = await Team.find({});
+        res.render("teams/teamsIndex", { teams });
+    })
+);
+
+app.get(
+    "/boards/new",
+    isLoggedIn,
+    catchAsync(async (req, res) => {
+        const teams = await Team.find({});
+        res.render("boards/new", { teams });
+    })
+);
+
+app.get("/teams/new", isLoggedIn, (req, res) => {
+    res.render("teams/newTeam");
 });
 
 // Sign up page
@@ -316,7 +354,7 @@ app.post(
     const dateNow = new Date();
     const board = new Board({ ...req.body.board, date: dateNow });
     board.owner = req.user._id;
-    board.members.push(req.user._id);
+
     const x = await board.save();
     const newBoard = await Board.findById(x._id);
 
@@ -332,6 +370,22 @@ app.post(
     req.flash("success", "Successfully made a board!");
     res.redirect(`/boards/${board._id}`);
   })
+);
+
+app.post(
+    "/teams",
+    isLoggedIn,
+    validateTeam,
+    catchAsync(async (req, res) => {
+        const team = new Team({ ...req.body.team });
+        team.owner = req.user._id;
+        team.members.push(req.user._id);
+        const x = await team.save();
+        const newTeam = await Team.findById(x._id);
+
+        req.flash("success", "Successfully created a team");
+        res.redirect(`/teams/${team._id}`);
+    })
 );
 
 app.post(
@@ -374,30 +428,24 @@ app.get(
   "/boards/:id",
   catchAsync(async (req, res) => {
     // const board = await Board.findById(req.params.id).populate("columns");
-      const board = await Board.findById(req.params.id);
-      // Allow user to view board if they are a member of it
-    if(board.members.includes(req.user._id)) {
-        const board = await Board.findById(req.params.id)
-            .populate({
-                path: "columns",
-                populate: {
-                    path: "comments",
-                    populate: {
-                        path: "owner",
-                    },
-                },
-            })
-            .populate("owner");
+      //const board = await Board.findById(req.params.id);
+      const board = await Board.findById(req.params.id)
+          .populate({
+              path: "columns",
+              populate: {
+                  path: "comments",
+                  populate: {
+                      path: "owner",
+                  },
+              },
+          })
+          .populate("team")
+          .populate("owner");
         // .populate("comments");
         // console.log(board);
 
         res.render("boards/show", { board });
-    }
-    // Otherwise deny access
-    else{
-        // To do: add proper page for this
-        res.send("Access denied.");
-    }
+
   })
 );
 
@@ -406,7 +454,8 @@ app.get(
   isLoggedIn,
   catchAsync(async (req, res) => {
     const board = await Board.findById(req.params.id);
-    res.render("boards/edit", { board });
+    const teams = await Team.find({});
+    res.render("boards/edit", { board, teams });
   })
 );
 
@@ -463,22 +512,81 @@ app.post(
     })
 );
 
+app.get(
+    "/teams/:id",
+    isLoggedIn,
+    catchAsync(async (req, res) => {
+        const team = await Team.findById(req.params.id)
+            .populate("members")
+            .populate("owner");
+
+        // Load boards that are linked to the team
+        const boards = await Board.find({ team: team });
+
+        res.render("teams/showTeam", { team, boards });
+    })
+);
+
+app.get(
+    "/teams/:id/edit",
+    isLoggedIn,
+    catchAsync(async (req, res) => {
+        const team = await Team.findById(req.params.id);
+        res.render("teams/editTeam", { team });
+    })
+);
+
+app.put(
+    "/teams/:id",
+    isLoggedIn,
+    catchAsync(async (req, res) => {
+        const { id } = req.params;
+        const teamBeforeUpdate = await Team.findById(id);
+
+        if (!teamBeforeUpdate.owner.equals(req.user._id)) {
+            return res.redirect(`/teams/${id}`);
+        }
+        const t = { ...teamBeforeUpdate._doc, ...req.body.team };
+        const team = await Team.findByIdAndUpdate(id, {
+            ...teamBeforeUpdate._doc,
+            ...req.body.team,
+        });
+        res.redirect(`/teams/${team._id}`);
+    })
+);
+
+app.delete(
+    "/teams/:id",
+    isLoggedIn,
+    catchAsync(async (req, res) => {
+        const { id } = req.params;
+        const team = await Team.findByIdAndDelete(id);
+
+        if (!team.owner.equals(req.user._id)) {
+            return res.redirect(`/teams/${id}`);
+        }
+        req.flash("success", "Successfully deleted the team");
+        res.redirect("/teams");
+    })
+);
+
 app.post(
-    "/boards/:id/invite",
+    "/teams/:id/invite",
+    isLoggedIn,
     catchAsync(async (req, res) => {
         sendgrid.setApiKey("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");
         const url = 'http://localhost:3100/boards/' + req.params.id;
-        const board = await Board.findById(req.params.id);
+        const team = await Team.findById(req.params.id);
         const email = req.body.email;
 
         const msg = {
             to: email, // Change to your recipient
             from: 'gyroscopicboard@gmail.com', // Change to your verified sender
-            subject: 'Gyroscopic Board Invitation',
+            subject: 'Gyroscopic Team Invitation',
             templateId: 'd-478522bdf29f47468a107e3540e0d577',
             dynamic_template_data: {
-                subject: 'Gyroscopic Board Invitation',
-                boardlink: url,
+                subject: 'Gyroscopic Team Invitation',
+                teamLink: url,
             },
         }
         sendgrid
@@ -501,10 +609,10 @@ app.post(
             if(doc != null) {
                 console.log("User exists");
                 const id = invitee._id;
-                if(!board.owner.equals(invitee._id) && !board.members.includes(id)) {
+                if(!team.owner.equals(invitee._id) && !team.members.includes(id)) {
                     console.log(invitee._id);
-                    board.members.push(invitee._id);
-                    board.save();
+                    team.members.push(invitee._id);
+                    team.save();
                 }
                 else {
                     console.log("Not added: User is already a member.");

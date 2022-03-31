@@ -87,6 +87,23 @@
         />
       </div>
 
+      <!-- Dropdown to select team -->
+      <div class="mb-3">
+        <label class="form-label" for="team">Team:</label>
+        <select class="form-control" name="board[team]" id="team">
+          <!-- Default of no team -->
+          <option value=<%=null%> id="default">None</option>
+
+          <!-- Populate with the user's teams -->
+          <% for(let team of teams) { %>
+            <!-- Check if user is a member of the team -->
+            <% if(team.members.includes(currentUser._id)) { %>
+                <option value="<%=team._id%>" id="<%= team.name %>"><%= team.name %></option>
+            <% } %>
+          <% } %>
+        </select>
+      </div>
+
       <!-- Submit the form (Board) -->
       <div class="mb-3">
         <button id="addBoard" class="btn btn-success">Add Board</button>

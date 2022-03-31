@@ -1,0 +1,19 @@
+<% layout('layouts/boilerplate') %>
+<h1>Edit Team</h1>
+<form action="/teams/<%=team._id%>?_method=PUT" method="POST">
+    <div>
+        <label for="name">Name</label>
+        <input type="text" id="name" name="team[name]" value="<%=team.name%>" />
+    </div>
+    <div>
+        <label for="description">Description</label>
+        <input
+                type="text"
+                id="description"
+                name="team[description]"
+                value="<%=team.description%>"
+        />
+    </div>
+    <button>Update Team</button>
+</form>
+<a href="/teams/<%=team._id%> ">Back to Team</a>

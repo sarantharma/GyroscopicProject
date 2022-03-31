@@ -1,0 +1,65 @@
+<% layout('layouts/boilerplate') %>
+<div class="row">
+    <h1 class="text-center"></h1>
+    <div class="col-6 offset-3">
+        <form action="/teams" method="POST" novalidate class="validated-form">
+            <!-- Name for the team -->
+            <div class="mb-3">
+                <label class="form-label" for="name">Name</label>
+                <input
+                        class="form-control"
+                        type="text"
+                        id="name"
+                        name="team[name]"
+                        required
+                />
+                <div class="valid-feedback">Looks good!</div>
+            </div>
+
+            <!-- Description of the team -->
+            <div class="mb-3">
+                <label class="form-label" for="description">Description</label>
+                <textarea
+                        class="form-control"
+                        type="text"
+                        id="description"
+                        name="team[description]"
+                        required
+                ></textarea>
+                <div class="valid-feedback">Looks good!</div>
+            </div>
+
+            <!-- Submit form -->
+            <div class="mb-3">
+                <button class="btn btn-success">Create Team</button>
+            </div>
+        </form>
+        <a href="/teams">My Teams</a>
+    </div>
+</div>
+
+<script>
+    // Prevent submission of invalid forms
+    (function () {
+        "use strict";
+
+        // Fetch forms
+        const forms = document.querySelectorAll(".validated-form");
+
+        // Loop through forms and prevent submission
+        Array.from(forms).forEach(function (form) {
+            form.addEventListener(
+                "submit",
+                function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+
+                    form.classList.add("was-validated");
+                },
+                false
+            );
+        });
+    })();
+</script>
