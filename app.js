@@ -87,7 +87,10 @@ io.on("connection", (socket) => {
 
     const cmtUser = await User.findById(theComment.owner._id)
 
-    console.log(cmtUser)
+    // adding React (Like/dislike) data to comment
+    theComment.likes = await React.countDocuments({commentId: cmtID, like: true});
+    theComment.dislikes = await React.countDocuments({commentId: cmtID, dislike: true});
+    
     io.emit("drag comment", theComment, findNewColumn.id, parentColumnID, cmtUser.username);
   });
 
@@ -115,7 +118,7 @@ io.on("connection", (socket) => {
 
   // Like comment
   socket.on("like", async (commentID, userId) => {
-                 
+      // if a react exists with both (userId=userId, commentId=commentId) update it, else insert new react.
       React.updateOne(
           {userId: userId, commentId: commentID},
               { $set: {
@@ -128,19 +131,18 @@ io.on("connection", (socket) => {
           function(error, result){
               if(error){
                   console.log(error);
-              }else{
-                  console.log("valid upvote");
               }
           }
       );
       let like = await React.countDocuments({commentId: commentID, like: true});
       let dislike = await React.countDocuments({commentId: commentID, dislike: true});
+      // both like and dislike Emit updateReact
       io.emit("updateReact", commentID, like, dislike);
       
   });
   // Dislike comment
   socket.on("dislike", async (commentID, userId) => {
-                 
+      // if a react exists with both (userId=userId, commentId=commentId) update it, else insert new react.   
       React.updateOne(
           {userId: userId, commentId: commentID},
               { $set: {
@@ -153,13 +155,12 @@ io.on("connection", (socket) => {
           function(error, result){
               if(error){
                   console.log(error);
-              }else{
-                  console.log("valid downvote");
               }
           }
       );
       let like = await React.countDocuments({commentId: commentID, like: true});
       let dislike = await React.countDocuments({commentId: commentID, dislike: true});
+      // both like and dislike Emit updateReact
       io.emit("updateReact", commentID, like, dislike);
   });
   
@@ -443,6 +444,14 @@ app.get(
           .populate("owner");
         // .populate("comments");
         // console.log(board);
+        
+        // adding React (Like/dislike) data to comments
+        for(let i =0; i < board.columns.length; i++){
+            for(let j =0; j < board.columns[i].comments.length; j++){
+                board.columns[i].comments[j].likes = await React.countDocuments({commentId: board.columns[i].comments[j]._id.toString(), like: true});
+                board.columns[i].comments[j].dislikes = await React.countDocuments({commentId: board.columns[i].comments[j]._id.toString(), dislike: true});
+            }
+        }
 
         res.render("boards/show", { board });
 

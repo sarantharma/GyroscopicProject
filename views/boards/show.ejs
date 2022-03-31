@@ -75,14 +75,14 @@
               style="height: 1em; width: 1em"
               class="like"
             />
-            <p class="likeCount">0</p>
+            <p class="likeCount"><%=comment.likes%></p>
             <img
               src="/img/dislike.svg"
               alt="dislike"
               style="height: 1em; width: 1em"
               class="dislike"
             />
-            <p class="dislikeCount">0</p>
+            <p class="dislikeCount"><%=comment.dislikes%></p>
           </div>
         </div>
       </div>
@@ -281,8 +281,10 @@
                                 </p>
                                     <div class="like-dislike">
                                       <p class="comment-owner">${cmtUser}</p>
-                                        <img src="/img/like.svg" alt="like" style="height: 1em; width: 1em;">
-                                        <img src="/img/dislike.svg" alt="dislike" style="height: 1em; width: 1em;">
+                                        <img src="/img/like.svg" alt="like" style="height: 1em; width: 1em;" class="like">
+                                        <p class="likeCount"> ${cmt.likes} </p>
+                                        <img src="/img/dislike.svg" alt="dislike" style="height: 1em; width: 1em;" class="dislike">
+                                        <p class="dislikeCount"> ${cmt.dislikes} </p>
                                     </div>
                             </div>
                         </div>   `;
