@@ -2,18 +2,21 @@
 <h1>Edit Team</h1>
 <form action="/teams/<%=team._id%>?_method=PUT" method="POST">
     <div>
-        <label for="name">Name</label>
-        <input type="text" id="name" name="team[name]" value="<%=team.name%>" />
+        <label for="name" class="form-label">Name</label>
+        <input type="text" id="name" class="form-control" name="team[name]" value="<%=team.name%>" />
     </div>
     <div>
-        <label for="description">Description</label>
+        <label for="description" class="form-label">Description</label>
         <input
                 type="text"
                 id="description"
                 name="team[description]"
+                class="form-control"
                 value="<%=team.description%>"
         />
     </div>
-    <button>Update Team</button>
+    <button class="btn btn-success">Update Team</button>
 </form>
-<a href="/teams/<%=team._id%> ">Back to Team</a>
+<div id="back" style="margin-top: 20px;">
+    <a href="/teams/<%=team._id%> " class="btn btn-success">&lt&lt Back to Team</a>
+</div>

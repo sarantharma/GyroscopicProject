@@ -11,23 +11,27 @@
     <div class="members" style="background-color: #DCDCDC;">
         <h5>Team members:</h5>
         <!-- Loop through members list -->
-        <% for(let member of team.members){ %>
-        <!-- Card for each member -->
-        <div class="member" id="<%=`${member._id}`%>">
-            <!-- Special ending for current user (who is also the owner) -->
-            <% if(team.owner.equals(member._id)) { %>
-                <p class="member-name"><%=member.username%> (me)</p>
-            <% } %>
-            <!-- Print name -->
-            <% if(!team.owner.equals(member._id)) { %>
-                <p class="member-name"><%=member.username%></p>
-            <% } %>
-            <!-- Add remove button for team members except the owner -->
-            <% if(!team.owner.equals(member._id)) { %>
-                <button class="btn btn-primary btn-sm" onclick="removeMember(<%=member._id.toString()%>)">Remove</button>
-            <% } %>
-        </div>
-        <% } %>
+        <% for(let member of team.members) {
+            if(member.username != null) { %>
+                <!-- Card for each member -->
+                <div class="member" id="<%=`${member._id}`%>">
+                    <!-- Special ending for current user (who is also the owner) -->
+                    <% if(team.owner.equals(member._id)) { %>
+                        <p class="member-name"><%=member.username%> (me)</p>
+                    <% } %>
+                    <!-- Print name -->
+                    <% if(!team.owner.equals(member._id)) { %>
+                        <p class="member-name"><%=member.username%></p>
+                    <% } %>
+                    <!-- Add remove button for team members except the owner -->
+                    <% if(!team.owner.equals(member._id)) { %>
+                        <form action="/teams/<%=team._id%>/<%=member._id%>/remove?_method=DELETE" method="POST">
+                            <button class="btn btn-primary btn-sm">Remove</button>
+                        </form>
+                    <% } %>
+                </div>
+            <% }
+        } %>
     </div>
 <% } %>
 
@@ -57,6 +61,12 @@ function isMember() {
                 <h5 class="card-title"><%= b.name %></h5>
                 <h6 class="card-subtitle mb-2 text-muted"><%= b.date.toLocaleString("en-US") %></h6>
                 <p class="card-text"><%= b.description %></p>
+                <!-- Button for the team owner to remove a board from their team -->
+                <% if(currentUser && b.team.owner.equals(currentUser._id)) { %>
+                <form action="/boards/<%=b._id%>/remove?_method=DELETE" method="POST">
+                    <button class="btn btn-primary btn-sm" style="margin-left: 0;">Remove</button>
+                </form>
+                <% } %>
                 <a href="/boards/<%=b._id%>"><button type="button" class="btn btn-primary btn-sm">View</button></a>
             </div>
         </div>
@@ -84,8 +94,8 @@ function isMember() {
 <!-- Invite form -->
 <div class="invite">
     <form id="invite-form" style="display: none;" action="/teams/<%=team._id%>/invite?_method=POST" method="POST">
-        <label class="form-label" for="email">Email</label>
-        <input class="email" type="email" id="email" name="email" required />
+        <label class="form-label" for="email">Email:</label>
+        <input class="form-control" type="email" id="email" name="email" required />
         <button class="btn btn-success">Send</button>
     </form>
     <p id="sent"></p>
@@ -96,16 +106,5 @@ function isMember() {
     function showInvite() {
         // Make invite form visible
         document.getElementById('invite-form').style.display = 'block';
-    }
-
-    // Remove member from team
-    function removeMember(memberid) {
-        let i = 0;
-        while(i < team.members.length) {
-            if(team.members[i]._id.toString() == memberid)
-                team.members.splice(i, 1);
-            else
-                i++;
-        }
     }
 </script>

@@ -110,10 +110,6 @@
             ></button>
           </div>
         </div>
-
-
-
-
       </div>
 
       <!-- Dropdown to select team -->
@@ -121,7 +117,7 @@
         <label class="form-label" for="team">Team:</label>
         <select class="form-control" name="board[team]" id="team">
           <!-- Default of no team -->
-          <option value=<%=null%> id="default">None</option>
+          <option value="none" id="default">None</option>
 
           <!-- Populate with the user's teams -->
           <% for(let team of teams) { %>

@@ -296,6 +296,7 @@ app.get("/", (req, res) => {
 
 app.get(
   "/boards",
+  isLoggedIn,
   catchAsync(async (req, res) => {
     const boards = await Board.find({});
     const teams = await Team.find({});
@@ -353,6 +354,10 @@ app.post(
   validateBoard,
   catchAsync(async (req, res) => {
     const dateNow = new Date();
+    // If user chooses no team, set to null
+      if(req.body.board.team == "none") {
+          req.body.board.team = null;
+      }
     const board = new Board({ ...req.body.board, date: dateNow });
     board.owner = req.user._id;
 
@@ -392,22 +397,49 @@ app.post(
 app.post(
   "/signup",
   catchAsync(async (req, res, next) => {
-    try {
+      // Get user inputs from form
       const { email, username, password } = req.body;
-      const user = new User({ email, username });
-      const registeredUser = await User.register(user, password);
-      req.login(registeredUser, (err) => {
-        if (err) {
-          return next(err);
-        }else{
-          req.flash("success", "Successfully created an account!");
-          res.redirect("/boards");
-        }
-      });
-    } catch (e) {
-      req.flash("error", e.message);
-      res.redirect("signup");
-    }
+
+      // Check if the email is already associated with a pseudo user
+      const pseudoUser = await User.findOne({ username: null, email: email }, function (err, docs) {
+          if(docs != null) {
+              pseudoUserID = docs._id;
+              console.log(pseudoUserID);
+
+              User.findByIdAndUpdate(pseudoUserID, {username: username}).then(function (sanitizedUser) {
+                  if(sanitizedUser) {
+                      sanitizedUser.setPassword(password, function () {
+                          sanitizedUser.save();
+                          console.log("Password updated");
+                          res.redirect("/teams");
+                      });
+                  }
+                  else {
+                      console.log("Password could not be updated");
+                      res.redirect("back");
+                  }
+              },function(err) { console.error(err); })
+          }
+      }).clone().catch(function (err){console.log(err)})
+
+      // If the email is not associated with a pseudo user, register as a new user
+      if(!pseudoUser) {
+          try {
+              const user = new User({email, username});
+              const registeredUser = await User.register(user, password);
+              req.login(registeredUser, (err) => {
+                  if (err) {
+                      return next(err);
+                  } else {
+                      req.flash("success", "Successfully created an account!");
+                      res.redirect("/boards");
+                  }
+              });
+          } catch (e) {
+              req.flash("error", e.message);
+              res.redirect("signup");
+          }
+      }
   })
 );
 
@@ -428,8 +460,6 @@ app.post(
 app.get(
   "/boards/:id",
   catchAsync(async (req, res) => {
-    // const board = await Board.findById(req.params.id).populate("columns");
-      //const board = await Board.findById(req.params.id);
       const board = await Board.findById(req.params.id)
           .populate({
               path: "columns",
@@ -453,8 +483,7 @@ app.get(
             }
         }
 
-        res.render("boards/show", { board });
-
+      res.render("boards/show", { board });
   })
 );
 
@@ -475,11 +504,17 @@ app.put(
     const { id } = req.params;
     const boardBeforeUpdate = await Board.findById(id);
 
-    // Check if a board member?  || !Board.findOne({id: id}, {members: {$elemMatch: {id: req.user._id}}})
+    // Check if the user isn't the board owner
     if (!boardBeforeUpdate.owner.equals(req.user._id)) {
-      return res.redirect(`/boards/${id}`);
+        // If the board has a team, check if the current user isn't its owner
+        if(typeof(boardBeforeUpdate.team) != 'undefined' && boardBeforeUpdate.team != null && boardBeforeUpdate.team.owner == req.user._id) {
+            return res.redirect(`/boards/${id}`);
+        }
     }
     const b = { ...boardBeforeUpdate._doc, ...req.body.board };
+    // If the user chooses no team
+    if(req.body.board.team == "none")
+        req.body.board.team = null;
     const board = await Board.findByIdAndUpdate(id, {
       ...boardBeforeUpdate._doc,
       ...req.body.board,
@@ -503,8 +538,37 @@ app.delete(
   })
 );
 
+// Remove board from team
+app.delete(
+    "/boards/:id/remove",
+    isLoggedIn,
+    catchAsync(async (req, res) => {
+        // Get board id from req
+        const { id } = req.params;
+        const boardBeforeUpdate = await Board.findById(id).populate("team");
+
+        console.log(boardBeforeUpdate.team.owner);
+        console.log(req.user._id);
+
+        // If the board has a team, check if the current user isn't its owner
+        if (!boardBeforeUpdate.team.owner.equals(req.user._id)) {
+            // User doesn't have permission, redirect back
+            console.log("Permission to remove denied.");
+            return res.redirect("back");
+        }
+
+        // Unlink the board to the team
+        const board = await Board.findByIdAndUpdate(id, { team: null });
+        console.log("Board removed from team.");
+
+        // Redirect back to the team page
+        res.redirect("back");
+    })
+);
+
 app.post(
     "/boards/:id",
+    isLoggedIn,
     catchAsync(async (req, res) => {
         // Get new column name, add new column to board
         const board = await Board.findById(req.params.id);
@@ -530,7 +594,8 @@ app.get(
             .populate("owner");
 
         // Load boards that are linked to the team
-        const boards = await Board.find({ team: team });
+        const boards = await Board.find({ team: team })
+            .populate("team");
 
         res.render("teams/showTeam", { team, boards });
     })
@@ -569,6 +634,15 @@ app.delete(
     isLoggedIn,
     catchAsync(async (req, res) => {
         const { id } = req.params;
+
+        const teamBeforeUpdate = await Team.findById(id);
+        const boards = await Board.find({ team: teamBeforeUpdate });
+
+        // Unlink all boards in the team, defaulting to none
+        for(let i = 0; i < boards.length; i++) {
+            x = await Board.findByIdAndUpdate(boards[i].id, {team: null});
+        }
+
         const team = await Team.findByIdAndDelete(id);
 
         if (!team.owner.equals(req.user._id)) {
@@ -579,12 +653,40 @@ app.delete(
     })
 );
 
+app.delete(
+    "/teams/:id/:memberID/remove",
+    isLoggedIn,
+    catchAsync(async (req, res) => {
+        // Get team
+        const team = await Team.findById(req.params.id);
+
+        // Check for null url parameter and if the user is the team owner
+        if(req.params.memberID != null && team.owner.equals(req.user._id)) {
+            // Get member's id from params
+            const memberID = req.params.memberID;
+
+            // Create members list without the specified member
+            const membersList = team.members.filter(({ _id }) => _id != memberID);
+
+            // Replace the team's members list with new list
+            const updatedTeam = await Team.findByIdAndUpdate(team.id, { members: membersList });
+
+            console.log("Member removed");
+        }
+        else {
+            console.log("Error: Member not removed");
+        }
+        // Redirect back to the team page
+        res.redirect("back");
+    })
+);
+
 app.post(
     "/teams/:id/invite",
     isLoggedIn,
     catchAsync(async (req, res) => {
         sendgrid.setApiKey("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");
-        const url = 'http://localhost:3100/boards/' + req.params.id;
+        const url = 'http://localhost:3100/teams/' + req.params.id;
         const team = await Team.findById(req.params.id);
         const email = req.body.email;
 
@@ -617,24 +719,33 @@ app.post(
             // If the user exists. To do: check if already a member of board
             if(doc != null) {
                 console.log("User exists");
-                const id = invitee._id;
-                if(!team.owner.equals(invitee._id) && !team.members.includes(id)) {
-                    console.log(invitee._id);
-                    team.members.push(invitee._id);
+                const id = doc._id;
+                if(!team.owner.equals(id) && !team.members.includes(id)) {
+                    console.log(id);
+                    team.members.push(id);
                     team.save();
                 }
                 else {
                     console.log("Not added: User is already a member.");
                 }
             }
-            // If the user doesn't exist
+            // If the invitee isn't associated with an account, add their email to a pseudo user
             else {
                 console.log("User doesn't already exist");
-                // Add pseudo users...
+
+                // Create a user with only an email
+                const pseudoUser = new User({ email: email });
+                pseudoUser.save();
+                console.log(pseudoUser._id);
+                // Add pseudo user to the team's member list
+                team.members.push(pseudoUser._id);
+                team.save();
+                console.log("Pseudo user added");
             }
         }).clone().catch(function (err){console.log(err)})
 
-        res.redirect("back");
+        // Redirect back to team
+        res.redirect("/teams");
     })
 );
 

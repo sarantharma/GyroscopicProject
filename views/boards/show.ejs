@@ -5,7 +5,7 @@
 <p class="board-date text-muted"><%= board.date.toLocaleString("en-US") %></p>
 
 <% if(board.team != null) { %>
-  <p class="team">Team: <%= board.team.name %></p>
+  <a href="/teams/<%=board.team._id%>" class="btn btn-primary btn-sm">Team: <%= board.team.name %></a>
 <% } %>
 
 <div class="d-flex justify-content-evenly">
@@ -94,7 +94,7 @@
 
 <!-- Add column -->
 <div style="position: absolute; left: 50%;">
-  <% if(currentUser && board.owner.equals(currentUser)){ %>
+  <% if(currentUser && (board.owner.equals(currentUser) || isTeamOwner())){ %>
     <button class="btn btn-primary btn-sm" onclick="showAddColumn()">Add Column</button>
   <% } %>
 
@@ -107,16 +107,31 @@
     </div>
 </div>
 
-<div class="all-buttons">
-  <% if(currentUser && board.owner.equals(currentUser)){ %>
-  <a href="/boards/<%=board._id%>/edit"
-    ><button class="btn btn-primary btn-sm">Edit</button></a
-  >
+<%
+    // Function to check if the user is the owner of the team that the board is linked to
+  function isTeamOwner() {
+    if(currentUser && typeof(board.team) != 'undefined' && board.team != null) {
+        return board.team.owner.equals(currentUser._id);
+    }
+    return false;
+  }
+%>
 
-  <form action="/boards/<%=board._id%>?_method=DELETE" method="POST">
-    <button class="btn btn-primary btn-sm">Delete</button>
-  </form>
-  <% } %>
+<div class="all-buttons">
+    <!-- Show the user the edit button if they are the board or team owner -->
+    <% if((currentUser && board.owner.equals(currentUser)) || isTeamOwner()) { %>
+      <a href="/boards/<%=board._id%>/edit">
+      <button class="btn btn-primary btn-sm">Edit</button></a>
+    <% } %>
+
+    <!-- Show the user the delete button if they are the board owner -->
+    <% if(currentUser && board.owner.equals(currentUser)) { %>
+      <form action="/boards/<%=board._id%>?_method=DELETE" method="POST">
+        <button class="btn btn-primary btn-sm">Delete</button>
+      </form>
+    <% } %>
+
+    <!-- Button to navigate back to all boards view -->
   <a href="/boards"><button class="btn btn-primary btn-sm">All Boards</button></a>
 
 </div>
