@@ -67,7 +67,7 @@
             <% if( !comment.anonymous ){ %>
             <p class="comment-owner"><%=comment.owner.username%></p>
             <% } else { %>
-            <p class="comment-owner"></p>
+            <p class="comment-owner">Anonymous</p>
             <% } %>
             <img
               src="/img/like.svg"
@@ -275,12 +275,60 @@
         
         // Create a html element for the comment
         let commentHtml;
-        // Create a html element for the comment
-        // console.log(currentUsername);
-        // console.log(cmtUser)
-        // console.log(boardOwnername)
+        
+        
+        if(cmt.anonymous){
+            // post anonymously without name
+            
+            if (currentUsername == cmtUser || currentUsername.trim() == boardOwnername.trim()) {
+                // if you are the board owner, or the comment creator
+          commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmt._id}>
+                            <div class="card-body">
+                              <div class="delete-comment">
+                                <img
+                                  class="remove-comment"
+                                  src="/img/xmark.svg"
+                                  alt="like"
+                                  style="height: 1em; width: 1em"
+                                />
+                              </div>
+                                <p class="card-text comment-edit">
+                                    ${cmt.content}
+                                </p>
+                                    <div class="like-dislike">
+                                      <p class="comment-owner">Anonymous</p>
+                                        <img src="/img/like.svg" alt="like" style="height: 1em; width: 1em;" class="like">
+                                        <p class="likeCount"> ${cmt.likes} </p>
+                                        <img src="/img/dislike.svg" alt="dislike" style="height: 1em; width: 1em;" class="dislike">
+                                        <p class="dislikeCount"> ${cmt.dislikes} </p>
+                                    </div>
+                            </div>
+                        </div>   `;
+            }else{
+                // someone else's comment, and your not board owner
+          commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmt._id}>
+                            <div class="card-body">
+                          
+                                <p class="card-text comment-edit">
+                                    ${cmt.content}
+                                </p>
+                                    <div class="like-dislike">
+                                      <p class="comment-owner">Anonymous</p>
+                                        <img src="/img/like.svg" alt="like" style="height: 1em; width: 1em;" class="like">
+                                        <p class="likeCount"> ${cmt.likes} </p>
+                                        <img src="/img/dislike.svg" alt="dislike" style="height: 1em; width: 1em;" class="dislike">
+                                        <p class="dislikeCount"> ${cmt.dislikes} </p>
+                                    </div>
+                            </div>
+                        </div>   `;
 
-        if (currentUsername == cmtUser || currentUsername.trim() == boardOwnername.trim()) {
+            }
+            
+        }else{
+            // post publicly (not anonymously)
+            
+            if (currentUsername == cmtUser || currentUsername.trim() == boardOwnername.trim()) {
+                // if you are the board owner, or the comment creator
           commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmt._id}>
                             <div class="card-body">
                               <div class="delete-comment">
@@ -303,7 +351,8 @@
                                     </div>
                             </div>
                         </div>   `;
-        }else{
+            }else{
+                // someone else's comment, and your not board owner
           commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmt._id}>
                             <div class="card-body">
                           
@@ -312,17 +361,20 @@
                                 </p>
                                     <div class="like-dislike">
                                       <p class="comment-owner">${cmtUser}</p>
-                                        <img src="/img/like.svg" alt="like" style="height: 1em; width: 1em;">
-                                        <img src="/img/dislike.svg" alt="dislike" style="height: 1em; width: 1em;">
+                                        <img src="/img/like.svg" alt="like" style="height: 1em; width: 1em;" class="like">
+                                        <p class="likeCount"> ${cmt.likes} </p>
+                                        <img src="/img/dislike.svg" alt="dislike" style="height: 1em; width: 1em;" class="dislike">
+                                        <p class="dislikeCount"> ${cmt.dislikes} </p>
                                     </div>
                             </div>
                         </div>   `;
 
+            }
+            
         }
 
         // Insert the html element to the comments under the coresponding column
         newColumn.insertAdjacentHTML("beforeend", commentHtml);
-        // location.reload();
         dragStartEnd();
         addCommentEdit();
         addReactButton();
