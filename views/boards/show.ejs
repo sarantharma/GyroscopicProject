@@ -375,11 +375,26 @@
 
         // Insert the html element to the comments under the coresponding column
         newColumn.insertAdjacentHTML("beforeend", commentHtml);
-        dragStartEnd();
-        addCommentEdit();
-        addReactButton();
-        // dragSocket();
         deleteComment();
+        dragStartEnd();
+        
+        // if edit-able
+        if(currentUsername == cmtUser || currentUsername == boardOwnername){
+            document.getElementById(cmt._id).childNodes[1].addEventListener("dblclick", realTimeEdit);
+        }
+        // adding like/dislike events to the new comment
+        let newComment = document.getElementById(cmt._id);
+        let newLike = newComment.getElementsByClassName("like");
+        // like event
+        newLike[0].addEventListener("click", function (e){
+            socket.emit("like", e.path[3].id, currentUser);
+        });
+        let newDislike = newComment.getElementsByClassName("dislike");
+        // dislike event
+        newDislike[0].addEventListener("click", function (e){
+            socket.emit("dislike", e.path[3].id, currentUser);
+        });
+        
       }
     });
   };
@@ -554,8 +569,6 @@
         }else{ // anonyous comment
             
             if (currentUsername == cmtUser || currentUsername == boardOwnername) { // is delete-able
-            console.log(currentUsername)
-            console.log(boardOwnername)
             commentHtml = `<div class="card mb-2 draggable" draggable="true" id=${cmtID}>
                             <div class="card-body">
                               <div class="delete-comment">
