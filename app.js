@@ -482,7 +482,6 @@ app.get(
                 board.columns[i].comments[j].dislikes = await React.countDocuments({commentId: board.columns[i].comments[j]._id.toString(), dislike: true});
             }
         }
-
       res.render("boards/show", { board });
   })
 );

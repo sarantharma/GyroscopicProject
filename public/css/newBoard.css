@@ -147,14 +147,19 @@ div.mycolumn {
  margin-left: auto;
   margin-bottom: 10px;
 }
-#allBoard{
+.center-block{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+/*#allBoard{
   margin-left: auto;
 }
 #addBoard{
   margin-left: 45%;
   margin-top: 15px;
   margin-bottom: 15px;
-}
+}*/
 
 /*Login Page CSS*/
 .divider:after,
@@ -194,15 +199,15 @@ div.mycolumn {
 }
 
 
-/*Footer css*/
+/*Footer css
 #footer {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 3.5rem;  /* Footer height */
+  height: 3.5rem;  //Footer height
   background-color: #343A40;
   color: white;
-}
+}*/
 
 
 /*Product css*/
