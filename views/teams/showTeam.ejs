@@ -36,7 +36,7 @@
 <% } %>
 
 <%
-// Function to check if the entered used is a member of a team
+// Function to check if the entered user is a member of a team
 function isMember() {
     let i = 0;
     for(let member of team.members) {
@@ -76,9 +76,7 @@ function isMember() {
 <!-- Buttons on the page -->
 <div class="all-buttons">
     <% if(currentUser && team.owner.equals(currentUser)){ %>
-    <a href="/teams/<%=team._id%>/edit"
-    ><button class="btn btn-primary btn-sm">Edit</button></a
-    >
+    <a href="/teams/<%=team._id%>/edit"><button class="btn btn-primary btn-sm">Edit</button></a>
 
     <form action="/teams/<%=team._id%>?_method=DELETE" method="POST">
         <button class="btn btn-primary btn-sm">Delete</button>

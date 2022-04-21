@@ -50,19 +50,24 @@ div.mycolumn {
   height: 100%;
 }
 
+.card-text{
+  margin-top: 2px;
+}
+
 .like-dislike{
-  /* background-color: bisque; */
   display: flex;
-  justify-content: flex-end;
-  align-items: baseline;
-  /* align-items: center; */
-  /* height: 25px; */
+  justify-content: center;
+  align-items: center;
+
+}
+
+.comment-owner-container{
+  margin-right: auto;
 }
 
 .like-dislike > img {
-  /* margin-right: 5px; */
-  margin: 0px;
-  margin-right: 5px;
+  margin-right: 4px;
+  margin-left: 6px;
   cursor: pointer;
 }
 
@@ -122,18 +127,15 @@ div.mycolumn {
 .board-title{
   text-align: center;
 }
-.card-body{
-  margin-left: auto;
-}
+
 .boards-container{
-  margin: auto;
-  margin-left: auto;
+  display: flex;
+  justify-content: center;
 }
 .new-board_button{
- margin-left: 990px;
- margin-top: 2%;
- margin-bottom: 2%;
- position: inherit;
+  height: 3rem;
+  display: flex;
+  flex-direction: row-reverse;
 }
 .board-title{
   margin-top: 2%;
@@ -196,6 +198,23 @@ div.mycolumn {
   .h-custom {
     height: 100%;
   }
+}
+
+.team{
+  margin: 1rem;
+}
+.teams-container{
+  display: flex;
+  justify-content: center;
+}
+
+.new-team_button{
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.team-title{
+  text-align: center;
 }
 
 

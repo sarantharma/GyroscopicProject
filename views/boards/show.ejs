@@ -64,11 +64,14 @@
           <% } %>
           <p class="card-text comment-edit"><%=comment.content%></p>
           <div class="like-dislike">
-            <% if( !comment.anonymous ){ %>
-            <p class="comment-owner"><%=comment.owner.username%></p>
-            <% } else { %>
-            <p class="comment-owner">Anonymous</p>
-            <% } %>
+            <div class="comment-owner-container"> 
+              <% if( !comment.anonymous ){ %>
+              <p class="comment-owner"><%=comment.owner.username%></p>
+              <% } else { %>
+              <p class="comment-owner">Anonymous</p>
+              <% } %>
+            </div>
+           
             <img
               src="/img/like.svg"
               alt="like"
@@ -92,20 +95,7 @@
   <% } %>
 </div>
 
-<!-- Add column -->
-<div style="position: absolute; left: 50%;">
-  <% if(currentUser && (board.owner.equals(currentUser) || isTeamOwner())){ %>
-    <button class="btn btn-primary btn-sm" onclick="showAddColumn()">Add Column</button>
-  <% } %>
 
-    <div class="add-column">
-      <form id="add-column-form" style="display: none;" action="/boards/<%=board._id%>?_method=POST" method="POST">
-        <label class="form-label" for="add-column-name">Column Name</label>
-        <input class="add-column-name" type="text" id="add-column-name" name="newColumnName" required />
-        <button class="btn btn-primary btn-sm">Add</button>
-      </form>
-    </div>
-</div>
 
 <%
     // Function to check if the user is the owner of the team that the board is linked to
@@ -131,9 +121,23 @@
       </form>
     <% } %>
 
+
     <!-- Button to navigate back to all boards view -->
   <a href="/boards"><button class="btn btn-primary btn-sm">All Boards</button></a>
 
+  <!-- Add column -->
+
+  <% if(currentUser && (board.owner.equals(currentUser) || isTeamOwner())){ %>
+    <button class="btn btn-primary btn-sm" onclick="showAddColumn()">Add Column</button>
+  <% } %>
+
+    <div class="add-column">
+      <form id="add-column-form" style="display: none;" action="/boards/<%=board._id%>?_method=POST" method="POST">
+        <label class="form-label" for="add-column-name">Column Name</label>
+        <input class="add-column-name" type="text" id="add-column-name" name="newColumnName" required />
+        <button class="btn btn-primary btn-sm">Add</button>
+      </form>
+    </div>
 </div>
 
 <script src="/socket.io/socket.io.js"></script>

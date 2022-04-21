@@ -13,7 +13,15 @@
                 <div class="card-body">
                     <h5 class="card-title"><%= team.name %></h5>
                     <p class="card-text"><%= team.description %></p>
-                    <a href="/teams/<%=team._id%>"><button type="button" class="btn btn-primary btn-sm">View</button></a>
+                    <% if(team.members.includes(currentUser._id)) { %>
+                        <a href="/teams/<%=team._id%>"><button type="button" class="btn btn-primary btn-sm">View</button></a>                         
+                    <% }       
+                     else { %>
+                        <button type="button" onclick="myFunction()" class="btn btn-primary btn-sm">View</button>
+                            <% function myFunction() { %>
+                            alert("Unfortunately you are not a member of this team");
+                            <% } %>
+                    <% } %>        
                 </div>
             </div>
         <% } %>
