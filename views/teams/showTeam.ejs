@@ -26,7 +26,7 @@
                     <!-- Add remove button for team members except the owner -->
                     <% if(!team.owner.equals(member._id)) { %>
                         <form action="/teams/<%=team._id%>/<%=member._id%>/remove?_method=DELETE" method="POST">
-                            <button class="btn btn-primary btn-sm">Remove</button>
+                            <button class="btn btn-primary btn-sm" style="margin: 5px;">Remove</button>
                         </form>
                     <% } %>
                 </div>
@@ -76,16 +76,21 @@ function isMember() {
 <!-- Buttons on the page -->
 <div class="all-buttons">
     <% if(currentUser && team.owner.equals(currentUser)){ %>
-    <a href="/teams/<%=team._id%>/edit"><button class="btn btn-primary btn-sm">Edit</button></a>
+    <a href="/teams/<%=team._id%>/edit">
+        <button class="btn btn-primary btn-sm">Edit</button>
+    </a>
 
     <form action="/teams/<%=team._id%>?_method=DELETE" method="POST">
         <button class="btn btn-primary btn-sm">Delete</button>
     </form>
-
-    <button class="btn btn-primary btn-sm" onclick="showInvite()">Invite</button>
+    <div>
+        <button class="btn btn-primary btn-sm" onclick="showInvite()">Invite</button>
+    </div>
 
     <% } %>
-    <a href="/teams"><button class="btn btn-primary btn-sm">My Teams</button></a>
+    <a href="/teams">
+        <button class="btn btn-primary btn-sm">My Teams</button>
+    </a>
 
 </div>
 
