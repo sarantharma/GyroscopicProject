@@ -44,8 +44,10 @@
                     <!--Email input-->
                     <div class="form-outline mb-4">
                       <label class="form-label" for="email">Email</label>
-                      <input class="form-control form-control-lg" type="email" id="email" name="email" placeholder="example@domain.ca" required />
+                      <input class="form-control form-control-lg" type="email" id="email" name="email" placeholder="example@domain.ca" pattern="[^@\s]+@[^@\s]+\.[^@\s]+" title="example: test@domain.com"
+                      required />
                       <div class="valid-feedback">Looks good!</div>
+                      <div class="invalid-feedback">Invalid Email address</div>
                     </div>
 
                     <!--Password Input-->
@@ -59,9 +61,11 @@
                         placeholder="Must be 6 to 15 characters long"
                         minlength="6"
                         maxlength="15"
+                        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="Must contain at least one number, one uppercase and lowercase letter, and at least 6 characters"                       
                         required
                       />
                       <div class="valid-feedback">Looks good!</div>
+                      <div class="invalid-feedback">Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters</div>
                     </div>
 
                     <!--Register Button with link to login page-->
@@ -89,7 +93,6 @@
                             event.preventDefault();
                             event.stopPropagation();
                           }
-
                           form.classList.add("was-validated");
                         },
                         false
