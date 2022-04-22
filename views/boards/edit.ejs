@@ -30,18 +30,15 @@
       <% } %>
 
       <!-- Populate with the user's teams -->
-      <% for(let team of teams) { %>
-        <!-- Check if user is a member of the team -->
-        <% if(team.members.includes(currentUser._id)) {
-            // If the team is already the board's team, don't show again
-            if(typeof(board.team) != 'undefined' && board.team != null && board.team._id.toString() != team._id.toString()) { %>
-              <option value="<%=team._id%>" id="<%= team.name %>"><%= team.name %></option>
-            <% }
-            // If the board doesn't have a team, then list all
-            else if(typeof(board.team) == 'undefined' || board.team == null) { %>
-              <option value="<%=team._id%>" id="<%= team.name %>"><%= team.name %></option> <%
-            }
-        }
+      <% for(let team of teams) {
+          // If the team is already the board's team, don't show again
+          if(typeof(board.team) != 'undefined' && board.team != null && board.team._id.toString() != team._id.toString()) { %>
+          <option value="<%=team._id%>" id="<%= team.name %>"><%= team.name %></option>
+          <% }
+          // If the board doesn't have a team, then list all
+          else if(typeof(board.team) == 'undefined' || board.team == null) { %>
+          <option value="<%=team._id%>" id="<%= team.name %>"><%= team.name %></option> <%
+          }
       } %>
 
       <!-- If none wasn't the default choice, list it at the end -->

@@ -121,10 +121,7 @@
 
           <!-- Populate with the user's teams -->
           <% for(let team of teams) { %>
-            <!-- Check if user is a member of the team -->
-            <% if(team.members.includes(currentUser._id)) { %>
-                <option value="<%=team._id%>" id="<%= team.name %>"><%= team.name %></option>
-            <% } %>
+            <option value="<%=team._id%>" id="<%= team.name %>"><%= team.name %></option>
           <% } %>
         </select>
       </div>

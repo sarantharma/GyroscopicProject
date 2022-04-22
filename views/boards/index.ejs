@@ -1,13 +1,17 @@
 <% layout('layouts/boilerplate') %>
 <html>
 <body>
-<h1 class="board-title">All Boards</h1>
+<h1 class="board-title">My Boards</h1>
 <div class="new-board_button">
   <a href="/boards/new"><button type="button" class="newBoardbtn btn btn-outline-success">+ Create New Board</button></a>
 </div>
 
+<!-- Container for user's boards -->
+<% let userCount = 0;
+    let teamCount = 0; %>
 <div class="boards-container row">
-  <%for(let board of boards){%>
+  <%for(let board of userBoards){
+    userCount++; %>
     <div class="card board" style="width: 18rem; height: 11rem; margin: 1rem;">
       <div class="card-body">
         <h5 class="card-title"><%= board.name %></h5>
@@ -16,7 +20,31 @@
         <a href="/boards/<%=board._id%>"><button type="button" class="btn btn-primary btn-sm">View</button></a>
       </div>
     </div>
+    <% }
+    // If no userBoards exist
+    if(userCount === 0) { %>
+        <h3> No boards yet </h3>
     <% } %>
+</div>
+<h1 class="board-title">Team Boards</h1>
+<!-- Container for user's team's boards -->
+<div class="boards-container row">
+    <%for(let board of teamBoards){
+        teamCount++; %>
+        <div class="card board" style="width: 18rem; height: 11rem; margin: 1rem;">
+            <div class="card-body">
+                <h5 class="card-title"><%= board.name %></h5>
+                <h6 class="card-subtitle mb-2 text-muted"><%= board.date.toLocaleString("en-US") %></h6>
+                <p class="card-text"><%= board.description %></p>
+                <a href="/boards/<%=board._id%>"><button type="button" class="btn btn-primary btn-sm">View</button></a>
+            </div>
+        </div>
+    <% }
+    // If no userBoards exist
+    if(teamCount === 0) { %>
+        <h3> No boards yet </h3>
+    <% } %>
+
 </div>
 </body>
 </html>

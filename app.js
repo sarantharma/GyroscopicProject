@@ -298,9 +298,20 @@ app.get(
   "/boards",
   isLoggedIn,
   catchAsync(async (req, res) => {
-    const boards = await Board.find({});
-    const teams = await Team.find({});
-    res.render("boards/index", { boards, teams });
+      var teamBoards = [];
+      // Populate with boards that the user is the owner of
+    const userBoards = await Board.find({ owner: req.user._id });
+    // Populate with teams the user is a member of
+    const teams = await Team.find({ members: req.user._id });
+      // Populate boards from teams that the user is a member of
+      for(let i = 0; typeof teams[i] != "undefined"; i++) {
+          let boards = await Board.find({ team: teams[i]._id });
+          for(let k = 0; typeof boards[k] != "undefined"; k++) {
+              teamBoards.push(boards[k]);
+          }
+      }
+
+    res.render("boards/index", { userBoards, teamBoards, teams });
   })
 );
 
@@ -308,7 +319,7 @@ app.get(
     "/teams",
     isLoggedIn,
     catchAsync(async (req, res) => {
-        const teams = await Team.find({});
+        const teams = await Team.find({ members: req.user._id });
         res.render("teams/teamsIndex", { teams });
     })
 );
@@ -317,7 +328,7 @@ app.get(
     "/boards/new",
     isLoggedIn,
     catchAsync(async (req, res) => {
-        const teams = await Team.find({});
+        const teams = await Team.find({ members: req.user._id });
         res.render("boards/new", { teams });
     })
 );
@@ -491,7 +502,7 @@ app.get(
   isLoggedIn,
   catchAsync(async (req, res) => {
     const board = await Board.findById(req.params.id);
-    const teams = await Team.find({});
+    const teams = await Team.find({ members: req.user._id });
     res.render("boards/edit", { board, teams });
   })
 );
