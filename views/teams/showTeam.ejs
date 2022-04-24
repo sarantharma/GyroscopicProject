@@ -54,6 +54,7 @@ function isMember() {
 <% } %>
 
 <!-- Show the team's boards if the user is a part of the team -->
+<div class="teams-container row">
 <% if(isMember()) {
     for(let b of boards) { %>
         <div class="card board" style="width: 18rem">
@@ -72,7 +73,7 @@ function isMember() {
         </div>
     <% }
 } %>
-
+</div>
 <!-- Buttons on the page -->
 <div class="all-buttons">
     <% if(currentUser && team.owner.equals(currentUser)){ %>
