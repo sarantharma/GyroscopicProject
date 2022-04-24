@@ -33,11 +33,11 @@
       ></textarea>
         <div>
             <div style="float: left; width:50%;">
-                <button class="btn comment-button">Send</button>
+                <button class="btn btn-primary btn-sm comment-button">Send</button>
             </div>
             <div style="float: right; width:50%; padding-top: 18px;">
                 <input class="form-check-input is-anonymous" type="checkbox" value="" name="anonymous">
-                <label class="form-check-label">Anonymous Comment</label>
+                <label class="form-check-label" style="font-size: small;">Make Comment Anonymous</label>
             </div>
         </div>
     </form>
@@ -128,7 +128,7 @@
   <!-- Add column -->
 
   <% if(currentUser && (board.owner.equals(currentUser) || isTeamOwner())){ %>
-    <button class="btn btn-primary btn-sm" onclick="showAddColumn()">Add Column</button>
+    <a><button class="btn btn-primary btn-sm" onclick="showAddColumn()">Add Column</button></a>
   <% } %>
 
     <div class="add-column">
@@ -173,7 +173,13 @@
   // Show add column button for board creators
   function showAddColumn() {
     // Make add button visible
-    document.getElementById('add-column-form').style.display = 'block';
+    var x = document.getElementById('add-column-form');
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+    //document.getElementById('add-column-form').style.display = 'block';
   }
 
   const deleteComment = () => {
@@ -587,7 +593,7 @@
                                     ${cmt}
                                 </p>
                                 <div class="like-dislike">
-                                        <p class="comment-owner">Anonyous</p>
+                                        <p class="comment-owner">Anonymous</p>
                                         <img src="/img/like.svg" alt="like" style="height: 1em; width: 1em;" class="like">
                                         <p class="likeCount">0</p>
                                         <img src="/img/dislike.svg" alt="dislike" style="height: 1em; width: 1em;" class="dislike">
