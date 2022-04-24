@@ -1,7 +1,7 @@
 <% layout('layouts/boilerplate') %>
 
 <!-- General team info -->
-<h1 class="team-title"><%= team.name %></h1>
+<h1 class="board-title"><%= team.name %></h1>
 <h4 class="team-description"><%= team.description %></h4>
 <p class="team-owner" data-teamOwner="<%=team.owner.username%> ">Created By: <%= team.owner.username %></p>
 
@@ -100,6 +100,7 @@ function isMember() {
     <form id="invite-form" style="display: none;" action="/teams/<%=team._id%>/invite?_method=POST" method="POST">
         <label class="form-label" for="email">Email:</label>
         <input class="form-control" type="email" id="email" name="email" required />
+        <br/>
         <button class="btn btn-success">Send</button>
     </form>
     <p id="sent"></p>

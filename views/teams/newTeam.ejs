@@ -1,6 +1,6 @@
 <% layout('layouts/boilerplate') %>
 <div class="row">
-    <h1 class="text-center"></h1>
+    <h1 class="board-title">New Team</h1>
     <div class="col-6 offset-3">
         <form action="/teams" method="POST" novalidate class="validated-form">
             <!-- Name for the team -->
@@ -30,11 +30,17 @@
             </div>
 
             <!-- Submit form -->
-            <div class="mb-3">
-                <button class="btn btn-success">Create Team</button>
+            <div style="display: flex; justify-content: center">
+                <button class="btn btn-success">Create Team</button>                   
             </div>
+            <br />
+            <div style="display: flex; justify-content: center">
+                <a href="/teams" class="btn btn-success">&lt&lt My Teams</a>                   
+            </div>
+            <!-- <div class="mb-3">
+                <button class="btn btn-success">Create Team</button>
+            </div> -->
         </form>
-        <a href="/teams" class="btn btn-success">&lt&lt My Teams</a>
     </div>
 </div>
 
