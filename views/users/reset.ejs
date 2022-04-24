@@ -1,0 +1,79 @@
+<!--Page to reset a user's password-->
+<% layout('layouts/loginBoiler') %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gyroscopic - Reset Password</title>
+</head>
+<body>
+
+<section class="vh-100">
+    <div class="container-fluid h-custom">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-9 col-lg-6 col-xl-5">
+                <a href="/home"><img src="https://gyroscopic.ca/images/icons/LogoSmall.png" class="img-fluid"
+                                     alt="Sample image" /></a>
+            </div>
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                <div class="container mt-5">
+                    <form action="/reset/<%=id%>/<%=token%>?_method=POST" method="POST" class="validated-form" novalidate>
+                        <!--New Password Input-->
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="password">Password</label>
+                            <input
+                                    class="form-control form-control-lg"
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    placeholder="Must be 6 to 15 characters long"
+                                    minlength="6"
+                                    maxlength="15"
+                                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="Must contain at least one number, one uppercase and lowercase letter, and at least 6 characters"
+                                    required
+                            />
+                            <div class="valid-feedback">Looks good!</div>
+                            <div class="invalid-feedback">Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters</div>
+                        </div>
+
+                        <!--Register Button with link to login page-->
+                        <button class="btn btn-success">Reset Password</button>
+                    </form>
+                </div>
+
+
+                <script>
+                    // Example starter JavaScript for disabling form submissions if there are invalid fields
+                    (function () {
+                        "use strict";
+
+                        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                        const forms = document.querySelectorAll(".validated-form");
+
+                        // Loop over them and prevent submission
+                        Array.from(forms).forEach(function (form) {
+                            form.addEventListener(
+                                "submit",
+                                function (event) {
+                                    if (!form.checkValidity()) {
+                                        event.preventDefault();
+                                        event.stopPropagation();
+                                    }
+                                    form.classList.add("was-validated");
+                                },
+                                false
+                            );
+                        });
+                    })();
+                </script>
+            </div>
+        </div>
+    </div>
+    <div class="footerLogin d-flex flex-column    py-4 px-4 px-xl-5">
+        <!-- Copyright -->
+        <p class="text-center fw-bold mx-3 mb-0">© Gyroscopic 2022</p>
+        <!-- Copyright -->
+    </div>
+</section>

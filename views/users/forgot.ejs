@@ -1,0 +1,45 @@
+<!--Page to send a link to reset a user's password-->
+<% layout('layouts/loginBoiler') %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gyroscopic - Forgot Password</title>
+</head>
+<body>
+
+<section class="vh-100">
+    <div class="container-fluid h-custom">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-9 col-lg-6 col-xl-5">
+                <a href="/home"><img src="https://gyroscopic.ca/images/icons/LogoSmall.png" class="img-fluid"
+                                     alt="Sample image" /></a>
+            </div>
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                <div class="container mt-5">
+                    <form action="/forgot" method="POST" class="validated-form">
+                        <!--Email input-->
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="email">Email</label>
+                            <input class="form-control form-control-lg" type="email" id="email" name="email" placeholder="example@domain.ca" pattern="[^@\s]+@[^@\s]+\.[^@\s]+" title="example: test@domain.com" required />
+                        </div>
+
+                        <!--Register Button with link to login page-->
+                        <button class="btn btn-success">Send Link</button>
+                    </form>
+                </div>
+
+
+                <script>
+                </script>
+            </div>
+        </div>
+    </div>
+    <div class="footerLogin d-flex flex-column    py-4 px-4 px-xl-5">
+        <!-- Copyright -->
+        <p class="text-center fw-bold mx-3 mb-0">© Gyroscopic 2022</p>
+        <!-- Copyright -->
+    </div>
+</section>

@@ -21,6 +21,8 @@ const catchAsync = require("./utils/catchAsync");
 const ExpressError = require("./utils/ExpressError");
 const Joi = require("joi"); // For validations
 const sendgrid = require("@sendgrid/mail"); // For emails
+const jwt = require("jsonwebtoken"); // For password resets
+const jwtKey = "gyroscopic2022key";
 
 const flash = require("connect-flash");
 
@@ -359,6 +361,11 @@ app.get("/logout", (req, res) => {
   res.redirect("/boards");
 });
 
+// Forgot password
+app.get("/forgot", (req, res) => {
+    res.render("users/forgot");
+});
+
 app.post(
   "/boards",
   isLoggedIn,
@@ -448,7 +455,7 @@ app.post(
               });
           } catch (e) {
               req.flash("error", e.message);
-              res.redirect("signup");
+              res.redirect("/signup");
           }
       }
   })
@@ -466,6 +473,143 @@ app.post(
     req.flash("success", `Hi ${req.user.username}`);
     res.redirect(redirectUrl);
   }
+);
+
+app.post(
+    "/forgot",
+    catchAsync(async (req, res) => {
+        sendgrid.setApiKey("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");
+        const { email } = req.body;
+
+        // Check if the email is in the db
+        const user = await User.findOne({email: email}, function(err, doc) {
+            if (err) {
+                console.log(err);
+            }
+            // If the user exists.
+            if (doc != null) {
+                // Create token
+                const key = doc._id + jwtKey;
+                const token = jwt.sign({
+                    id: doc._id,
+                    email: email
+                }, key, { expiresIn: "30m" });
+                // Create url to reset password
+                const url = `http://localhost:3100/reset/${doc._id}/${token}`;
+
+                // Password reset email to be sent to the user's email
+                const msg = {
+                    to: email, // Change to your recipient
+                    from: 'gyroscopicboard@gmail.com', // Change to your verified sender
+                    subject: 'Gyroscopic Password Reset',
+                    templateId: 'd-fdf4fd19ea93442cae5c4128866a618c',
+                    dynamic_template_data: {
+                        subject: 'Gyroscopic Password Reset',
+                        link: url,
+                    },
+                }
+                sendgrid
+                    .send(msg)
+                    .then(() => {
+                        req.flash("success", "Password reset email sent");
+                        console.log('Email sent')
+                    })
+                    .catch((error) => {
+                        console.log("Couldn't send email:");
+                        console.error(error)
+                    })
+                res.redirect("/login");
+            }
+            else {
+                console.log("Email not in db");
+                req.flash("error", "User not found.");
+                res.redirect("/forgot");
+            }
+        }).clone().catch(function (err){console.log(err)})
+    })
+);
+
+
+
+app.get(
+    "/reset/:id/:token",
+    catchAsync(async (req, res) => {
+        const { id, token } = req.params;
+
+        // Find user
+        const user = User.findById(id, function(err, doc) {
+            if(err) {
+                console.log(err);
+            }
+            // If the user is found
+            if(doc != null) {
+                const key = doc._id + jwtKey;
+
+                // Verify
+                try {
+                    const payload = jwt.verify(token, key);
+                    res.render("users/reset", { id, token });
+                } catch(error) {
+                    console.log(error.message)
+                    res.redirect("/forgot");
+                }
+            }
+            // If the user is not found
+            else {
+                console.log("User not found");
+                req.flash("error", "User not found");
+                res.redirect("/login")
+            }
+        }).clone().catch(function (err){console.log(err)})
+    })
+);
+
+app.post(
+    "/reset/:id/:token",
+    catchAsync( async (req, res) => {
+        const { password } = req.body;
+        const { id, token } = req.params;
+
+        // Find user
+        const user = User.findById(id, function(err, doc) {
+            if(err) {
+                console.log(err);
+            }
+            // If the user is found
+            if(doc != null) {
+                const key = doc._id + jwtKey;
+
+                // Verify
+                try {
+                    const payload = jwt.verify(token, key);
+                    // Find the user and update their password
+                    User.findByIdAndUpdate(doc._id, {}).then(function (sanitizedUser) {
+                        if(sanitizedUser) {
+                            sanitizedUser.setPassword(password, function () {
+                                sanitizedUser.save();
+                                console.log("Password updated");
+                                req.flash("success", "Password updated");
+                                res.redirect("/login");
+                            });
+                        }
+                        else {
+                            console.log("Password could not be updated");
+                            res.redirect("/forgot");
+                        }
+                    },function(err) { console.error(err); })
+                } catch(error) {
+                    console.log(error.message)
+                    res.redirect("/login");
+                }
+            }
+            // If the user is not found
+            else {
+                console.log("User not found");
+                req.flash("error", "User not found");
+                res.redirect("/login")
+            }
+        }).clone().catch(function (err){console.log(err)})
+    })
 );
 
 app.get(
@@ -708,6 +852,7 @@ app.post(
             dynamic_template_data: {
                 subject: 'Gyroscopic Team Invitation',
                 teamLink: url,
+                teamName: team.name,
             },
         }
         sendgrid
@@ -726,7 +871,7 @@ app.post(
             if(err) {
                 console.log(err);
             }
-            // If the user exists. To do: check if already a member of board
+            // If the user exists.
             if(doc != null) {
                 console.log("User exists");
                 const id = doc._id;
