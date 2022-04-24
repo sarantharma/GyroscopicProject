@@ -185,7 +185,7 @@ div.mycolumn {
 .btn{
   background-color: #E66F25;
   border-color: #E66F25;
-  margin-left: 160px;
+  /* margin-left: 160px; */  
 }
 .loginLink{
   margin-left: 100px;
