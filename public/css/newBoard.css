@@ -15,6 +15,10 @@ div.mycolumn {
   padding: 10px;
 }
 
+.card-body > .card-text{
+  overflow-y: hidden;height: 20px;
+}
+
 .hidden {
   display: none;
 }
