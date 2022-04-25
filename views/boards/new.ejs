@@ -74,6 +74,7 @@
               name="column[column_1]"
               placeholder="Enter the column name"
               value="Went Well"
+              required
             />
             <button
               type="button"
@@ -89,6 +90,7 @@
               name="column[column_2]"
               placeholder="Enter the column name"
               value="To Improve"
+              required
             />
             <button
               type="button"
@@ -104,6 +106,7 @@
               name="column[column_3]"
               placeholder="Enter the column name"
               value="Actions"
+              required
             />
             <button
               type="button"
@@ -137,34 +140,29 @@
         <a href="/boards" id="allBoard" class="btn btn-success">&lt&lt All Boards</a>                  
       </div>
     </form>
-
-    <!--<a href="/boards" id="allBoard" class="btn btn-success">&lt&lt All Boards</a>*/
   </div>
 </div>
 
 <script>
-  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  // Disable form submission if there are invalid fields
   (function () {
     "use strict";
 
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    const forms = document.querySelectorAll(".validated-form");
+    // Fetch the form to be validated
+    const form = document.querySelector(".validated-form");
 
-    // Loop over them and prevent submission
-    Array.from(forms).forEach(function (form) {
-      form.addEventListener(
-        "submit",
-        function (event) {
-          if (!form.checkValidity()) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
-
-          form.classList.add("was-validated");
-        },
-        false
-      );
-    });
+    // Prevent submission
+    form.addEventListener(
+            "submit",
+            function (event) {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add("was-validated");
+            },
+            false
+    );
   })();
 </script>
 
