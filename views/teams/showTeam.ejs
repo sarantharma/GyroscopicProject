@@ -64,11 +64,13 @@ function isMember() {
                 <p class="card-text"><%= b.description %></p>
                 <!-- Button for the team owner to remove a board from their team -->
                 <% if(currentUser && b.team.owner.equals(currentUser._id)) { %>
-                <form action="/boards/<%=b._id%>/remove?_method=DELETE" method="POST">
+                <div class="team-card">
+                    <form action="/boards/<%=b._id%>/remove?_method=DELETE" method="POST">
                     <button class="btn btn-primary btn-sm" style="margin-left: 0;">Remove</button>
                 </form>
                 <% } %>
-                <a href="/boards/<%=b._id%>"><button type="button" class="btn btn-primary btn-sm">View</button></a>
+                <a href="/boards/<%=b._id%>"><button type="button" class="btn btn-primary btn-sm">View</button></a>    
+                </div>
             </div>
         </div>
     <% }
