@@ -13,6 +13,16 @@
 
   <!-- card for each column -->
   <div class="card column" id="<%=`${column._id}`%>">
+    <% if(currentUser && board.owner.equals(currentUser)) { %>
+      <div class="delete-column">
+        <img
+          class="remove-column"
+          src="/img/xmark.svg"
+          alt="like"
+          style="height: 1.3em; width: 1.3em; margin-top: 4px; margin-right: 5px;"
+        />
+      </div>
+      <% } %> 
     <h5 class="card-title"><%=column.header%></h5>
 
     <!-- <div class="comment-form-div"> -->
@@ -166,9 +176,33 @@
 
   const boardOwner = document.querySelector('.board-owner');
   const boardOwnername = boardOwner.dataset.boardowner.trim();
+
+  let remove_Column = document.querySelectorAll(".remove-column");
+
   
 
   // ==Functions =======================================
+
+  const deleteColumn = () => {
+    remove_Column = document.querySelectorAll(".remove-column");
+
+    remove_Column.forEach((remove) => {
+      remove.addEventListener("click", (e) => {
+        console.log(e.target.offsetParent.id);
+        socket.emit("remove column", e.target.offsetParent.id);
+      });
+    });
+
+
+    socket.on("remove column", (columnID) => {
+      const deleteColumn = document.getElementById(`${columnID}`);
+      if (deleteColumn) {
+        deleteColumn.remove();
+      }
+    });
+  }
+
+  deleteColumn();
 
   // Show add column button for board creators
   function showAddColumn() {
@@ -180,6 +214,8 @@
       x.style.display = "none";
     }
     //document.getElementById('add-column-form').style.display = 'block';
+  deleteColumn();
+
   }
 
   const deleteComment = () => {
@@ -653,6 +689,8 @@
   dragOver();
   addCommentEdit();
   addReactButton();
+  deleteColumn();
+
 
   // when someone else updates a comment
   socket.on("commentEdit", function (cmt, commentID) {

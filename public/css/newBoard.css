@@ -423,6 +423,14 @@ div.mycolumn {
   cursor: pointer;
 }
 
+.delete-column{
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.remove-column{
+  cursor: pointer;
+}
 
 .team-card{
   display: flex;

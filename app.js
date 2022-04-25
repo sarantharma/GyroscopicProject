@@ -121,6 +121,12 @@ io.on("connection", (socket) => {
     io.emit("remove comment", cmtID);
   });
 
+  // delete a column
+  socket.on("remove column", async (columnID) => {
+    const deletedComemnt = await Column.findByIdAndDelete(columnID);
+    io.emit("remove column", columnID);
+  });
+
   // Like comment
   socket.on("like", async (commentID, userId) => {
       // if a react exists with both (userId=userId, commentId=commentId) update it, else insert new react.
