@@ -15,4 +15,4 @@ They can also delete a column by clicking on the 'x' on the top right of each co
 
 The board’s owner can also delete the board by clicking the “Delete” button, removing it from the collection:
 ![Deleting a board](https://github.com/sarantharma/GyroscopicProject/blob/passport/User%20Guides/img/delete_board.png)
-![Deleting a board 2](https://github.com/sarantharma/GyroscopicProject/blob/passport/User%20Guides/img/delete_board.png)
+![Deleting a board 2](https://github.com/sarantharma/GyroscopicProject/blob/passport/User%20Guides/img/delete_board_2.png)
