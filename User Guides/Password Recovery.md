@@ -14,9 +14,9 @@ After clicking the link, the user is brought to the Reset page where thay can en
 ![Password reset page](https://github.com/sarantharma/GyroscopicProject/blob/passport/User%20Guides/img/new_password.png)
 
 The password must meet the same requirements as with creating an account: 
-\    - Include at least one number
-\    - Include at least one lowercase letter
-\    - Include at least one uppercase letter
-\    - Be 6 to 15 characters long
+- Include at least one number
+- Include at least one lowercase letter
+- Include at least one uppercase letter
+- Be 6 to 15 characters long
 
 After submission, the user's password in the collection is updated to the new password.
