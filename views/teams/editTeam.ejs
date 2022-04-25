@@ -1,9 +1,9 @@
 <% layout('layouts/boilerplate') %>
 <h1 class="board-title">Edit Team</h1>
-<form action="/teams/<%=team._id%>?_method=PUT" method="POST">
+<form action="/teams/<%=team._id%>?_method=PUT" method="POST" class="validated-form" novalidate>
     <div>
         <label for="name" class="form-label">Name</label>
-        <input type="text" id="name" class="form-control" name="team[name]" value="<%=team.name%>" />
+        <input type="text" id="name" class="form-control" name="team[name]" value="<%=team.name%>" required />
     </div>
     <br />
     <div>
@@ -25,3 +25,25 @@
         <a href="/teams/<%=team._id%> " class="btn btn-success">&lt&lt Back to Team</a>                   
     </div>    
 </form>
+<script>
+    // Disable form submission if there are invalid fields
+    (function () {
+        "use strict";
+
+        // Fetch the form to be validated
+        const form = document.querySelector(".validated-form");
+
+        // Prevent submission
+        form.addEventListener(
+            "submit",
+            function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add("was-validated");
+            },
+            false
+        );
+    })();
+</script>

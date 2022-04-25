@@ -45,27 +45,24 @@
 </div>
 
 <script>
-    // Prevent submission of invalid forms
+    // Disable form submission if there are invalid fields
     (function () {
         "use strict";
 
-        // Fetch forms
-        const forms = document.querySelectorAll(".validated-form");
+        // Fetch the form to be validated
+        const form = document.querySelector(".validated-form");
 
-        // Loop through forms and prevent submission
-        Array.from(forms).forEach(function (form) {
-            form.addEventListener(
-                "submit",
-                function (event) {
-                    if (!form.checkValidity()) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-
-                    form.classList.add("was-validated");
-                },
-                false
-            );
-        });
+        // Prevent submission
+        form.addEventListener(
+            "submit",
+            function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add("was-validated");
+            },
+            false
+        );
     })();
 </script>

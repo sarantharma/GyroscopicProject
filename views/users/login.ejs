@@ -65,40 +65,32 @@
                       <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="/signup"
                         class="link-danger">Sign Up</a></p>                    
                     </div>
-                    <!-- Forgot password -->                    
-                    <!-- <a style="display: flex; justify-content: center; text-align: center; margin-right: 15px;" href="/forgot"
-                      class="link-danger">Forgot Password</a> -->
-                    <!-- <p class="loginLink small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="/signup"
-                      class="link-danger">Sign Up</a></p> -->
                   </form>
                 </div>
-                
 
-                <script>
-                  // Example starter JavaScript for disabling form submissions if there are invalid fields
-                  (function () {
-                    "use strict";
-                
-                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                    const forms = document.querySelectorAll(".validated-form");
-                
-                    // Loop over them and prevent submission
-                    Array.from(forms).forEach(function (form) {
-                      form.addEventListener(
-                        "submit",
-                        function (event) {
-                          if (!form.checkValidity()) {
-                            event.preventDefault();
-                            event.stopPropagation();
-                          }
-                
-                          form.classList.add("was-validated");
-                        },
-                        false
-                      );
-                    });
-                  })();
-                </script>
+
+          <script>
+            // Disable form submission if there are invalid fields
+            (function () {
+              "use strict";
+
+              // Fetch the form to be validated
+              const form = document.querySelector(".validated-form");
+
+              // Prevent submission
+              form.addEventListener(
+                      "submit",
+                      function (event) {
+                        if (!form.checkValidity()) {
+                          event.preventDefault();
+                          event.stopPropagation();
+                        }
+                        form.classList.add("was-validated");
+                      },
+                      false
+              );
+            })();
+          </script>
         </div>
       </div>
     </div>
