@@ -52,8 +52,6 @@ io.on("connection", (socket) => {
   // ==================== Real Time ====================
   //create new comment
   socket.on("board comment", async (cmt, columnID, currentUser, isanonymous) => {
-    // console.log("message: ", cmt, columnID);
-    // console.log(columnID);
     let user = "annonymous";
     const findColumn = await Column.findById(columnID);
     const comment = new Comment({ content: cmt });
@@ -65,16 +63,13 @@ io.on("connection", (socket) => {
 
     if (currentUser != "annonymous") {
       const checkUser = await User.findById(currentUser);
-      // console.log(user);
       comment.owner = checkUser._id;
       user = checkUser.username;
     }
-    // console.log(comment);
+
     const newComment = await comment.save();
     findColumn.comments.push(newComment);
     await findColumn.save();
-    // console.log("The ID: ", newComment);
-    // console.log(newComment.id);
     io.emit("board comment", cmt, newComment.id, columnID, user, isanonymous);
   });
 
@@ -101,7 +96,6 @@ io.on("connection", (socket) => {
 
   //Editing Comment
   socket.on("commentEdit", async (cmt, commentID) => {
-    // console.log(cmt + "" + commentID);
     Comment.findOneAndUpdate(
       { _id: commentID },
       { $set: { content: cmt } },
@@ -296,15 +290,13 @@ const isLoggedIn = (req, res, next) => {
   next();
 };
 
+// Landing page
 app.get("/", (req, res) => {
   session = req.session;
-  if (session.username) {
-    res.render("home");
-  } else {
-    res.redirect("login");
-  }
+  res.render("home");
 });
 
+// Boards view: displays list of user's and user's teams' boards
 app.get(
   "/boards",
   isLoggedIn,
@@ -326,6 +318,7 @@ app.get(
   })
 );
 
+// Teams view: displays list of teams the user is a member of
 app.get(
     "/teams",
     isLoggedIn,
@@ -335,6 +328,7 @@ app.get(
     })
 );
 
+// New board page: page to create a new board
 app.get(
     "/boards/new",
     isLoggedIn,
@@ -344,6 +338,7 @@ app.get(
     })
 );
 
+// New team page: page to create a new team
 app.get("/teams/new", isLoggedIn, (req, res) => {
     res.render("teams/newTeam");
 });
@@ -375,6 +370,7 @@ app.get("/forgot", (req, res) => {
     res.render("users/forgot");
 });
 
+// Create a new board and add it to the collection
 app.post(
   "/boards",
   isLoggedIn,
@@ -392,7 +388,6 @@ app.post(
     const newBoard = await Board.findById(x._id);
 
     for (const [key, value] of Object.entries(req.body.column)) {
-      // console.log(`{${key} and ${value}}`);
       const column = new Column({ header: value, columnOrder: key.slice(-1) });
       const x = await column.save();
       const newColumn = await Column.findById(x._id);
@@ -405,6 +400,7 @@ app.post(
   })
 );
 
+// Create a new team and add it to the collection
 app.post(
     "/teams",
     isLoggedIn,
@@ -421,6 +417,7 @@ app.post(
     })
 );
 
+// Create a new user and add them to the collection
 app.post(
   "/signup",
   catchAsync(async (req, res, next) => {
@@ -431,7 +428,6 @@ app.post(
       const pseudoUser = await User.findOne({ username: null, email: email }, function (err, docs) {
           if(docs != null) {
               pseudoUserID = docs._id;
-              console.log(pseudoUserID);
 
               User.findByIdAndUpdate(pseudoUserID, {username: username}).then(function (sanitizedUser) {
                   if(sanitizedUser) {
@@ -470,6 +466,7 @@ app.post(
   })
 );
 
+// Validate and sign user in
 app.post(
   "/login",
   passport.authenticate("local", {
@@ -484,6 +481,7 @@ app.post(
   }
 );
 
+// Send recovery email for a forgotten password
 app.post(
     "/forgot",
     catchAsync(async (req, res) => {
@@ -539,7 +537,7 @@ app.post(
                     req.flash("success", "Recovery email sent");
                     res.redirect("/login");
                 } else {
-                    console.log("Email not in db");
+                    console.log("Email not in collection");
                     req.flash("error", "User not found.");
                     res.redirect("/forgot");
                 }
@@ -548,8 +546,7 @@ app.post(
     })
 );
 
-
-
+// Page to reset password from temporary email link
 app.get(
     "/reset/:id/:token",
     catchAsync(async (req, res) => {
@@ -564,7 +561,7 @@ app.get(
             if(doc != null) {
                 const key = doc._id + jwtKey;
 
-                // Verify
+                // Verify, render upon success
                 try {
                     const payload = jwt.verify(token, key);
                     res.render("users/reset", { id, token });
@@ -573,7 +570,7 @@ app.get(
                     res.redirect("/forgot");
                 }
             }
-            // If the user is not found
+            // If the user is not found, redirect to login page
             else {
                 console.log("User not found");
                 req.flash("error", "User not found");
@@ -583,6 +580,7 @@ app.get(
     })
 );
 
+// Update password in the collection from the reset password form
 app.post(
     "/reset/:id/:token",
     catchAsync( async (req, res) => {
@@ -631,6 +629,7 @@ app.post(
     })
 );
 
+// Board's page: view an individual board
 app.get(
   "/boards/:id",
   catchAsync(async (req, res) => {
@@ -646,8 +645,6 @@ app.get(
           })
           .populate("team")
           .populate("owner");
-        // .populate("comments");
-        // console.log(board);
 
         // adding React (Like/dislike) data to comments
         for(let i =0; i < board.columns.length; i++){
@@ -660,6 +657,7 @@ app.get(
   })
 );
 
+// Board edit page: page to edit board attributes
 app.get(
   "/boards/:id/edit",
   isLoggedIn,
@@ -670,6 +668,7 @@ app.get(
   })
 );
 
+// Update board
 app.put(
   "/boards/:id",
   isLoggedIn,
@@ -696,6 +695,7 @@ app.put(
   })
 );
 
+// Delete a board
 app.delete(
   "/boards/:id",
   isLoggedIn,
@@ -720,9 +720,6 @@ app.delete(
         const { id } = req.params;
         const boardBeforeUpdate = await Board.findById(id).populate("team");
 
-        console.log(boardBeforeUpdate.team.owner);
-        console.log(req.user._id);
-
         // If the board has a team, check if the current user isn't its owner
         if (!boardBeforeUpdate.team.owner.equals(req.user._id)) {
             // User doesn't have permission, redirect back
@@ -739,6 +736,7 @@ app.delete(
     })
 );
 
+// Add a column to a board
 app.post(
     "/boards/:id",
     isLoggedIn,
@@ -758,6 +756,7 @@ app.post(
     })
 );
 
+// Team's page: view an individual team along with the boards associated with it
 app.get(
     "/teams/:id",
     isLoggedIn,
@@ -774,6 +773,7 @@ app.get(
     })
 );
 
+// Team edit page: edit the name and description of a team
 app.get(
     "/teams/:id/edit",
     isLoggedIn,
@@ -783,6 +783,7 @@ app.get(
     })
 );
 
+// Update team
 app.put(
     "/teams/:id",
     isLoggedIn,
@@ -802,6 +803,7 @@ app.put(
     })
 );
 
+// Delete a team
 app.delete(
     "/teams/:id",
     isLoggedIn,
@@ -826,6 +828,7 @@ app.delete(
     })
 );
 
+// Remove a member from a team
 app.delete(
     "/teams/:id/:memberID/remove",
     isLoggedIn,
@@ -854,6 +857,7 @@ app.delete(
     })
 );
 
+// Invite a user to a team using a dynamic SendGrid template
 app.post(
     "/teams/:id/invite",
     isLoggedIn,
@@ -872,6 +876,7 @@ app.post(
             const team = await Team.findById(req.params.id);
             const email = req.body.email;
 
+            // Construct dynamic email message
             const msg = {
                 to: email, // Change to your recipient
                 from: 'gyroscopicboard@gmail.com', // Change to your verified sender
@@ -883,6 +888,7 @@ app.post(
                     teamName: team.name,
                 },
             }
+            // Send email
             sendgrid
                 .send(msg)
                 .then(() => {
@@ -903,8 +909,9 @@ app.post(
                 if (doc != null) {
                     console.log("User exists");
                     const id = doc._id;
+                    // If the invitee isn't already a team member
                     if (!team.owner.equals(id) && !team.members.includes(id)) {
-                        console.log(id);
+                        // Add invitee to the team
                         team.members.push(id);
                         team.save();
                     } else {
