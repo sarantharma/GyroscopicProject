@@ -12,4 +12,4 @@ The user can view a specific team by clicking on their respective “View” but
 
 If the user is the team’s owner, they can also see a list of all the team members:
 ![Team page from owner](https://github.com/sarantharma/GyroscopicProject/blob/passport/User%20Guides/img/team_view_2.png)
-On this page, the team owner can also [invite and remove members from the team](https://github.com/sarantharma/GyroscopicProject/blob/passport/User%20Guides/Inviting%20and%20Removing%20Team%20Members.md) as well as edit or delete it [link to guide]
+On this page, the team owner can also [invite and remove members from the team](https://github.com/sarantharma/GyroscopicProject/blob/passport/User%20Guides/Inviting%20and%20Removing%20Team%20Members.md) as well as [edit or delete it](https://github.com/sarantharma/GyroscopicProject/blob/passport/User%20Guides/Editing%20and%20Deleting%20Teams.md)
