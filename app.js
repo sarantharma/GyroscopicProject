@@ -900,7 +900,7 @@ app.post(
         }).clone().catch(function (err){console.log(err)})
 
         // Redirect back to team
-        res.redirect("/teams");
+        res.redirect("back");
     })
 );
 
