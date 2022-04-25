@@ -518,6 +518,7 @@ app.post(
                         console.log("Couldn't send email:");
                         console.error(error)
                     })
+                req.flash("success", "Recovery email sent");
                 res.redirect("/login");
             }
             else {
