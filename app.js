@@ -358,7 +358,7 @@ app.get("/home", (req, res) => {
 app.get("/logout", (req, res) => {
   req.logout();
   req.flash("success", "Successfully logged out!");
-  res.redirect("/boards");
+  res.redirect("/home");
 });
 
 // Forgot password
