@@ -10,6 +10,9 @@ They can also add a column by clicking the “Add Column” button, which then b
 ![Adding a column](https://github.com/sarantharma/GyroscopicProject/blob/passport/User%20Guides/img/add_column.png)
 ![Adding a column 2](https://github.com/sarantharma/GyroscopicProject/blob/passport/User%20Guides/img/add_column_2.png)
 
+They can also delete a column by clicking on the 'x' on the top right of each column:
+![Delete column](https://github.com/sarantharma/GyroscopicProject/blob/passport/User%20Guides/img/delete_column.png)
+
 The board’s owner can also delete the board by clicking the “Delete” button, removing it from the collection:
 ![Deleting a board](https://github.com/sarantharma/GyroscopicProject/blob/passport/User%20Guides/img/delete_board.png)
 ![Deleting a board 2](https://github.com/sarantharma/GyroscopicProject/blob/passport/User%20Guides/img/delete_board.png)
