@@ -20,7 +20,10 @@ const ejsMate = require("ejs-mate");
 const catchAsync = require("./utils/catchAsync");
 const ExpressError = require("./utils/ExpressError");
 const Joi = require("joi"); // For validations
+
 const sendgrid = require("@sendgrid/mail"); // For emails
+const API_KEY = "default"; // CHANGE TO API KEY
+
 const jwt = require("jsonwebtoken"); // For password resets
 const jwtKey = "gyroscopic2022key";
 
@@ -59,7 +62,7 @@ io.on("connection", (socket) => {
     }else{
         comment.anonymous = true;
     }
-    
+
     if (currentUser != "annonymous") {
       const checkUser = await User.findById(currentUser);
       // console.log(user);
@@ -92,7 +95,7 @@ io.on("connection", (socket) => {
     // adding React (Like/dislike) data to comment
     theComment.likes = await React.countDocuments({commentId: cmtID, like: true});
     theComment.dislikes = await React.countDocuments({commentId: cmtID, dislike: true});
-    
+
     io.emit("drag comment", theComment, findNewColumn.id, parentColumnID, cmtUser.username);
   });
 
@@ -140,11 +143,11 @@ io.on("connection", (socket) => {
       let dislike = await React.countDocuments({commentId: commentID, dislike: true});
       // both like and dislike Emit updateReact
       io.emit("updateReact", commentID, like, dislike);
-      
+
   });
   // Dislike comment
   socket.on("dislike", async (commentID, userId) => {
-      // if a react exists with both (userId=userId, commentId=commentId) update it, else insert new react.   
+      // if a react exists with both (userId=userId, commentId=commentId) update it, else insert new react.
       React.updateOne(
           {userId: userId, commentId: commentID},
               { $set: {
@@ -165,7 +168,7 @@ io.on("connection", (socket) => {
       // both like and dislike Emit updateReact
       io.emit("updateReact", commentID, like, dislike);
   });
-  
+
 
 });
 
@@ -478,54 +481,64 @@ app.post(
 app.post(
     "/forgot",
     catchAsync(async (req, res) => {
-        sendgrid.setApiKey("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");
-        const { email } = req.body;
+        // Check that the SendGrid API key is set, otherwise display error and abort
+        if(API_KEY == "default")
+        {
+            console.log("Error: SendGrid API key not set");
+            req.flash("error", "Error: SendGrid API key not set");
+            res.redirect("/login");
+        }
+        else {
+            sendgrid.setApiKey(API_KEY);
 
-        // Check if the email is in the db
-        const user = await User.findOne({email: email}, function(err, doc) {
-            if (err) {
-                console.log(err);
-            }
-            // If the user exists.
-            if (doc != null) {
-                // Create token
-                const key = doc._id + jwtKey;
-                const token = jwt.sign({
-                    id: doc._id,
-                    email: email
-                }, key, { expiresIn: "30m" });
-                // Create url to reset password
-                const url = `http://localhost:3100/reset/${doc._id}/${token}`;
+            const {email} = req.body;
 
-                // Password reset email to be sent to the user's email
-                const msg = {
-                    to: email, // Change to your recipient
-                    from: 'gyroscopicboard@gmail.com', // Change to your verified sender
-                    subject: 'Gyroscopic Password Reset',
-                    templateId: 'd-fdf4fd19ea93442cae5c4128866a618c',
-                    dynamic_template_data: {
-                        subject: 'Gyroscopic Password Reset',
-                        link: url,
-                    },
+            // Check if the email is in the db
+            const user = await User.findOne({email: email}, function (err, doc) {
+                if (err) {
+                    console.log(err);
                 }
-                sendgrid
-                    .send(msg)
-                    .then(() => {
-                        req.flash("success", "Password reset email sent");
-                        console.log('Email sent')
-                    })
-                    .catch((error) => {
-                        console.log("Couldn't send email:");
-                        console.error(error)
-                    })
-                res.redirect("/login");
-            }
-            else {
-                console.log("Email not in db");
-                req.flash("error", "User not found.");
-                res.redirect("/forgot");
-            }
-        }).clone().catch(function (err){console.log(err)})
+                // If the user exists.
+                if (doc != null) {
+                    // Create token
+                    const key = doc._id + jwtKey;
+                    const token = jwt.sign({
+                        id: doc._id,
+                        email: email
+                    }, key, {expiresIn: "30m"});
+                    // Create url to reset password
+                    const url = `http://localhost:3100/reset/${doc._id}/${token}`;
+
+                    // Password reset email to be sent to the user's email
+                    const msg = {
+                        to: email, // Change to your recipient
+                        from: 'gyroscopicboard@gmail.com', // Change to your verified sender
+                        subject: 'Gyroscopic Password Reset',
+                        templateId: 'd-fdf4fd19ea93442cae5c4128866a618c',
+                        dynamic_template_data: {
+                            subject: 'Gyroscopic Password Reset',
+                            link: url,
+                        },
+                    }
+                    sendgrid
+                        .send(msg)
+                        .then(() => {
+                            req.flash("success", "Password reset email sent");
+                            console.log('Email sent')
+                        })
+                        .catch((error) => {
+                            console.log("Couldn't send email:");
+                            console.error(error)
+                        })
+                    req.flash("success", "Recovery email sent");
+                    res.redirect("/login");
+                } else {
+                    console.log("Email not in db");
+                    req.flash("error", "User not found.");
+                    res.redirect("/forgot");
+                }
+            }).clone().catch(function (err) { console.log(err) })
+        }
     })
 );
 
@@ -629,7 +642,7 @@ app.get(
           .populate("owner");
         // .populate("comments");
         // console.log(board);
-        
+
         // adding React (Like/dislike) data to comments
         for(let i =0; i < board.columns.length; i++){
             for(let j =0; j < board.columns[i].comments.length; j++){
@@ -839,68 +852,77 @@ app.post(
     "/teams/:id/invite",
     isLoggedIn,
     catchAsync(async (req, res) => {
-        sendgrid.setApiKey("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");
-        const url = 'http://localhost:3100/teams/' + req.params.id;
-        const team = await Team.findById(req.params.id);
-        const email = req.body.email;
-
-        const msg = {
-            to: email, // Change to your recipient
-            from: 'gyroscopicboard@gmail.com', // Change to your verified sender
-            subject: 'Gyroscopic Team Invitation',
-            templateId: 'd-478522bdf29f47468a107e3540e0d577',
-            dynamic_template_data: {
-                subject: 'Gyroscopic Team Invitation',
-                teamLink: url,
-                teamName: team.name,
-            },
+        // Check that the SendGrid API key is set, otherwise display error and abort
+        if(API_KEY === "default")
+        {
+            console.log("Error: SendGrid API key not set");
+            req.flash("error", "Error: SendGrid API key not set");
+            res.redirect("back");
         }
-        sendgrid
-            .send(msg)
-            .then(() => {
-                console.log('Email sent')
-            })
-            .catch((error) => {
-                console.error(error)
-            })
+        else {
+            sendgrid.setApiKey(API_KEY);
 
-        req.flash("success", `Invite sent`);
+            const url = 'http://localhost:3100/teams/' + req.params.id;
+            const team = await Team.findById(req.params.id);
+            const email = req.body.email;
 
-        // If user already has an account, add to members list of board
-        const invitee = await User.findOne({email: email}, function(err, doc) {
-            if(err) {
-                console.log(err);
+            const msg = {
+                to: email, // Change to your recipient
+                from: 'gyroscopicboard@gmail.com', // Change to your verified sender
+                subject: 'Gyroscopic Team Invitation',
+                templateId: 'd-478522bdf29f47468a107e3540e0d577',
+                dynamic_template_data: {
+                    subject: 'Gyroscopic Team Invitation',
+                    teamLink: url,
+                    teamName: team.name,
+                },
             }
-            // If the user exists.
-            if(doc != null) {
-                console.log("User exists");
-                const id = doc._id;
-                if(!team.owner.equals(id) && !team.members.includes(id)) {
-                    console.log(id);
-                    team.members.push(id);
-                    team.save();
+            sendgrid
+                .send(msg)
+                .then(() => {
+                    console.log('Email sent')
+                })
+                .catch((error) => {
+                    console.error(error)
+                })
+
+            req.flash("success", `Invite sent`);
+
+            // If user already has an account, add to members list of board
+            const invitee = await User.findOne({email: email}, function (err, doc) {
+                if (err) {
+                    console.log(err);
                 }
+                // If the user exists.
+                if (doc != null) {
+                    console.log("User exists");
+                    const id = doc._id;
+                    if (!team.owner.equals(id) && !team.members.includes(id)) {
+                        console.log(id);
+                        team.members.push(id);
+                        team.save();
+                    } else {
+                        console.log("Not added: User is already a member.");
+                    }
+                }
+                // If the invitee isn't associated with an account, add their email to a pseudo user
                 else {
-                    console.log("Not added: User is already a member.");
+                    console.log("User doesn't already exist");
+
+                    // Create a user with only an email
+                    const pseudoUser = new User({email: email});
+                    pseudoUser.save();
+                    console.log(pseudoUser._id);
+                    // Add pseudo user to the team's member list
+                    team.members.push(pseudoUser._id);
+                    team.save();
+                    console.log("Pseudo user added");
                 }
-            }
-            // If the invitee isn't associated with an account, add their email to a pseudo user
-            else {
-                console.log("User doesn't already exist");
+            }).clone().catch(function (err) { console.log(err) })
 
-                // Create a user with only an email
-                const pseudoUser = new User({ email: email });
-                pseudoUser.save();
-                console.log(pseudoUser._id);
-                // Add pseudo user to the team's member list
-                team.members.push(pseudoUser._id);
-                team.save();
-                console.log("Pseudo user added");
-            }
-        }).clone().catch(function (err){console.log(err)})
-
-        // Redirect back to team
-        res.redirect("back");
+            // Redirect back to team
+            res.redirect("back");
+        }
     })
 );
 
