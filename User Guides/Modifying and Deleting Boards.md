@@ -8,7 +8,7 @@ These users can click the “Edit” button to be brought to the Edit Board page
 
 They can also add a column by clicking the “Add Column” button, which then brings up a text field for the column name and an “Add” button. After entering the name and clicking the button, the column is added to the end of the board:
 ![Adding a column](https://github.com/sarantharma/GyroscopicProject/blob/passport/User%20Guides/img/add_column.png)
-![Adding a column 2](https://github.com/sarantharma/GyroscopicProject/blob/passport/User%20Guides/img/add_column.png)
+![Adding a column 2](https://github.com/sarantharma/GyroscopicProject/blob/passport/User%20Guides/img/add_column_2.png)
 
 The board’s owner can also delete the board by clicking the “Delete” button, removing it from the collection:
 ![Deleting a board](https://github.com/sarantharma/GyroscopicProject/blob/passport/User%20Guides/img/delete_board.png)
