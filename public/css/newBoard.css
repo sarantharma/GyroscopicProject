@@ -422,3 +422,28 @@ div.mycolumn {
 .remove-comment{
   cursor: pointer;
 }
+
+
+.team-card{
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.member{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  height: 50px;
+  margin: 5px;
+  padding: 5px;
+  background-color: #eeeeeead;
+}
+
+
+.member > .member-name{
+  margin-top: 12.5px;
+  margin-right: 10px;
+
+}
