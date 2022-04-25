@@ -1,3 +1,5 @@
+# Creating an Account
+
 To create an account, simply click “Signup” on the navbar:
 ![Create an account from the home page](https://github.com/sarantharma/GyroscopicProject/blob/passport/User%20Guides/img/create_account_home.png?raw=true)
 This can also be done from the Login page:
