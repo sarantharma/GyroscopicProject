@@ -117,6 +117,18 @@ io.on("connection", (socket) => {
 
   // delete a column
   socket.on("remove column", async (columnID) => {
+      try {
+          // Find the board that has the column
+          const board = await Board.findOne({ columns: columnID } );
+
+          // Make a new columns array that excludes the column
+          const columns = board.columns.filter(({ _id }) => _id != columnID);
+
+          const newBoard = await Board.findByIdAndUpdate(board.id, { columns: columns });
+      } catch (error) {
+          console.log(error);
+      }
+
     const deletedComemnt = await Column.findByIdAndDelete(columnID);
     io.emit("remove column", columnID);
   });
@@ -232,15 +244,6 @@ app.use((req, res, next) => {
   res.locals.error = req.flash("error");
   next();
 });
-
-// Express session
-// app.use(
-//   expressSession({
-//     saveUninitialized: false,
-//     secret: "gyroscopicboard",
-//     resave: false,
-//   })
-// );
 
 // Cookie parser
 app.use(parser());
