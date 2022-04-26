@@ -2,7 +2,7 @@
 ### By Jared Corman, Steven Nash, Tharmarajah Saranyan, and Mohammed Ayaan Shirazi
 # Intro
 
-Gyroscopic internal collaboration tool is a remote retrospective tool. It simplifies the collection of feedback from team members and facilitates collaboration and communication. Gyroscopic internal collaboration makes it easy to maintain an asynchronous workflow. It allows users to assign tasks to other team members, add team members to projects, and monitor deadlines. It is very useful as a to-do list or calendar for strategic planning. 
+Gyroscopic Retrospective is a remote tool to help with conducting sprint retrospectives. It simplifies the collection of feedback from team members and facilitates collaboration and communication. Gyroscopic Retrospective makes it easy to maintain an asynchronous workflow. It allows users to assign tasks to other team members, add team members to projects, and monitor deadlines. It is very useful as a to-do list or calendar for strategic planning. 
 
 
 
