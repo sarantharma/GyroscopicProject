@@ -21,4 +21,7 @@ Various tests of user stories on the final version of the software in the follow
 - The expected result
 - The actual result
 
+### [Work Logs](https://github.com/sarantharma/GyroscopicProject/blob/passport/Documentation/gitlogs.txt)
+Collection of git logs.
+
 #### Documentation on how to use the application can be found under [User Guides](https://github.com/sarantharma/GyroscopicProject/tree/passport/User%20Guides)
