@@ -1,5 +1,8 @@
 # Final Documentation 
 
+### [Executive Summary](https://github.com/sarantharma/GyroscopicProject/blob/passport/Documentation/Executive_Summary.pdf)
+Summary poster outlining the use and purpose of the application.
+
 ### [Final Design Documentation](https://github.com/sarantharma/GyroscopicProject/blob/passport/Documentation/Design_Doc.pdf)
 Complete project summary consisting of:
 - Project outline
