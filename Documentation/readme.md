@@ -1,6 +1,6 @@
 # Final Documentation 
 
-### [Final Design Documentation](github.com/sarantharma/GyroscopicProject/tree/passport/Documentation/Design_Doc.pdf)
+### [Final Design Documentation](https://github.com/sarantharma/GyroscopicProject/blob/passport/Documentation/Design_Doc.pdf)
 Complete project summary consisting of:
 - Project outline
 - Significant design changes
@@ -11,7 +11,7 @@ Complete project summary consisting of:
 - List of relevant business events
 - Design diagrams
 
-### [Final Testing Documentation](github.com/sarantharma/GyroscopicProject/tree/passport/Documentation/Testing.pdf)
+### [Final Testing Documentation](https://github.com/sarantharma/GyroscopicProject/blob/passport/Documentation/Testing.pdf)
 Various tests of user stories on the final version of the software in the following format:
 - Description of the user story
 - Description of the specific test for the user story
