@@ -45,6 +45,20 @@ A good place to learn the different functionalities of the project and how to ma
 
 ![Animation4](https://github.com/sarantharma/GyroscopicProject/blob/passport/public/img/Animation4.gif)
 
+# Final Documentation 
+
+#### [Executive Summary](https://github.com/sarantharma/GyroscopicProject/blob/passport/Documentation/Executive_Summary.pdf)
+Summary poster.
+
+#### [Final Design Documentation](https://github.com/sarantharma/GyroscopicProject/blob/passport/Documentation/Design_Doc.pdf)
+Complete project summary.
+
+#### [Final Testing Documentation](https://github.com/sarantharma/GyroscopicProject/blob/passport/Documentation/Testing.pdf)
+Various tests of user stories.
+
+#### [Work Logs](https://github.com/sarantharma/GyroscopicProject/blob/passport/Documentation/gitlogs.txt)
+Collection of git logs.
+
 # Contributors
 
 [Steven Nash](https://www.linkedin.com/in/steven-nash-306b84198/)
