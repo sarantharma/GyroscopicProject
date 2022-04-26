@@ -34,16 +34,12 @@ To run the program simply find the root of the folder and type the following
 node app.js
 ```
 
+Automated email delivery for team invitations and password recovery uses SendGrid. The custom templates as well as the basic instructions needed to use these features can be found under the [SendGrid Templates directory](https://github.com/sarantharma/GyroscopicProject/tree/passport/SendGrid%20Templates)
+
 
 # Usage
 
-A good place to learn the different functionalities of the project and how to make the most of the project can be explored in the 
-
-[User Guide](https://github.com/sarantharma/GyroscopicProject/tree/passport/User%20Guides)
-
-![Animation1](https://github.com/sarantharma/GyroscopicProject/blob/passport/public/img/Animation1.gif)
-
-![Animation2](https://github.com/sarantharma/GyroscopicProject/blob/passport/public/img/Animation2.gif)
+A good place to learn the different functionalities of the project and how to make the most of the project can be explored in the [User Guide](https://github.com/sarantharma/GyroscopicProject/tree/passport/User%20Guides)
 
 ![Animation3](https://github.com/sarantharma/GyroscopicProject/blob/passport/public/img/Animation3.gif)
 
