@@ -1,0 +1,1551 @@
+commit da2c3629e35e1bfee9d799a55fa262cf02d37960 (HEAD -> passport, origin/passport)
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 23:08:02 2022 -0400
+
+    Update README.md
+
+commit 5565a783ac67067ef23ff9bfe6317a727e6de5c2
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 22:59:37 2022 -0400
+
+    Update README.md
+
+commit 872d475e7f4cd0361759fcaa02d3ef1b08690c27
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 22:58:27 2022 -0400
+
+    Update README.md
+
+commit 775d96ddce89e608f86c2eebd703fce358ffde0f
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 22:55:53 2022 -0400
+
+    Delete Executive Summary.pdf
+
+commit 20713129cbf06630a124c86b1eacaaf6a68ae534
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 22:55:24 2022 -0400
+
+    Update readme.md
+
+commit 55b5f2a33e240e4f146f3e78c01f978a26f83bb4
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 22:51:51 2022 -0400
+
+    Executive Summary
+
+commit a3a0bd36ca2d7b50dcab1321209f97dd4e1eeda1
+Author: CormanClan <46726812+CormanClan@users.noreply.github.com>
+Date:   Mon Apr 25 22:26:15 2022 -0400
+
+    Added Executive Summary
+
+    +added a pdf
+
+commit 6e2d13cb21f33375577fb78d928d64278adf317e
+Author: ayaanshirazi <a_shirazi@hotmail.com>
+Date:   Mon Apr 25 22:11:22 2022 -0400
+
+    README.md
+
+    Created Readme file for the project
+
+commit 4741fd59797e66d76d57a7ad3d869c27151edb7e
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 21:46:38 2022 -0400
+
+    Link fixes for Documentation files
+
+commit d37ebe8d1589e49aee5a0700ea7fbadc2c3fb4a5
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 21:45:00 2022 -0400
+
+    Final Design Documents
+
+commit 93bd2fd32ea3f4e759bb8cee5a7e093f8a426945
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 21:44:25 2022 -0400
+
+    Readme for Documentation folder
+
+commit aba8b623eb0b11cf7c4b2f87e2991d1de34823ec
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 20:37:45 2022 -0400
+
+    Header size change
+
+commit b42428d85d969cc63688773e54fdcb5aa8f82ae9
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 20:36:25 2022 -0400
+
+    Update Inviting and Removing Team Members.md
+
+commit 4379c4d55bbbbcaeab13aab0dbd21cd3c0263c0e
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 20:35:38 2022 -0400
+
+    Pseudo-users explanation
+
+commit eaccbda3671994c46d97cb4ee204786563592f61
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 20:12:50 2022 -0400
+
+    Update readme.md
+
+commit 56b9b4fd3d1f44f9884cef371993d583dcf9f434
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 20:09:55 2022 -0400
+
+    SendGrid Readme
+
+commit b666c33b0b8d59fb62ede10693f3bf76e055c055
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 19:54:20 2022 -0400
+
+    Password Reset.html
+
+    Dynamic password recovery email sent using SendGrid.
+    An example can be found at: https://github.com/sarantharma/GyroscopicProject/blob/passport/User%20Guides/img/password_recovery_email.png
+
+    Template ID: d-fdf4fd19ea93442cae5c4128866a618c
+
+commit b4d6726791d478e44e78fb042c702b76eb798552
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 19:51:28 2022 -0400
+
+    Create Dynamic Team Invite.html
+
+    Dynamic template for the team invitation emails sent through SendGrid.
+    An example can be found at: https://github.com/sarantharma/GyroscopicProject/blob/passport/User%20Guides/img/invitation_email.png
+
+    Template ID: d-478522bdf29f47468a107e3540e0d577
+
+commit a2090e46231a52e0478dd386e19f3c6d60511b1d
+Merge: 22e858f 6841e76
+Author: Steven Nash <stevennash@trentu.ca>
+Date:   Mon Apr 25 18:55:15 2022 -0400
+
+    Merge remote-tracking branch 'origin/passport' into passport
+
+commit 22e858f4dc431372a69cc4fcc4dcae1d5cf08567
+Author: Steven Nash <stevennash@trentu.ca>
+Date:   Mon Apr 25 18:54:05 2022 -0400
+
+    Delete Columns Fix
+    - Deleting columns now deletes the column from its board's "columns" array
+
+commit 6841e76a32847b851643b366254c17f2f34ec822
+Author: ayaanshirazi <a_shirazi@hotmail.com>
+Date:   Mon Apr 25 18:10:09 2022 -0400
+
+    Deleted Unnecessary File
+
+    -image delete
+
+
+commit a9b08a3dd000b2bdece13b7cf5116539836bcb2f (HEAD -> passport)
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 16:24:57 2022 -0400
+
+    Create README.md
+
+commit 1837995f9b2b9a4889174761be148b4d7f142dcb
+Merge: 7209be8 88f6d57
+Author: Steven Nash <stevennash@trentu.ca>
+Date:   Mon Apr 25 16:01:59 2022 -0400
+
+    Merge remote-tracking branch 'origin/passport' into passport
+
+commit 7209be87509b5b3afad4ba2a2d477d66b7646eeb
+Author: Steven Nash <stevennash@trentu.ca>
+Date:   Mon Apr 25 15:59:30 2022 -0400
+
+    Commenting Touchups
+    - Deleted old commented-out blocks of code
+    - Deleted unnecessary console.logs
+    - Added more comments/descriptions
+
+commit 88f6d577d7219f98b4410cb5c8fdbcd9b5e2d9fd
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 15:26:06 2022 -0400
+
+    Update Modifying and Deleting Boards.md
+
+commit b2915c6a4a7493c7a97c40d47260ee8752c92a57
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 15:25:54 2022 -0400
+
+    Add files via upload
+
+commit b5238c4bf2193eeaabd7dc33636bd6b1371c01bb
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 15:24:50 2022 -0400
+
+    Delete delete_board_2.png
+
+commit 699f40e26adbad0372eea4daf32a3ba63c5be7aa
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 15:24:33 2022 -0400
+
+    Add files via upload
+
+commit 76772446c52898743d21d9680587f834b1e6d937
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 15:24:17 2022 -0400
+
+    Delete delete_board.png
+
+commit 04352e7c1f25d737d4b915880911844f54aafe14
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 15:22:43 2022 -0400
+
+    Update Modifying and Deleting Boards.md
+
+commit 2489ecb1e7db61b614a793b670d9b4f0836422f6
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 15:22:17 2022 -0400
+
+    Add files via upload
+
+commit d841651aaada90d8ebbe562782e55b56a1c98c09
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 15:19:34 2022 -0400
+
+    Update Modifying and Deleting Boards.md
+
+commit e1f5b97200f00afb2afcde87d5f3e32364a8b6cf
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 15:19:17 2022 -0400
+
+    Add files via upload
+
+commit b538360c81d663d9ad770ceae50cd440470aaf68
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 15:19:03 2022 -0400
+
+    Delete add_column_2.png
+
+commit 262fc1c6e1624314ba3929d49235acde0ff39540
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 15:17:15 2022 -0400
+
+    Add files via upload
+
+commit f964fbb32319773afb2450a1222c1c3663292b06
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 15:17:05 2022 -0400
+
+    Delete add_column.png
+
+commit a61d538372d312d1079e59162c250dd89d7f3b74
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 15:15:29 2022 -0400
+
+    Add files via upload
+
+commit 982c9bf0a997a2bad7958b2380c2983df2c2c5a0
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 15:15:20 2022 -0400
+
+    Delete modify_board.png
+
+commit 7ff42be987a83744a20db59e953d4e328df51bdb
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 15:11:41 2022 -0400
+
+    Update Viewing and Creating Teams.md
+
+commit 963180128414c33996146fb17be8e73ff0c2c9e3
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 15:10:32 2022 -0400
+
+    Update Removing a Board from a Team.md
+
+commit 6891608d82efb4dd791c6be06bdca690f23c92ce
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 15:09:42 2022 -0400
+
+    Create Removing a Board from a Team.md
+
+commit 4468f94b1699e6ac9964ab949872431e69b11bcc
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 15:06:14 2022 -0400
+
+    Add files via upload
+
+commit 6d22e0c3cf223a6c393fe18cd444f8b68329ac9a
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 15:03:27 2022 -0400
+
+    Add files via upload
+
+commit c71fc18501572120ff1849c76573092ebdf59171
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 15:03:16 2022 -0400
+
+    Delete remove_board.png
+
+commit a5906ccf00e09390bfbe59702a771b73a908eca6
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 15:03:04 2022 -0400
+
+    Add files via upload
+
+commit f3445d602d9bc8bcb22f0e11328df14d1708cbcd
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 15:02:26 2022 -0400
+
+    Delete remove.png
+
+commit 6d82ad7d535d13a31335fb95641e8d7bd56dc571
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 15:00:15 2022 -0400
+
+    Add files via upload
+
+commit 1593eb081551be36a766f486f5de73b49b528e9b
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 14:52:13 2022 -0400
+
+    Add files via upload
+
+commit cd9b2134523d207af7b62442bf1a664118466a42
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 14:51:58 2022 -0400
+
+    Delete team_view_2.png
+
+commit 66496bc6886373146e5f0f836ef8cd22655f2ba3
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 14:49:23 2022 -0400
+
+    Add files via upload
+
+commit 48201ec6e91e5a5c4b49f6b603f49181144a4ec6
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 14:49:16 2022 -0400
+
+    Delete remove.png
+
+commit e9ea43a68c93f124e1c02efa2abf613bd3b08a46
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 14:48:00 2022 -0400
+
+    Add files via upload
+
+commit c3e34abfadf05cada0f9b79e5c7900ea3db5f300
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 14:47:44 2022 -0400
+
+    Delete new_member.png
+
+commit ccce3ef6dd7d8827cb75ef9e97fc5edc23af3d87
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 14:36:15 2022 -0400
+
+    Add files via upload
+
+commit 2c0fdac8e72341603a133847a04c6f7d33725d37
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 14:36:01 2022 -0400
+
+    Delete invite.png
+
+commit 0fb57c1e99aa2f27507331c9d6d3bfecedacdf54
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 14:33:05 2022 -0400
+
+    Update Editing and Deleting Teams.md
+
+commit da0a8519da72c80e638a5f39c8f75903ebc9535b
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 14:32:56 2022 -0400
+
+    Update Editing and Deleting Teams.md
+
+commit 4e46eaefb7b268bc04c92f0b065ce780e7b58b7f
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 14:32:41 2022 -0400
+
+    Add files via upload
+
+commit 01207e6cb8fe3b7a9c2b962a0249a9d71dcc24b2
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 14:32:32 2022 -0400
+
+    Delete delete_team.png
+
+commit 97268d747929fa88d22d5b953a30be17f5b06012
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 14:28:14 2022 -0400
+
+    Add files via upload
+
+commit 78b37670f0ea72e2dc8e4f4960e2be1725fdf8f8
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 14:27:54 2022 -0400
+
+    Delete edit_team.png
+
+commit cf9349993e06bc18373f2310acffbdf0b0ccca96
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 14:26:47 2022 -0400
+
+    Add files via upload
+
+commit 9155cc4645fae33a3f42dc0d7bfc1865387ad752
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 14:26:39 2022 -0400
+
+    Delete edit_team.png
+
+commit afe656259461e11e2e35e7994fa71264ac9c883d
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 14:03:23 2022 -0400
+
+    Update Adding a Board to a Team.md
+
+commit 7618ecbe02a9791e43f5e742c8df4adceecfbda8
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 14:02:23 2022 -0400
+
+    Add files via upload
+
+commit 7b67ddc39420d6b71c3c08c4f128f1d39d1bd146
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 14:02:12 2022 -0400
+
+    Delete new_board_in_team.png
+
+commit f36188e82151683c74b0271b271d77b9d499f3f2
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 13:57:31 2022 -0400
+
+    Update Password Recovery.md
+
+commit 6249ca8d42646db6f6dc937964c90ab94e86e79d
+Merge: fa7c6dc 6b4dd3d
+Author: Saran <sarantharma7@gmail.com>
+Date:   Mon Apr 25 13:56:58 2022 -0400
+
+    Merge branch 'passport' of https://github.com/sarantharma/GyroscopicProject into passport
+
+commit 6b4dd3de6d796728d4848d348f486d4778a2ae33
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 13:55:57 2022 -0400
+
+    Update Password Recovery.md
+
+commit fa7c6dcd506058904a40e0ba62c0a83a8e992fe5
+Merge: 5a1c5d1 eef00ca
+Author: Saran <sarantharma7@gmail.com>
+Date:   Mon Apr 25 13:55:56 2022 -0400
+
+    Merge branch 'passport' of https://github.com/sarantharma/GyroscopicProject into passport
+
+commit 5a1c5d1a7a34fa59d8fafba0ab02c462084392e1
+Author: Saran <sarantharma7@gmail.com>
+Date:   Mon Apr 25 13:55:22 2022 -0400
+
+    Delete Column in Real time
+
+commit eef00ca0f2687605e011ea0623d905a0bf0f81f9
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 13:54:53 2022 -0400
+
+    Create Password Recovery.md
+
+commit 9e1d506b05d9a2a85a2ad1b5c0280a2401539c13
+Author: Saran <sarantharma7@gmail.com>
+Date:   Mon Apr 25 13:48:33 2022 -0400
+
+    add user guides in git ignore
+
+commit 9ad9c735f59acaffbfd2cafeebe420ae78537e37
+Merge: 1c05759 5c140fe
+Author: Saran <sarantharma7@gmail.com>
+Date:   Mon Apr 25 13:45:55 2022 -0400
+
+    Merge branch 'passport' of https://github.com/sarantharma/GyroscopicProject into passport
+
+commit 1c0575921b902f5e60ab879696ba090a777ad9b7
+Author: Saran <sarantharma7@gmail.com>
+Date:   Mon Apr 25 13:45:40 2022 -0400
+
+    Public JavaScript Error Fix
+
+commit 5c140fe418fcaa2f1f83d518c7ee5337d1caa5db
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 13:45:38 2022 -0400
+
+    Add files via upload
+
+commit cea258c4368438d17f6376cd057d584550dacc5c
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 13:45:24 2022 -0400
+
+    Add files via upload
+
+commit 8e0c4d4762560041cccec577fb48f6a93579400b
+Author: Steven Nash <stevennash@trentu.ca>
+Date:   Mon Apr 25 13:34:20 2022 -0400
+
+    SendGrid API Check
+    - Now checks if SendGrid API is checked before trying to send emails
+    - If SendGrid API key is not set, forgot password redirects to login page and displays an error message
+    - If the API key isn't set, invite team members refreshes the page and displays an error message
+
+commit c2947c2ed6c1d0fc5cefd177e151da8c1db09bbf
+Merge: e6a874a a527d20
+Author: Steven Nash <stevennash@trentu.ca>
+Date:   Mon Apr 25 12:26:03 2022 -0400
+
+    Merge remote-tracking branch 'origin/passport' into passport
+
+commit e6a874a34e6cbdba2aa0d15649442e0aae7aea4c
+Author: Steven Nash <stevennash@trentu.ca>
+Date:   Mon Apr 25 12:25:38 2022 -0400
+
+    Minor Forgot Password UI
+    - Added a success message after sending a recovery email from the /forgot page
+
+commit a527d206eb05cd6d28de14265a79162026b2b406
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 12:19:39 2022 -0400
+
+    Add files via upload
+
+commit 2add98747928544df68a38c2c95e339748b6fcf5
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 12:18:32 2022 -0400
+
+    Add files via upload
+
+commit 11b006794860e320238cbfb0b9ffaa8e64b66b7c
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 12:13:30 2022 -0400
+
+    Update Adding a Board to a Team.md
+
+commit 6163729fbd6acd9d0bd7a11fff51e352d9eef7fd
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 12:13:05 2022 -0400
+
+    Create Adding a Board to a Team.md
+
+commit d61b66cb067186cdcc20026e4629496514702654
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 12:12:11 2022 -0400
+
+    Add files via upload
+
+commit 97d414af14a3c8bdbbda882543a8778ae01125bd
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 12:07:41 2022 -0400
+
+    Add files via upload
+
+commit bdd39bcddf1224219ca067e90f8fb09ad5333707
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 12:04:25 2022 -0400
+
+    Add files via upload
+
+commit eabb9ce8036b4bf4ece8a38aea65320300bc8e4f
+Merge: 4039bc1 11d259e
+Author: Saran <sarantharma7@gmail.com>
+Date:   Mon Apr 25 11:59:17 2022 -0400
+
+    Merge branch 'passport' of https://github.com/sarantharma/GyroscopicProject into passport
+
+commit 11d259e4c4d5f3e66c269bdceccf2c62c63a3dfb
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 11:58:06 2022 -0400
+
+    Update Viewing and Creating Teams.md
+
+commit 4039bc1f9dcab967da2e713d5cea7934779743f9
+Merge: d56860a 04dca04
+Author: Saran <sarantharma7@gmail.com>
+Date:   Mon Apr 25 11:57:59 2022 -0400
+
+    Merge branch 'passport' of https://github.com/sarantharma/GyroscopicProject into passport
+
+commit d56860a03cfac63bfca1b39ec1973d98aaff992a
+Author: Saran <sarantharma7@gmail.com>
+Date:   Mon Apr 25 11:57:17 2022 -0400
+
+    Add Team Card and Teams style corrections
+
+commit 04dca041cd6a285a4b7740b734db6fe209c57abf
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 11:56:36 2022 -0400
+
+    Create Editing and Deleting Teams.md
+
+commit 1bded9e70235d8491d947b5fe1f24c830149f80b
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 11:56:14 2022 -0400
+
+    Add files via upload
+
+commit 10d97deaa4f2a032ffb5a70da79f36423d6f32a4
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 11:52:42 2022 -0400
+
+    Add files via upload
+
+commit 417a3a685935e376d6d4564b66d6bb66288be26d
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 11:51:59 2022 -0400
+
+    Delete image.png
+
+commit f53d743a384b305411c5610aeb8a8d427214359c
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 11:51:06 2022 -0400
+
+    edit_team_2.png
+
+commit 0b03b6ddc70c793b1f6d3e7543c5cfa8eca07972
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 11:47:46 2022 -0400
+
+    Add files via upload
+
+commit 0b3c48c2c2574063d03f0779a3c42ada52ffc3bf
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 11:39:04 2022 -0400
+
+    Update Viewing and Creating Teams.md
+
+commit b5f7e75881eb5dd7569801c725136b7fa615ea3c
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 11:37:59 2022 -0400
+
+    Create Inviting and Removing Team Members.md
+
+commit 8d74029d0596b78c6cafd2f8823d87ade3955248
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 11:34:14 2022 -0400
+
+    Create Viewing and Creating Teams.md
+
+commit a097c450af94d191657eb3919386664a4c157d27
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 11:31:02 2022 -0400
+
+    Update Board Interactions.md
+
+commit 5ede759d74ffdffa77f147ac1e87c789798abecd
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 11:29:41 2022 -0400
+
+    Create Board Interactions.md
+
+commit cb177d02798aa0fa8f2695efe69c3a34ac1a10c2
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 11:25:04 2022 -0400
+
+    Create Modifying and Deleting Boards.md
+
+commit 84f19264d68cd0d4cce8eaf6cb25790e4ca715ca
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 11:20:53 2022 -0400
+
+    Update Viewing and Creating Boards.md
+
+commit aafd1ca4e325229673bd8735aa9522400aa6ae84
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 11:20:04 2022 -0400
+
+    Viewing and Creating Boards
+
+commit 9b0e2da7133367e69c54460b4800f5fd6e683994
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 11:15:09 2022 -0400
+
+    Update Creating an Account.md
+
+commit 47db440d8546d7ab91a0dfa90defbdfc19718a1e
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 11:14:04 2022 -0400
+
+    Update Creating an Account.md
+
+commit 665d465ad830b1f8601953a189e21afd3dc51629
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 11:13:18 2022 -0400
+
+    Update Creating an Account.md
+
+commit ac9a2a5b061134c11a66ce684be2c326aa042ff4
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 11:12:13 2022 -0400
+
+    Update Creating an Account.md
+
+commit ef549234852ffdcfbdbbd1a360c74ad4f3a367af
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 11:11:54 2022 -0400
+
+    Update Creating an Account.md
+
+commit 77e612ba6a60d819944852ab45d85ea8c2ab336a
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 11:11:14 2022 -0400
+
+    Rename Creating an Account to Creating an Account.md
+
+commit 8a038d67f4a4439b7f3cb29872f91c910dbe1f53
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Mon Apr 25 08:31:12 2022 -0400
+
+    Creating an Account
+
+commit 9a8dbd64ecac7d1123e2e2c0d76c7ac115afd9d9
+Author: Steven Nash <stevennash@trentu.ca>
+Date:   Mon Apr 25 08:26:24 2022 -0400
+
+    User Guides and Minor Fixes
+    - Inviting a member to a team now refreshes the page rather than send the user back to the teams list
+    - Capitalized Edit Board title
+    - Added user guides
+
+commit f8cba0340d708c33caec5752a7db8acfdbcc887f
+Author: Steven Nash <stevennash@trentu.ca>
+Date:   Mon Apr 25 06:02:11 2022 -0400
+
+    Form Validation Fix
+    - Form validation on the login and New Team pages updated to not redundantly loop for all forms when there is only one form
+    - Form validation added to Edit Team to require a title
+
+commit 739ea504ba416103abf8ff4087eff511f77b2edd
+Author: Steven Nash <stevennash@trentu.ca>
+Date:   Mon Apr 25 05:53:42 2022 -0400
+
+    Form Validation Fix
+    - Form validation on the signup page updated to not redundantly loop for all forms when there is only one form
+    - Form for New Board is now validated so users can't submit an incomplete form (was previously giving and error)
+
+commit 9b6fbc7d8234e60579801248d30e72d293726852
+Author: Steven Nash <stevennash@trentu.ca>
+Date:   Mon Apr 25 05:26:49 2022 -0400
+
+    Minor UI Change
+    - Feedback message for invalid password corrected to reflect the actual password requirements ("6 to 15 characters long" instead of "8 or more characters")
+
+commit 9e251cae56f15c9df020e2e333289a6c931e10ae
+Author: Steven Nash <stevennash@trentu.ca>
+Date:   Mon Apr 25 05:10:22 2022 -0400
+
+    Simple UI/UX Changes
+    - Changed "Make comment anonymous" to "Post Anonymously" for more succinct language/to not take up as much space
+    - Logging out now redirects to /home instead of /boards, where the logged out user couldn't access (being redirected to /login with error flash)
+
+    Forgot to include in last push comment:
+    loginBoilerplate Fix
+    - Login boilerplate now displays req flashes
+
+commit c7abce0285482cac9e3aafd29258e4da864f1d25
+Author: ayaanshirazi <a_shirazi@hotmail.com>
+Date:   Sun Apr 24 19:39:38 2022 -0400
+
+    Button Centering
+
+commit e09422de2d1cc820dc8f79d0cd61d782a8178731
+Author: ayaanshirazi <a_shirazi@hotmail.com>
+
+commit c7abce0285482cac9e3aafd29258e4da864f1d25
+Author: ayaanshirazi <a_shirazi@hotmail.com>
+Date:   Sun Apr 24 19:39:38 2022 -0400
+
+    Button Centering
+
+commit e09422de2d1cc820dc8f79d0cd61d782a8178731
+Author: ayaanshirazi <a_shirazi@hotmail.com>
+Date:   Sun Apr 24 19:28:37 2022 -0400
+
+    All UI changes Complete
+
+    - Made all buttons centered
+    -fixed sizing issues
+    -All forms, buttons and columns should now be screen compliant and responsive
+    -Fixed color format to stay same throughout all pages for title headers
+
+commit fcc7a2c7273b2916cc762d128015aaf94d4f3adc
+Author: ayaanshirazi <a_shirazi@hotmail.com>
+Date:   Sun Apr 24 18:21:15 2022 -0400
+
+    UI changes for Board show and edit
+
+    -all buttons look same and are centered now
+    -Added toggle option in Add column button so user can click once to add column and reclick button if they dont want to add column anymore
+    -Edit board page is now screen optimized
+
+commit 5deaae7e540f95e9c6da441b903122cdb6663926 (HEAD -> passport, origin/passport)
+Author: ayaanshirazi <a_shirazi@hotmail.com>
+Date:   Sun Apr 24 17:42:31 2022 -0400
+
+    Flexbox xhanges for signup form
+
+    - all elements in the signup page are now in a flexbox should this should help maintain styling on different screens
+commit 5bb9651efd7fcd6b127f5df1fb549504f3d961d6
+Author: ayaanshirazi <a_shirazi@hotmail.com>
+Date:   Sun Apr 24 17:37:58 2022 -0400
+
+    Forgot Password Styling Changes
+
+    -Changed styling for forgot password link
+    - all elements in the signup page are now in a flexbox should this should help maintain styling on different screens
+commit 460ee70aecfb907a84e91157867e0ed860d0c436
+Author: CormanClan <46726812+CormanClan@users.noreply.github.com>
+Date:   Sun Apr 24 17:03:04 2022 -0400
+
+    Teams Board css fix
+
+    + bug fixed where teams boards would display down rather then in rows
+
+commit 6e7d0a23230e299b2793ddd90bf9bd9b61686064
+Author: Saran <sarantharma7@gmail.com>
+Date:   Sun Apr 24 14:28:32 2022 -0400
+
+    Board description overflow fix
+
+commit 7f82af3b682322e8dac24435f2b9ab862256f7ce
+Author: Steven Nash <stevennash@trentu.ca>
+Date:   Sun Apr 24 04:51:46 2022 -0400
+
+    Password Reset Update
+    - Link to forgot password page
+    - New 'forgot' page where the user enters an email to send a reset link to
+    - Checks if email is associated with an account and sends an email with a link to reset password
+    - Clicking the link in the email brings the user to the 'reset' page where they can enter a new password (which is checked for proper requirements)
+    - Jsonwebtokens used for verification, links expire after 30 minutes
+    
+    Team Invite Update
+    - Fixed links in team invitation emails
+    - Dynamic email template now displays the name of the team the user has been invited to
+
+commit 2683d09ba7c9f972c7a8fb1dd2672175e73bc9d1
+Author: ayaanshirazi <a_shirazi@hotmail.com>
+Date:   Fri Apr 22 17:54:32 2022 -0400
+
+    Signup and Login Validation
+    
+    -Added validation to signup form
+    -Have not changed validation for login to allow previous accounts created to still be allowed to login but if you want to add it just follow the same validation as seen in signup.ejs
+
+commit d1ab7333b0bb06528ff5121bb189bf13abb5f344
+Author: CormanClan <46726812+CormanClan@users.noreply.github.com>
+Date:   Fri Apr 22 12:44:40 2022 -0400
+
+    css styling
+    
+    + fixed a couple buttons on teams users page
+
+commit 2d8a8da95c03ead19de67de435aa074fec55903f
+Author: Steven Nash <stevennash@trentu.ca>
+Date:   Fri Apr 22 11:29:38 2022 -0400
+
+    Security & UI Update
+    - User's boards and teams are filtered in their mongo queries rather than on the user's end. Much more secure and efficient
+    - Boards view only populates with boards that the user has created or boards from teams they're a member of
+    - Separate containers for user's boards and their team's boards
+    - Added messages for when board or teams list are empty
+
+commit 26efc7651cb7199c8de57174f887f0fe3857e53a
+Author: ayaanshirazi <a_shirazi@hotmail.com>
+Date:   Thu Apr 21 05:15:40 2022 -0400
+
+    Changes for UI and landing page
+    
+    -Made changes to center and align buttons
+    -Most cards are now centered and fit well
+    -Add changes to navbar
+    -Changes to landing page
+
+commit 78fdf6a95976cc5622ec9b6e46528a801c1980e6
+Author: ayaanshirazi <a_shirazi@hotmail.com>
+Date:   Thu Apr 7 15:43:35 2022 -0400
+
+    New Footer
+    
+    -made new changes to footer
+
+commit c32cb9f9eda1546bcbb4c1b5d2e5f2c5ef49d8b2
+Author: CormanClan <46726812+CormanClan@users.noreply.github.com>
+Date:   Wed Apr 6 13:52:54 2022 -0400
+
+    after move react failed bug fix
+
+commit 308c554982b6ef279ae091ea251553e7fd36711e
+Author: CormanClan <46726812+CormanClan@users.noreply.github.com>
+Date:   Wed Apr 6 13:20:57 2022 -0400
+
+    Bug bash
+    
+    + fixed seeing poster of anonymous comments on shake,
+    + fixed edge case where after move like/dislike broke.
+    + adding 'Anonymous' rather then blank user
+
+commit c8224fd9af3cf7a5adc7c6be92cababea1381859
+Author: Steven Nash <stevennash@trentu.ca>
+Date:   Fri Apr 1 03:57:34 2022 -0400
+
+    Teams update 1.2:
+    
+    Edit Board:
+    - Fixed UI
+    - List of teams defaults to current team
+    - Bug fix for properly handling null values for boards without teams
+    - Team and board owners can switch which team the board is a part of
+    - Team owners can edit and add columns to boards that are linked to their team
+    
+    Teams Boards:
+    - Owners of teams can edit and remove boards linked to their team (boards are not deleted but unlinked from the team, board owner can still view)
+    - Owners can remove members from their team
+    
+    Edit Team:
+    - Fixed UI
+    
+    Delete Team:
+    - Now removes all links to deleted teams from all boards
+    
+    General:
+    - Boards view requires sign in for obvious reasons
+    - Fixed bug where users not signed in couldn't view boards via a link
+    - Emails changed to link to teams, email template updated accordingly
+    - Fixed critical bug where invites sometimes caused a crash
+    - Pseudo users who can be added to teams before they have an account. Once they sign in, the teams they were added to are already there
+
+commit 4538df2e94b81f5b6987c8a63c3d341719baaabb
+Author: Steven Nash <stevennash@trentu.ca>
+Date:   Thu Mar 31 15:58:14 2022 -0400
+
+    Fixed button colours
+
+commit 45bc5f942f07d93a0e6260036153eccfb6c8d300
+Author: ayaanshirazi <a_shirazi@hotmail.com>
+Date:   Thu Mar 31 15:56:47 2022 -0400
+
+    Footer Hide
+    
+    Just hid the footer for the time being
+
+commit 40c282a92582a79fa348f7de12ac1af8387eda41
+Author: Saran <sarantharma7@gmail.com>
+Date:   Thu Mar 31 15:49:06 2022 -0400
+
+    New board bug fix
+
+commit 629bb2762d4800f29377bec10e80fe8ef3e7b997
+Author: Saran <sarantharma7@gmail.com>
+Date:   Thu Mar 31 15:41:29 2022 -0400
+
+    Add custom new board creation
+
+commit 692071a6568886fef5f7290ecaebe30f8677838f
+Author: CormanClan <46726812+CormanClan@users.noreply.github.com>
+Date:   Thu Mar 31 14:27:18 2022 -0400
+
+    like and dislike, onload
+    
+    + added on load dislike/like count to app.js
+    + added a fix for moving comments not tracking like/dislike
+    + fixed move comment html with correct class for img and like/dislike count
+
+commit 39ad657f071f54a4400d15ef3befb435506b24b4
+Author: CormanClan <46726812+CormanClan@users.noreply.github.com>
+Date:   Thu Mar 31 13:20:04 2022 -0400
+
+    Like / Dislike on created comments
+    
+    + modified create comment html to be more inline with on page load comments html
+    + added class tags (like&dislike) to img
+    + added (like&dislike) count
+
+commit 8b43946225309b69aa0c96c467c1a209dc6a143e
+Merge: 7f4ef5d 4c8faa7
+Author: ayaanshirazi <a_shirazi@hotmail.com>
+Date:   Thu Mar 31 07:57:25 2022 -0400
+
+    Merge branch 'passport' of https://github.com/sarantharma/GyroscopicProject into passport
+
+commit 7f4ef5dbd03a32d76f68fcc29361b2f3e7663a7f
+Author: ayaanshirazi <a_shirazi@hotmail.com>
+Date:   Thu Mar 31 07:42:28 2022 -0400
+
+    UI Changes
+    
+    -made button changes to index.ejs, new.ejs
+    -updated footer and navbar to match overall layout
+    -added new login page to the site
+
+commit 4c8faa77fb6e9c817f14a16e99e50e298a2f09cc
+Merge: 417bc5d ffd7f00
+Author: Steven Nash <stevennash@trentu.ca>
+Date:   Thu Mar 31 07:21:25 2022 -0400
+
+    Merge remote-tracking branch 'origin/passport' into passport
+    
+    # Conflicts:
+    #       app.js
+
+commit 417bc5d47bec54c87fe847f4f7e1233164aa1dfe
+Author: Steven Nash <stevennash@trentu.ca>
+Date:   Thu Mar 31 07:17:20 2022 -0400
+
+    Team functionality
+    - ability to create, edit, delete, view, and invite people to teams
+    - boards can be linked to teams
+    - a boards team can be changed
+    - Teams view shows teams the user is a member of
+    - Team pages show boards linked to them
+    - Team creator can view members of their team
+    To do
+    - add ability for team creators to remove members
+    - fix page designs
+
+commit 5c89baea05aa7ef2fa2c5ca7360eb7a3741021a3
+Author: ayaanshirazi <a_shirazi@hotmail.com>
+Date:   Thu Mar 31 05:57:13 2022 -0400
+
+    SignUp UI changes
+    
+    -New look for signup page
+    -Made changes to footer
+    -Tested and works well with validation
+
+commit ffd7f0054716651ea47b82ff7f297407cc7e58a3
+Author: CormanClan <46726812+CormanClan@users.noreply.github.com>
+Date:   Wed Mar 30 22:39:32 2022 -0400
+
+    Like/Dislike Realtime
+    
+    all the functionality for the real time likes and dislike on comments.
+    + db model
+    + on click creating like
+    + real time with socket code for updating.
+    - missing the onload display
+
+commit 7e65f7c8ba93166ad3be9018f06c53a8ed574880
+Author: CormanClan <46726812+CormanClan@users.noreply.github.com>
+Date:   Thu Mar 17 16:54:10 2022 -0400
+
+    Edit Comments Fix 3?
+    
+    fixed them again, also now new comments can be edited and only if there yours.
+
+commit abcfc924725bb319fc58400cae19a4babcf5cda4
+Author: Steven Nash <stevennash@trentu.ca>
+Date:   Thu Mar 17 10:59:23 2022 -0400
+
+    Improved board permissions and New Column
+    - checks if user is a member before letting them view a board
+    - Doesn't add users who are already members
+    - Board owner can add new columns after creating a board
+
+commit 09b5a514cc321a03ec42d939e380729d92cb59eb
+Author: Steven Nash <stevennash@trentu.ca>
+Date:   Thu Mar 17 08:02:58 2022 -0400
+
+    Encrypted passwords, useful navbar.
+    Passwords are now salted and hashed. Plaintext passwords are still stored so we can easily access accounts without remembering passwords, but only the encrypted passwords are used for sign in and log in.
+    Also added useful links to the navbar.
+
+commit 368778f4d45649c81cc69e79ac966146bfdbcaad
+Author: Steven Nash <steven_nash@outlook.com>
+Date:   Tue Mar 15 03:26:05 2022 -0400
+
+    Email invites
+    - Added invite button for board owner
+    - Sends email invite with dynamic template
+    - Link in email currently only links to the board
+    - Adding verified members next
+    - Board not real time for people who join through email
+
+commit 86828a2d98f0f116735afe6b58ad08dfd294745d
+Author: Saran <sarantharma7@gmail.com>
+Date:   Thu Mar 3 19:12:30 2022 -0500
+
+    Real time drag and drop withour reloading page
+
+commit f6e2de5e5a01024545b9644908669076114028fe
+Author: Saran <sarantharma7@gmail.com>
+Date:   Thu Mar 3 19:03:10 2022 -0500
+
+    find user for comment drag and drop
+
+commit e5c6d2ad09f72888cdac28f27f89e58f2da36ceb
+Author: CormanClan <46726812+CormanClan@users.noreply.github.com>
+Date:   Thu Mar 3 15:05:43 2022 -0500
+
+    Fixed 'X' bug
+    
+    2nd time I've tried fixing it...
+
+commit 13e6d083f3c0f6e21951d2c94203b802bebb6761
+Author: CormanClan <46726812+CormanClan@users.noreply.github.com>
+Date:   Thu Mar 3 13:33:37 2022 -0500
+
+    Fix Anonymous Comments
+    
+    re-added the Anonymous Comments branch
+
+commit a5a5eedcb89850061571945fc2170aa9d4b3c21b
+Author: CormanClan <46726812+CormanClan@users.noreply.github.com>
+Date:   Thu Mar 3 13:21:29 2022 -0500
+
+    Revert "Real time drag and drop bug fix"
+    
+    This reverts commit bea4da5e935301c47da253c1a12dd8a479f8eb78.
+
+commit 7bc3f8b4f5a2d0708bb9d458b249da48b742c283
+Author: CormanClan <46726812+CormanClan@users.noreply.github.com>
+Date:   Thu Mar 3 13:21:23 2022 -0500
+
+    Revert "Real time drag and drop bug fix"
+    
+    This reverts commit 232efbf6880a663088e59e5ea0505d02e27e34b7, reversing
+    changes made to bea4da5e935301c47da253c1a12dd8a479f8eb78.
+
+commit 232efbf6880a663088e59e5ea0505d02e27e34b7
+Merge: bea4da5 5e2cc01
+Author: Tharmarajah Saranyan <sarantharma7@gmail.com>
+Date:   Thu Mar 3 12:38:48 2022 -0500
+
+    Real time drag and drop bug fix
+
+commit bea4da5e935301c47da253c1a12dd8a479f8eb78
+Author: Tharmarajah Saranyan <sarantharma7@gmail.com>
+Date:   Thu Mar 3 12:35:26 2022 -0500
+
+    Real time drag and drop bug fix
+
+commit 5e2cc012fc164fbe1eeedd1835d13faa5b9c60e9
+Author: CormanClan <46726812+CormanClan@users.noreply.github.com>
+Date:   Tue Feb 22 15:08:30 2022 -0500
+
+    Comment change 'X' bug fix
+    
+    changed childNodes from 1 -> 3
+
+commit 2821339e3a53885e964b289b4dfe8e26d2e13896
+Author: CormanClan <46726812+CormanClan@users.noreply.github.com>
+Date:   Tue Feb 22 14:54:26 2022 -0500
+
+    Anonymous Comments
+    
+    js: anonymous boolean and isanonymous to app.js, sockets, emits
+    
+    html: added the post anonymous toggle
+
+commit 081b9444af36daa20ad90db4f4140edcdfd50d55
+Author: Tharmarajah Saranyan <sarantharma7@gmail.com>
+Date:   Mon Feb 21 18:11:53 2022 -0500
+
+    Add passport library, flash and bux fixes
+
+commit f2a620fa3d9945d7082328d700842d079e7edb15
+Merge: a5ac206 3367c1d
+Author: Tharmarajah Saranyan <sarantharma7@gmail.com>
+Date:   Mon Feb 21 16:28:33 2022 -0500
+
+    Merge branch 'main' of https://github.com/sarantharma/GyroscopicProject
+
+commit a5ac206e9153b900fc2342cdb19f0c83e3036060
+Author: Tharmarajah Saranyan <sarantharma7@gmail.com>
+Date:   Mon Feb 21 16:28:26 2022 -0500
+
+    Bug fix
+
+commit 3367c1d107975c0bfd6e1d58c74405b3b53fb2a4
+Author: Steven Nash <stevennash@trentu.ca>
+Date:   Thu Feb 17 14:08:57 2022 -0500
+
+    Encrypted passwords, useful navbar.
+    Passwords are now salted and hashed. Plaintext passwords are still stored so we can easily access accounts without remembering passwords, but only the encrypted passwords are used for sign in and log in.
+    Also added useful links to the navbar.
+
+commit ed3abe127a643fbfd7f7f002463e0c1957189f8f
+Author: Tharmarajah Saranyan <sarantharma7@gmail.com>
+Date:   Wed Feb 16 13:56:37 2022 -0500
+
+    Real time delete comment bug fix
+
+commit 250368631f91825431b57eabc99a94d6a212b33e
+Merge: 2ed40b1 f426f64
+Author: Tharmarajah Saranyan <sarantharma7@gmail.com>
+Date:   Wed Feb 16 13:43:07 2022 -0500
+
+    Bug fix
+
+commit 2ed40b188ddcb81b4df4bb8eade5ba6203da3895
+Author: Tharmarajah Saranyan <sarantharma7@gmail.com>
+Date:   Wed Feb 16 13:39:08 2022 -0500
+
+    bug fix
+
+commit f426f64e1bc3b6748eb8121becdd5fb956965fce
+Author: CormanClan <46726812+CormanClan@users.noreply.github.com>
+Date:   Mon Feb 7 22:14:10 2022 -0500
+
+    fixed missing event on moved comments
+    
+    also cleaned up some debug logs I left from last push.
+
+commit 409c4a126fabc855510de7f3757b10a880b6824d
+Merge: 4bcfb7b 235ccbb
+Author: Tharmarajah Saranyan <sarantharma7@gmail.com>
+Date:   Mon Feb 7 19:56:59 2022 -0500
+
+    bug fix on show page
+
+commit 4bcfb7b40afb5f50ea080434b43df72f50babb32
+Author: Tharmarajah Saranyan <sarantharma7@gmail.com>
+Date:   Mon Feb 7 19:27:08 2022 -0500
+
+    Board real time bug fixes and Borad index page styling
+
+commit 235ccbbbc468b572c2bdd693c4a1ec79ef8c6bd5
+Author: CormanClan <46726812+CormanClan@users.noreply.github.com>
+Date:   Fri Feb 4 19:11:20 2022 -0500
+
+    Editable Comments
+    
+    double click a comment opens a input field. Submit on enter and blur, bugged when you move the comments around. moving breaks select query.
+
+commit 5ead8fd51d5d282cdbe01da9e215a978d04e1d3c
+Merge: 40a2f49 3761f3f
+Author: Tharmarajah Saranyan <sarantharma7@gmail.com>
+Date:   Thu Feb 3 15:41:37 2022 -0500
+
+    Merge branch 'main' of https://github.com/sarantharma/GyroscopicProject
+    merge ayaan code# the commit.
+
+commit 40a2f495e1b180c6785fb69092ce35f23c609b85
+Author: Tharmarajah Saranyan <sarantharma7@gmail.com>
+Date:   Thu Feb 3 15:41:34 2022 -0500
+
+    Change title
+
+commit 3761f3f557c3b26098da1e9f554ca474206c4ed4
+Author: ayaanshirazi <a_shirazi@hotmail.com>
+Date:   Thu Feb 3 15:39:17 2022 -0500
+
+    Additional changes to Footer Navbar and homepage
+    
+    CSS changes for landing page, navbar and footer - Ayaan
+
+commit 52e84856ce14d23df700a8a5b95c00f5c2e5b66c
+Author: Tharmarajah Saranyan <sarantharma7@gmail.com>
+Date:   Thu Feb 3 13:02:31 2022 -0500
+
+    Add style to board show page
+
+commit af830bc15ed10327ef80f991933b0d97db5ad310
+Merge: ea941e5 2c593e8
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Thu Feb 3 10:45:00 2022 -0500
+
+    Merge pull request #5 from steven-nash/main
+    
+    Sessions
+
+commit 2c593e8ae1cbc8497c450eb4a0c98ef4f39c4089
+Author: Steven Nash <steven_nash@outlook.com>
+Date:   Thu Feb 3 10:41:50 2022 -0500
+
+    Sessions
+    - login/signup creates sessions
+    - added logout to navbar
+    - going to home page without session redirects to login page
+
+commit ea941e5260e30bc744dc0f4b667d688f8b88c854
+Author: Tharmarajah Saranyan <sarantharma7@gmail.com>
+Date:   Sat Jan 29 22:24:24 2022 -0500
+
+    Add like dislike and comment button on show page / Add images
+
+commit bcc72745cf8de233326d8f5cb7fd32401f5e9cad
+Merge: bf237ee ddf148d
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Fri Jan 28 12:39:56 2022 -0500
+
+    Merge pull request #4 from steven-nash/main
+    
+    Minor login/signup changes
+
+commit ddf148db6c1d60124ae648b725f20c8ee8832219
+Author: Steven Nash <steven_nash@outlook.com>
+Date:   Fri Jan 28 12:25:51 2022 -0500
+
+    - Signup button on login page added
+    - Successful signup now redirects to boards
+
+commit bf237eeac3abe2b8edcf1e0e4be724da214f0ffb
+Merge: 7e90946 4c4106e
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Fri Jan 28 11:30:14 2022 -0500
+
+    Merge pull request #3 from steven-nash/main
+    
+    Basic Login Functionality
+
+commit 4c4106e71189e3ce2bafc88940565119dd06b677
+Author: Steven Nash <steven_nash@outlook.com>
+Date:   Fri Jan 28 11:29:14 2022 -0500
+
+    Basic Login Functionality
+    
+    - takes user data from login form
+    - searches database for user
+    - if found, redirect to boards page
+    - if not found, display error
+    To do:
+    - sessions
+
+commit 7e909464bc875ed6924ff8833ecd3a9d0907d3f6
+Merge: 5c39da8 d70894b
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Thu Jan 27 06:23:15 2022 -0500
+
+    Merge pull request #2 from steven-nash/main
+    
+    Updated Signup Functionality
+
+commit d70894bc7de3de007019e4f59016e7ed20e7d4c1
+Author: Steven Nash <stevennash@trentu.ca>
+Date:   Thu Jan 27 06:21:24 2022 -0500
+
+    Updated Signup Functionality
+    
+    - now checks if the email exists on the db
+    - now notifies the user if the username or email are in use
+
+commit 5c39da8d7e25d34abb75a15f2b738560d56bc950
+Merge: dbb77dc 2462732
+Author: Steven Nash <32461178+steven-nash@users.noreply.github.com>
+Date:   Wed Jan 26 04:47:11 2022 -0500
+
+    Merge pull request #1 from steven-nash/main
+    
+    User signup page
+
+commit 246273273c5b77f95e573a266a28851e5e4669b5
+Author: Steven Nash <stevennash@trentu.ca>
+Date:   Wed Jan 26 04:29:44 2022 -0500
+
+    User signup page
+    
+    - allows users to input info
+    - checks if username is in use
+    - pushes user data to db if not
+
+commit dbb77dc956282525853593044284b03a34e6ffe3
+Author: Tharmarajah Saranyan <sarantharma7@gmail.com>
+Date:   Mon Jan 24 04:11:16 2022 -0500
+
+    First commit
+// new project
+commit 164a0d0ca6664ef33ec1c817296daa48bace0d25
+Author: CormanClan <46726812+CormanClan@users.noreply.github.com>
+Date:   Sun Jan 16 16:47:36 2022 -0500
+
+    Comments Edit & Style
+    
+    Styling Changes to board and comments with bootstrap.
+    
+    Added editable comments they update on enter and blur.
+
+commit d3eadc9f064bb0e1279f9dae290805ce0d6b929f
+Author: Tharmarajah Saranyan <sarantharma7@gmail.com>
+Date:   Thu Jan 13 15:46:10 2022 -0500
+
+    Add real time comments
+
+commit ca78f30b6eeb17a0716413d1fb3adfba010a433b
+Author: Tharmarajah Saranyan <sarantharma7@gmail.com>
+Date:   Tue Jan 11 13:18:47 2022 -0500
+
+    Add columns in a board
+
+commit 661da6c8e5dd86d052ad70214780ce3ea411ff39
+Author: Tharmarajah Saranyan <sarantharma7@gmail.com>
+Date:   Sun Jan 9 02:58:49 2022 -0500
+
+    Add some Validations
+
+commit 5afdddd7fba44b7a7daae2e4f4bc9b48ff210757
+Author: Tharmarajah Saranyan <sarantharma7@gmail.com>
+Date:   Sun Jan 9 01:40:55 2022 -0500
+
+    Add basic styles
+
+commit a925b96fda69bbeedab14da650adbae8fb8cbfa8
+Author: Tharmarajah Saranyan <sarantharma7@gmail.com>
+Date:   Wed Jan 5 22:10:46 2022 -0500
+
+    Add board CRUD opperations
+// new project
+commit 01178268d20b700a5f84626db4a526ed46b4a65c
+Author: CormanClan <46726812+CormanClan@users.noreply.github.com>
+Date:   Thu Jan 20 16:56:11 2022 -0500
+
+    Comments Edit & Style
+    
+    Styling Changes to board and comments with bootstrap.
+    
+    Added editable comments they update on enter and blur.
+
+commit 579e9b2ed6c2e54fe2ab8726d3e83d99ad371e6f
+Author: steven-nash <steven_nash@outlook.com>
+Date:   Thu Jan 20 03:40:51 2022 -0500
+
+    -Added delete option to boards view. Only works for the first board in the view, could not for the life of me get it to work for each
+    -Added user confirmations for deleting in board view and board editor
+    -Minor spellcheck/edits to the names of the UI elements
+
+commit 46073145b58af3f544c5e67ec389e8816346220e
+Author: Tharmarajah Saranyan <sarantharma7@gmail.com>
+Date:   Thu Jan 13 17:27:40 2022 -0500
+
+    Mongo version
+
+commit 2599b6eaaccd3d3a968721063d0c94b16f32c620
+Merge: dd3c13a 9ac12b1
+Author: Tharmarajah Saranyan <sarantharma7@gmail.com>
+Date:   Thu Jan 13 17:26:44 2022 -0500
+
+    Some changes
+
+commit dd3c13ae6f9a1cb8f68a5f1b1274687c10d6649e
+Author: Tharmarajah Saranyan <sarantharma7@gmail.com>
+Date:   Thu Jan 13 15:52:18 2022 -0500
+
+    Add mongoDB version
+
+commit 9ac12b18b9c5446eec3d2c506f7e546ec368d16c
+Author: CormanClan <46726812+CormanClan@users.noreply.github.com>
+Date:   Thu Dec 9 14:42:06 2021 -0500
+
+    extra Comment to connect to db
+    
+    couldn't connect using (env file) so I added in comments the code I'd used to to grab credentials from config file.
+    
+    Also 'Package-lock.json' is a mess sorry I'm gonna ignore it?
+
+commit 844a889a287148b24b7ebdebfe95519a979de462
+Author: Tharmarajah Saranyan <sarantharma7@gmail.com>
+Date:   Thu Dec 9 11:22:02 2021 -0500
+
+    Style and script path change
+
+commit c504444ecd00a165b4b618f4c5649ba052cb204a
+Author: Saran <57696280+sarantharma@users.noreply.github.com>
+Date:   Thu Dec 9 10:36:59 2021 -0500
+
+    Delete config.env
+
+commit 5aabe6cd411a7dd6db818df0c47d035c8c320a59
+Author: Tharmarajah Saranyan <sarantharma7@gmail.com>
+Date:   Thu Dec 9 10:36:10 2021 -0500
+
+    Config modification
+
+commit 9bd3953593dbbb7746e3a588de49a15fe6b5bf42
+Author: Tharmarajah Saranyan <sarantharma7@gmail.com>
+Date:   Thu Dec 9 10:35:09 2021 -0500
+
+    Create new board file and display with get request
+
+commit 21c94212602a4218afe65cbaa7c6fea87d67b883
+Merge: 961dbd8 8a3e78f
+Author: Tharmarajah Saranyan <sarantharma7@gmail.com>
+Date:   Thu Dec 9 10:15:26 2021 -0500
+
+    Change in gitignore
+
+commit 961dbd82c5ba68976d7c7014455b40de7e13b381
+Author: Tharmarajah Saranyan <sarantharma7@gmail.com>
+Date:   Thu Dec 9 10:12:34 2021 -0500
+
+    Changes in package-lock.json
+
+commit 8a3e78ff23d24b146079da908791019590f5bc52
+Author: CormanClan <46726812+CormanClan@users.noreply.github.com>
+Date:   Thu Dec 2 18:54:00 2021 -0500
+
+    board data from db.
+    
+    hardcoded to get all the data for board(1)
+    returns a undefined, something to do with asynchronous code? I'll figure out later
+
+commit 32d67977dfdbae2de1f112f9e6267116e39b7c54
+Author: CormanClan <46726812+CormanClan@users.noreply.github.com>
+Date:   Wed Dec 1 15:18:50 2021 -0500
+
+    Localhost Database
+    
+    got my database working it's running with Xampp on localhost as well.
+    
+    I changed the config file to also have the database name very small change I'll drop the newest config and some guide videos I fallowed into our discord.
+
+commit 511091311a6389c4f07b55c19c614aae059821dd
+Author: CormanClan <46726812+CormanClan@users.noreply.github.com>
+Date:   Tue Nov 30 20:25:08 2021 -0500
+
+    attempted to add database
+    
+    add sql with npm install mysql
+    , you also need a config.json object I'll drop in out discord to connect since we are keeping the credentials outside of git
+
+commit ad4f92c8d16e73301c22c6ade92fb50f7f84adb7
+Author: CormanClan <46726812+CormanClan@users.noreply.github.com>
+Date:   Sun Nov 28 18:42:20 2021 -0500
+
+    Started Board Demo
+    
+    Added a public file with css and board.css
+    Added a view file with the board.html
+    added board.js a demo.
+    got a trival board working no database connected yet
+
+commit 429692febc7847ffbe846682529d330e7e576247
+Author: CormanClan <46726812+CormanClan@users.noreply.github.com>
+Date:   Thu Nov 25 14:43:07 2021 -0500
+
+    Socket-Io tutorial
+    
+    Fallowed Tutorial at:
+    
+    https://socket.io/get-started/chat#introduction
+    
+    Running Requires these:
+    npm install socket.io
+    npm install express@4
+
+commit 09fec079e661665d0b023a8e3ac5eb8f1600be5d
+Author: Tharmarajah Saranyan <sarantharma7@gmail.com>
+Date:   Sun Nov 21 17:01:15 2021 -0500
+
+    Add my name
+
+commit 86f09fd304b4a5b68d315ca4175c2c666f114b7d
+Author: CormanClan <46726812+CormanClan@users.noreply.github.com>
+Date:   Sun Nov 21 16:27:16 2021 -0500
+
+    Renamed
+    
+    from HelloWorld
+    to HelloWorld.js
+
+commit 8dd63c8fb07f9b87b36ae5b280696545f42353ca
+Author: CormanClan <46726812+CormanClan@users.noreply.github.com>
+Date:   Sun Nov 21 16:14:44 2021 -0500
+
+    HelloWorld
+    
+    basics
+// first commit, first project
